@@ -1,0 +1,75 @@
+/* HighLight Green */
+.highLG {
+  color: #008080;
+  background-color: #daf2f1;
+}
+
+/* HighLight Blue */
+.highLB {
+  color: #004A99;
+  background-color: #d9e4f2;
+}
+
+/* HighLight Red */
+.highLR {
+  color: #B7013A;
+  background-color: #F6E4E4;
+}
+
+/* Code Block Rounded edge */
+.highlight pre {
+  border-radius: 8px;
+}
+
+.code-toolbar pre {
+  border-radius: 8px;
+}
+
+/* Code disable first line padding  */
+code {
+  padding: 0;
+}
+
+/* Set Hx margin top */
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 1em;
+}
+
+/* content block hover latency */
+div.post:nth-child(n) {
+  transition-duration: 0.2s;
+}
+
+/* gap for "read more" */
+.excerpt-content {
+  margin-top: 2em;
+}
+
+.more-link-wrapper {
+  margin-top: 2em;
+}
+
+/* aligh image */
+img[src$='#center']
+{
+    display: block;
+    margin: 0.7rem auto; 
+    /* you can replace the vertical '0.7rem'
+       by whatever floats your boat,
+       but keep the horizontal 'auto' for this to work */
+    /* whatever else styles you fancy here */
+}
+
+img[src$='#floatleft']
+{
+    float:left;
+    margin: 0.7rem;      /* this margin is totally up to you */
+    /* whatever else styles you fancy here */
+}
+
+img[src$='#floatright']
+{
+    float:right;
+    margin: 0.7rem;      /* this margin is totally up to you */
+    /* whatever else styles you fancy here */
+}
