@@ -73,3 +73,27 @@ img[src$='#floatright']
     margin: 0.7rem;      /* this margin is totally up to you */
     /* whatever else styles you fancy here */
 }
+
+
+/* main background image */
+#overflow-container {
+  background-image: url("https://image.wadeism.net/wp_bg002.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+}
+
+/* inside background image */
+#loop-container {
+  background-image: url('https://image.wadeism.net/wp_bg002.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+}
+
+/* remove gap between inside background and bottom-nav  */
+#main {
+ padding-bottom: 0;
+}
