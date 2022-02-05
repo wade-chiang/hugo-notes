@@ -27,3 +27,7 @@
 <link href="{{ with .OutputFormats.Get "RSS" }}{{ .RelPermalink }}{{ end }}" rel="feed" type="application/rss+xml" title="{{ .Site.Title | default "" }}" />
 {{ end }}
 {{ template "_internal/google_analytics_async.html" . }}
+
+
+<!-- My Custom CSS Style -->
+<link href="{{ "css/wade_custom.css" | absURL }}?v={{ now.Unix }}" rel="stylesheet" type='text/css' media='all'>
