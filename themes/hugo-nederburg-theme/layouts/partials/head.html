@@ -29,8 +29,16 @@
 {{ template "_internal/google_analytics_async.html" . }}
 
 
+<!---------- Custom CSS Import ---------->
+
+<!--  Prism.css for code block style -->
+<link rel="stylesheet" href="{{ "css/prism.css" | absURL }}" >
+
+<!-- Google Font Style -->
+<!-- Roboto Mono 400, Fira Code 500 -->
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@500&family=Roboto+Mono&display=swap');
+</style>
+
 <!-- My Custom CSS Style -->
 <link href="{{ "css/wade_custom.css" | absURL }}?v={{ now.Unix }}" rel="stylesheet" type='text/css' media='all'>
-
-<!-- add prism.css for code block style -->
-<link rel="stylesheet" href="{{ "css/prism.css" | absURL }}" >

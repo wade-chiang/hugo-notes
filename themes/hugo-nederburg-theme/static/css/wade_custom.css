@@ -25,22 +25,22 @@
   border-radius: 8px;
 }
 
-/* Code disable first line padding  */
+/* Code Block disable first line padding  */
 code {
   padding: 0;
 }
 
 /* Set Hx margin top */
-h1, h2, h3, h4, h5, h6 {
+/* h1, h2, h3, h4, h5, h6 {
   margin-top: 1em;
-}
+} */
 
 /* content block hover latency */
 div.post:nth-child(n) {
   transition-duration: 0.2s;
 }
 
-/* gap for "read more" */
+/* add gap for "read more" */
 .excerpt-content {
   margin-top: 2em;
 }
@@ -96,4 +96,140 @@ img[src$='#floatright']
 /* remove gap between inside background and bottom-nav  */
 #main {
  padding-bottom: 0;
+}
+
+/* disable force uppercase on entry's title  */
+h1.entry-title {
+  text-transform: none;
+}
+
+h2.excerpt-title {
+  text-transform: none;
+}
+
+@media (min-width: 900px){
+	/* 內文的段落font size */
+	article>p {
+		font-size: 1.375em;
+	}
+
+	/* li裡的p font-size，但li最好保持單純，因此暫無使用  */
+	li>p {
+		font-size: 1.375em;
+	}
+
+	ul {
+		/* font-size: 1.4em; */
+    font-size: 1.37em;
+		/* margin-top: 3em; ul與上排*/
+	}
+
+	ol {
+		/* font-size: 1.4em; */
+    font-size: 1.375em;
+	}
+
+	/* 文章大標題font size */
+	h1.entry-title {
+		font-size: 3.5em;
+	}
+
+	article>h2 {
+		font-size: 2.25em;
+		margin-top: 2em;
+	}
+
+	h3 {
+		font-size: 1.8em;
+	}
+
+	h4 {
+		/*font-size: 1.35em;*/
+		font-size: 1.5em;
+	}
+
+	/* 讓h5與p的格式一樣  */
+	h5 {
+		font-size: 1.375em;
+		line-height: 1.5em;
+	}
+
+	/* 文章內標題(hx)與上面的間距 */
+	article>h3,article>h4,article>h5,article>h6 {
+		margin-top: 3em;
+	}
+
+	/* 網站頁尾標題(link) */
+	.site-footer h1{
+		font-size: 1.5em;
+	}
+
+	/* 首頁內文節錄與上下的間距 */
+	.excerpt-content{
+		margin-top: 1.5em;
+	}
+
+	li {
+		margin-top: 1em;
+	}
+}
+
+
+@media (max-width: 900px){
+	.site-footer h1{
+		font-size: 1em;
+	}
+
+	h1.entry-title {
+		font-size: 1.5em;
+	}
+
+	h2 {
+		font-size: 1.3em;
+	}
+
+	h3 {
+		font-size: 1.25em;
+	}
+
+	h4 {
+		font-size: 1.2em;
+	}
+
+	h5 {
+		font-size: 1em;
+		line-height: 1.5em;
+	}
+
+	li {
+		margin-top: 3em;
+	}
+
+	/* 文章內標題(hx)與上排的間距 */
+	/*article>h3,article>h4,article>h5,article>h6 {*/
+	article>h2,article>h3,article>h4,article>h5,article>h6 {
+		margin-top: 3em;
+	}
+
+	/* 首頁內文節錄與上下的間距 */
+	/* .excerpt-content{
+		margin-top:1.5em;
+	} */
+}
+
+
+/* Font Setting */
+
+.mono {
+  font-family: 'Roboto Mono';
+  font-weight: '400';
+}
+
+/* Code Block Font */
+/* font-weight 700 is just for xingothic-tc,
+   because FireCode weight in CSS style is 500
+   so the actual english font weight in Fire Code is 500, not 700 */
+code[class*="language-"], pre[class*="language-"] {
+	font-family:'Fira Code','xingothic-tc';
+	font-weight: 700;
 }
