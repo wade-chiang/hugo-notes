@@ -7,7 +7,7 @@ disqusShortname = ""
 # Enable Google Analytics by entering your tracking code
 googleAnalytics = ""
 preserveTaxonomyNames = true
-paginate = 5 #frontpage pagination
+paginate = 500 #frontpage pagination
 
 hasCJKLanguage = true
 summaryLength = 50
@@ -25,13 +25,13 @@ summaryLength = 50
 [params]
   # Unmark to use post folder for images. Default is static folder.
   #usepostimgfolder = true
-  slogan = "A fast &amp; secure theme"
+  slogan = "..Something"
   description = "Describe your website" # meta description
   # You need to set author to have an author bio. If you have a writer in the markdown file it will override this.
-  author = "Göran Svensson"
-  authorLink = "https://appernetic.io/"
+  author = "wade"
+  authorLink = "https://notes.wadeism.net/"
   bio = [
-    "Göran is an avid blogger and the founder of <a href='https://appernetic.io/'>Appernetic.io</a>. This is the author bio shown after posts."
+    "本站站長"
   ]
   copyright = [
     "&copy; 2018 Göran Svensson",
@@ -52,7 +52,7 @@ summaryLength = 50
      # - send a dummy email yourself to confirm your account
      # - click the confirm link in the email from www.formspree.io
      # - you're done. Happy mailing!
-  email = "goran@molnsys.com"
+  email = "wade0702@gmail.com"
 
   # Nav links in the side bar
   [[menu.main]]
@@ -73,44 +73,44 @@ summaryLength = 50
 # this will also be in author bio if there is no writer.
   [params.social]
   facebook      = "full Social profile url in facebook"
-  googleplus    = "full profile url in googleplus"
-  email         = "email@example.com"
-  twitter       = "full profile url in twitter"
-  linkedin      = "full profile url in linkedin"
-  stackoverflow = "full profile url in stackoverflow"
-  instagram     = "full profile url in instagram"
+  # googleplus    = "full profile url in googleplus"
+  # email         = "email@example.com"
+  # twitter       = "full profile url in twitter"
+  # linkedin      = "full profile url in linkedin"
+  # stackoverflow = "full profile url in stackoverflow"
+  # instagram     = "full profile url in instagram"
   github        = "full profile url in github"
-  pinterest     = "full profile url in pinterest"
+  # pinterest     = "full profile url in pinterest"
   rss           = true
 
 # Add a writer, then use it in the markdown front matter like this: writer = "Lukas Herman"
   [params.writers]
-    [params.writers."Lukas Herman"]
-    link = "https://lherman.tk"
-    email = "lherman.cs@gmail.com"
+    [params.writers."wade"]
+    link = "https://notes.wadeism.net"
+    email = "wade0702@gmail.com"
     bio = [
-      "Lukas has a few skills up his sleve. He can fly blindfolded under a bridge while simultanous writing blog posts."
+      "自稱台主"
     ]
     facebook      = "full lukas profile url in facebook"
-    googleplus    = "full profile url in googleplus"
-    twitter       = "full profile url in twitter"
-    linkedin      = "full profile url in linkedin"
-    stackoverflow = "full profile url in stackoverflow"
-    instagram     = "full profile url in instagram"
+    # googleplus    = "full profile url in googleplus"
+    # twitter       = "full profile url in twitter"
+    # linkedin      = "full profile url in linkedin"
+    # stackoverflow = "full profile url in stackoverflow"
+    # instagram     = "full profile url in instagram"
     github        = "full profile url in github"
-    pinterest     = "full profile url in pinterest"
+    # pinterest     = "full profile url in pinterest"
 
-    [params.writers."Göran Svensson"]
-    link = "https://appernetic.io/"
-    email = "goran@molnsys.com"
-    bio = [
-      "Göran is an avid blogger and the founder of <a href='https://appernetic.io/'>Appernetic.io</a>. This is the author bio shown after posts."
-    ]
-    facebook      = "full Göran profile url in facebook"
-    googleplus    = "full profile url in googleplus"
-    twitter       = "full profile url in twitter"
-    linkedin      = "full profile url in linkedin"
-    stackoverflow = "full profile url in stackoverflow"
-    instagram     = "full profile url in instagram"
-    github        = "full profile url in github"
-    pinterest     = "full profile url in pinterest"
+    # [params.writers."Göran Svensson"]
+    # link = "https://appernetic.io/"
+    # email = "goran@molnsys.com"
+    # bio = [
+    #   "Göran is an avid blogger and the founder of <a href='https://appernetic.io/'>Appernetic.io</a>. This is the author bio shown after posts."
+    # ]
+    # facebook      = "full Göran profile url in facebook"
+    # googleplus    = "full profile url in googleplus"
+    # twitter       = "full profile url in twitter"
+    # linkedin      = "full profile url in linkedin"
+    # stackoverflow = "full profile url in stackoverflow"
+    # instagram     = "full profile url in instagram"
+    # github        = "full profile url in github"
+    # pinterest     = "full profile url in pinterest"
