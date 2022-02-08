@@ -44,7 +44,7 @@ firewalld 使用 zone 作為管理連線的框架，舉例來說，有點像手�
 
 * {{< green >}}{{< mono >}}drop{{< /green >}}{{< /mono >}}：所有進來的連線都會被丟掉，而且不會有所回應，除了本機發起的 request 以外，外來連線只出不進
 * {{< green >}}{{< mono >}}block{{< /green >}}{{< /mono >}}：所有進來的連線會被阻擋（reject），與 drop 不同的是被 reject 的話，對方會知道連線是被阻擋，但 drop 對方只會知道無法連線，但無法得知連線是被封鎖，還是機器掛掉，因此通常在做測試時會用 block，正式防護時會用 drop
-* {{< green >}}{{< mono >}}external{{< /green >}}{{< /mono >}}：主要用在內部網路與 NAT 轉址，只有允許的 port 可以連入，external 預設開啟 {{< blue >}}masquerade{{< /   blue >}}，作為 VPN server 時都會要開啟該選項
+* {{< green >}}{{< mono >}}external{{< /green >}}{{< /mono >}}：主要用在內部網路與 NAT 轉址，只有允許的 port 可以連入，external 預設開啟 {{< blue >}}masquerade{{< /blue >}}，作為 VPN server 時都會要開啟該選項
 * {{< green >}}{{< mono >}}trusted{{< /green >}}{{< /mono >}}：所有的連線都將被允許！
 * {{< green >}}{{< mono >}}dmz{{< /green >}}{{< /mono >}}：給置於 dmz zone裡的電腦使用，允許讓特定的連線進入內部網路，但也只接受有被允許的連線
 

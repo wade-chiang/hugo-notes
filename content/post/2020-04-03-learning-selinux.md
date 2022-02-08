@@ -287,7 +287,7 @@ drwxr-xr-x. 2 apache apache    6 Mar 26 22:34 upload       # 上傳檔案用的�
 {{< center >}}檔案上傳頁面{{< /center >}}
 
 ![](https://image.wadeism.net/selinux02.png#center)
-{{< center >}}上傳成功{{< / center >}}
+{{< center >}}上傳成功{{< /center >}}
 
 \
 雖然理想情況是這樣，但我發現每次上傳後，PHP 網頁顯示上傳成功，但點擊連結後，顯示檔案不存在，表示檔案沒有真的上傳成功…

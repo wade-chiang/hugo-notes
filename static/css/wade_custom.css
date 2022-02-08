@@ -232,7 +232,7 @@ h2.excerpt-title {
 /* Code Block Font */
 /* font-weight 700 is just for xingothic-tc,
    because FireCode weight in CSS style is 400
-   so the actual english font weight in Fire Code is 4	00, not 700 */
+   so the actual english font weight in Fire Code is 400, not 700 */
 code[class*="language-"], pre[class*="language-"] {
 	font-family:'Fira Code','xingothic-tc';
 	font-weight: 700;
