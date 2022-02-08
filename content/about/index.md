@@ -1,21 +1,18 @@
-+++
-date = "2016-11-05T21:05:33+05:30"
-title = "About me"
-+++
+---
+date: "2018-06-12T21:05:33+05:30"
+title: "About me"
+---
 
-An sincerity so extremity he additions. Her yet **there truth merit**. Mrs all projecting favourable now unpleasing. Son law garden chatty temper. Oh children provided to mr elegance marriage strongly. Off can admiration prosperous now devonshire diminution law.
+記得小時候的某天，看新聞在介紹一款作業系統叫 <span class="hl-red">Red Hat Linux</span>，有別於 Windows 的免費與開放，這頂小紅帽給了我很深的印象，所以就請表哥幫我搞了片安裝光碟，在英文也不通的情況下竟然也裝上去了，不過也就只是裝好，根本不知道能拿它來做什麼（畢竟小時候只會用電腦玩遊戲）
 
-Received overcame oh sensible so at an. Formed do change merely to county it. **Am separate contempt** domestic to to oh. On relation my so addition branched. Put hearing cottage she norland letters equally prepare too. Replied exposed savings he no viewing as up. Soon body add him hill. No father living really people estate if. Mistake do produce beloved demesne if am pursuit.
+\
+畢業後，眼看著陪我大學四年的 Intel Pentium 4 電腦越來越慢，剛好逛到 <span class="hl-blue">Ubuntu</span> 這個平易近人的 Linux 介紹，懵懵懂懂的裝了起來，發現原本播不動的影片竟然播放順暢！對 Linux 整個信心大增，直到 Ubuntu 後來的版本不再支援我的無線網卡，還因此買了 Home Plug 電力線網路，不過某天 Home Plug 突然不能用了，也因此改回了 Windows…
 
-![This is me][1]
+\
+又過了幾年，真正開始認真玩 Linux 的起因其實只是為了一部冷門日劇 - [相棒](https://www.tv-asahi.co.jp/aibou-store/)，至於詳細的原因就不好說了（想支持正版都沒門路，只能買電影版當支持）只是沒有想到這個動機給我發現了新大陸，某方面也是找回小時候想玩 Linux 的一點心願吧。
 
-The Big Oxmox advised her not to do so, because there were thousands of bad Commas, wild Question Marks and devious Semikoli, but the Little Blind Text didn't listen. She packed her seven versalia, put her initial into the belt and made herself on the way.
+\
+這個網站的文章大多是我在玩的過程中所碰到的問題與解決方法，原本這些筆記都是放在 Evernote 上面，因為擔心哪天 Evernote 會不會突然倒掉，加上[朋友](https://blog.wawajohn.net/)的建議，促使了 Blog 的誕生。
 
-#### Education
-
-* Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-* Aliquam tincidunt mauris eu risus.
-
-When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then
-
-[1]: /img/about.jpg
+\
+雖然網站的內容並不多，但比起原本的私人筆記，把它分享出去或許更有意義。希望這些文章可以幫到正在閱讀的你。
