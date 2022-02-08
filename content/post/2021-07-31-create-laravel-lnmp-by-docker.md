@@ -28,7 +28,7 @@ LNMP 是一般對 Linux + Nginx + MySQL（MariaDB）+ PHP 的簡稱，不過用 
 
 ## 前置作業
 
-首先在系統裡建立一個新資料夾 {{< blue >}}lnmp{{< /blue >}}，裡面再分別建立四個資料夾，這邊將資料夾命名為：{{< blue >}}php{{< /blue >}}、{{< blue >}}ngnix{{< /blue >}}、{{< blue >}}mariadb{{< /blue >}} 與 {{< blue >}}projects{{< /blue >}}。
+首先在系統裡建立一個新資料夾 <span class="hl-blue">lnmp</span>，裡面再分別建立四個資料夾，這邊將資料夾命名為：<span class="hl-blue">php</span>、<span class="hl-blue">ngnix</span>、<span class="hl-blue">mariadb</span> 與 <span class="hl-blue">projects</span>。
 
 ```bash
 mkdir lnmp && cd lnmp
@@ -54,24 +54,24 @@ tree
 
 4 個資料夾的用途如下：
 
-* {{< green >}}{{< mono >}}mariaDB{{< /green >}}{{< /mono >}}：  
+* <span class="hl-green mono">mariaDB</span>：  
 給 MariaDB 的 container 掛載用，存放 data base 的資料，也可以選擇不掛載
-* {{< green >}}{{< mono >}}nginx{{< /green >}}{{< /mono >}}：  
+* <span class="hl-green mono">nginx</span>：  
 給 nginx container 掛載用，存放 nginx conf
-* {{< green >}}{{< mono >}}php{{< /green >}}{{< /mono >}}：  
+* <span class="hl-green mono">php</span>：  
 放自行 build 的 php Dockerfile
-* {{< green >}}{{< mono >}}projects{{< /green >}}{{< /mono >}}：  
+* <span class="hl-green mono">projects</span>：  
 統一將 Laravel 或 Wordpress 的資料夾放在這邊
 
-使用 {{< blue >}}tree{{< /blue >}} 指令是為了方便給大家看資料與資料夾間的關聯，這個指令通常不會內建在系統中，也不是很必要，可依個人喜好自行安裝
+使用 <span class="hl-blue">tree</span> 指令是為了方便給大家看資料與資料夾間的關聯，這個指令通常不會內建在系統中，也不是很必要，可依個人喜好自行安裝
 
 
 ## 編寫 PHP 的 Dockerfile
 
 PHP 官方的 Docker Image 基底為 Debian，另外也有出基於 Alpine 的版本，Alpine 做出來的 image 會比較輕量，另外我們的 web servce 是使用 nginx，所以就要選 
-{{< blue >}}php-fpm{{< /blue >}} 的 image，而不是 php image。
+<span class="hl-blue">php-fpm</span> 的 image，而不是 php image。
 
-本次的 Dockerfile 使用官方的 {{< blue >}}php:7.4-fpm-alpine{{< /blue >}} 為底，如果只是想基本的練練 php，那直接使用官方的 php-fpm image 就可以了，但在 [Laravel 的官網](https://laravel.com/docs/7.x#server-requirements)中有提到，7.x 版的 Laravel 需要許多額外的套件：
+本次的 Dockerfile 使用官方的 <span class="hl-blue">php:7.4-fpm-alpine</span> 為底，如果只是想基本的練練 php，那直接使用官方的 php-fpm image 就可以了，但在 [Laravel 的官網](https://laravel.com/docs/7.x#server-requirements)中有提到，7.x 版的 Laravel 需要許多額外的套件：
 
 ```yaml
 - BCMath
@@ -256,11 +256,11 @@ server {
 
 基本上是直接拿 [Laravel 官網的 conf 檔](https://laravel.com/docs/8.x/deployment#nginx)來改，要注意的地方如下：
 
-* {{< green >}}{{< mono >}}server_name{{< /green >}}{{< /mono >}}：  
+* <span class="hl-green mono">server_name</span>：  
 自訂網站的域名，即使沒有申請，也建議設一下，之後再修改 hosts 檔就可以模擬真實的情況。
-* {{< green >}}{{< mono >}}root{{< /green >}}{{< /mono >}}：  
+* <span class="hl-green mono">root</span>：  
 網頁檔存放的路徑，路徑可自訂，之後啟動 container 時要把本機的 projects 資料夾掛載到這邊。
-* {{< green >}}{{< mono >}}fastcgi_pass{{< /green >}}{{< /mono >}}：  
+* <span class="hl-green mono">fastcgi_pass</span>：  
 負責解析 php 的 service，一般的 LNMP Server 在這邊可能會是本機 127.0.0.1:9000，不過我們的 php 會放在別的 container 裡，並且會將該 php container 命名為 php，之後 docker-compose 啟動的每個 container 都能互相解析彼此的 host name，所以這邊設 php:9000 即可。
 
 
@@ -311,16 +311,16 @@ services:
       MYSQL_ROOT_PASSWORD: abc123
 ```
 
-* {{< green >}}{{< mono >}}php{{< /green >}}{{< /mono >}}：  
-  - {{< blue >}}build{{< /blue >}} 的 dockerfile 裡，指定要用哪個 Dockerfile 來 build php 的 image  
-  - 在 {{< blue >}}volumes{{< /blue >}} 這邊，{{< red >}}必須要跟 nginx 一起掛載同個目錄{{< /red >}}，本例為本機上的 projects 資料夾
-* {{< green >}}{{< mono >}}nginx{{< /green >}}{{< /mono >}}：  
-  - {{< blue >}}ports{{< /blue >}}，基本就是 80:80 的 mapping 或是加個 443:443  
-  - {{< blue >}}volumes{{< /blue >}} 部分，將本機上的 conf 與 projects 掛載到 container 中
-* {{< green >}}{{< mono >}}mariadb{{< /green >}}{{< /mono >}}：  
-  - {{< blue >}}ports{{< /blue >}} 用預設的 3306:3306  
-  - {{< blue >}}volumes{{< /blue >}} 可將 container 裡的 DB 資料放到本機上，不設定的話，container 刪除後 DB 的資料也會不見，如果每次都想啟個乾淨環境的話就不用設這個  
-  - {{< blue >}}environments{{< /blue >}} 這邊設定 DB 的 root 密碼
+* <span class="hl-green mono">php</span>：  
+  - <span class="hl-blue">build</span> 的 dockerfile 裡，指定要用哪個 Dockerfile 來 build php 的 image  
+  - 在 <span class="hl-blue">volumes</span> 這邊，<span class="hl-red">必須要跟 nginx 一起掛載同個目錄</span>，本例為本機上的 projects 資料夾
+* <span class="hl-green mono">nginx</span>：  
+  - <span class="hl-blue">ports</span>，基本就是 80:80 的 mapping 或是加個 443:443  
+  - <span class="hl-blue">volumes</span> 部分，將本機上的 conf 與 projects 掛載到 container 中
+* <span class="hl-green mono">mariadb</span>：  
+  - <span class="hl-blue">ports</span> 用預設的 3306:3306  
+  - <span class="hl-blue">volumes</span> 可將 container 裡的 DB 資料放到本機上，不設定的話，container 刪除後 DB 的資料也會不見，如果每次都想啟個乾淨環境的話就不用設這個  
+  - <span class="hl-blue">environments</span> 這邊設定 DB 的 root 密碼
 
 
 ## 執行 docker-compose
@@ -434,16 +434,16 @@ nginx        latest           08b152afcfae   9 days ago     133MB
 docker run --rm -v $(pwd):/app lnmp_php composer create-project laravel/laravel /app/take1
 ```
 
-* {{< green >}}{{< mono >}}--rm{{< /green >}}{{< /mono >}}：該 container 執行後就會刪除，因為建立專案是一次性的行為，因此加上自行刪除指令就不會留下多餘的 container
-* {{< green >}}{{< mono >}}-v $(pwd):/app{{< /green >}}{{< /mono >}}：將目前的資料夾掛載到 container 裡的 {{< blue >}}/app{{< /blue >}}
-* {{< green >}}{{< mono >}}lnmp_php{{< /green >}}{{< /mono >}}：php 的 image 檔
-* {{< green >}}{{< mono >}}composer create-project laravel/laravel /app/take1{{< /green >}}{{< /mono >}}：用 composer 在 container 裡的 {{< blue >}}/app/take1{{< /blue >}} 中建立 Laravel 專案，如果 composer 是裝在本機而非 docker image 的話，只需要這一行就夠了。  
-另外因為本機的 projects 資料夾已和 container 中的 {{< blue >}}/app{{< /blue >}} 做掛載綁定，因此指令完成後，就會在本機的 projects 裡建立一個名為 take1 的資料夾，裡面的內容即為 Laravel 的檔案
+* <span class="hl-green mono">--rm</span>：該 container 執行後就會刪除，因為建立專案是一次性的行為，因此加上自行刪除指令就不會留下多餘的 container
+* <span class="hl-green mono">-v $(pwd):/app</span>：將目前的資料夾掛載到 container 裡的 <span class="hl-blue">/app</span>
+* <span class="hl-green mono">lnmp_php</span>：php 的 image 檔
+* <span class="hl-green mono">composer create-project laravel/laravel /app/take1</span>：用 composer 在 container 裡的 <span class="hl-blue">/app/take1</span> 中建立 Laravel 專案，如果 composer 是裝在本機而非 docker image 的話，只需要這一行就夠了。  
+另外因為本機的 projects 資料夾已和 container 中的 <span class="hl-blue">/app</span> 做掛載綁定，因此指令完成後，就會在本機的 projects 裡建立一個名為 take1 的資料夾，裡面的內容即為 Laravel 的檔案
 
 
 ## 開啟 Laravel 的測試頁
 
-還記得之前在 nginx conf 中設的 {{< blue >}}server_name{{< /blue >}}「my-lab」 嗎？我們先給網站指定了域名，但這只是個假域名，所以記得先去 {{< blue >}}/etc/hosts{{< /blue >}} 把 my-lab 這個域名與這台 Docker 主機的 ip 做 mapping。
+還記得之前在 nginx conf 中設的 <span class="hl-blue">server_name</span>「my-lab」 嗎？我們先給網站指定了域名，但這只是個假域名，所以記得先去 <span class="hl-blue">/etc/hosts</span> 把 my-lab 這個域名與這台 Docker 主機的 ip 做 mapping。
 
 接著就來試著用瀏覽器打開 Laravel 的首頁 http://my-lab/take1/public/
 
@@ -492,7 +492,7 @@ Connected successfully
 ```
 
 \
-不過除了 php 之外，我也想知道 Laravel 能否正常連到 DB，這時我們就先編輯一下 Laravel 的 {{< blue >}}.env{{< /blue >}} 這個檔案
+不過除了 php 之外，我也想知道 Laravel 能否正常連到 DB，這時我們就先編輯一下 Laravel 的 <span class="hl-blue">.env</span> 這個檔案
 
 ```bash
 vim ./projects/take1/.env

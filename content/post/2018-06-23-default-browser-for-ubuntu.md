@@ -18,7 +18,7 @@ tags:
 Settings → Prefferd Applications 即可設定
 
 ![](https://image.wadeism.net/xubuntu01.png#center)
-{{< center >}}雖然圖中顯示 Chromium，但實際上應該是 Vivaldi{{< /center >}}
+<div style="text-align: center">雖然圖中顯示 Chromium，但實際上應該是 Vivaldi</div>
 
 \
 但即使做了上面的設定，我的 Xubuntu 預設瀏覽器仍然是 Firefox，而非我設定的 Vivaldi。這時候必須做用下面的指令來做設定：

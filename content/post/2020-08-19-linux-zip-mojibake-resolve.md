@@ -33,7 +33,7 @@ total 0
 ```
 
 \
-這是由於 {{< red >}}Linux 預設是以 utf-8 的編碼來解壓縮，但 Win 上面預設使用 big5 碼來壓縮{{< /red >}}，因此如果要在 Linux 上正確的解開 big5 的 zip 檔，只要在解壓縮時使用參數 {{< blue >}}-O{{< /blue >}} 指定編碼就可以了
+這是由於 <span class="hl-red">Linux 預設是以 utf-8 的編碼來解壓縮，但 Win 上面預設使用 big5 碼來壓縮</span>，因此如果要在 Linux 上正確的解開 big5 的 zip 檔，只要在解壓縮時使用參數 <span class="hl-blue">-O</span> 指定編碼就可以了
 
 
 ```bash
@@ -54,5 +54,5 @@ total 0
 -rw-rw-r-- 1 wade wade 0  8月 19 12:11 筆記.txt
 ```
 
-* {{< green >}}{{< mono >}}-O CHARSET{{< /green >}}{{< /mono >}}：為 DOS、Windows 與 OS/2 的壓縮檔指定編碼
-* {{< green >}}{{< mono >}}-I CHARSET{{< /green >}}{{< /mono >}}：為 Unix 或其它系統的壓縮檔指定編碼
+* <span class="hl-green mono">-O CHARSET</span>：為 DOS、Windows 與 OS/2 的壓縮檔指定編碼
+* <span class="hl-green mono">-I CHARSET</span>：為 Unix 或其它系統的壓縮檔指定編碼

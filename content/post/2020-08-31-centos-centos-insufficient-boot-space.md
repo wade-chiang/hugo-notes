@@ -12,7 +12,7 @@ tags:
 - CentOS 8
 ---
 
-安裝系統時，如果 {{< green >}}/boot{{< /green >}} 分區給的空間太少，在更新時可能就會顯示 /boot 空間不足的 error，因為 Linux 更新時會保留近幾次更新的 kernel，因此出現錯誤時，我們可以把一些比較舊的 kernel 刪掉，幫 /boot 釋放空間
+安裝系統時，如果 <span class="hl-green">/boot</span> 分區給的空間太少，在更新時可能就會顯示 /boot 空間不足的 error，因為 Linux 更新時會保留近幾次更新的 kernel，因此出現錯誤時，我們可以把一些比較舊的 kernel 刪掉，幫 /boot 釋放空間
 
 以下方法適用於 CentOS 7 與 CentOS 8
 
@@ -22,7 +22,7 @@ tags:
 ![](https://image.wadeism.net/deboot01.png)
 
 \
-編輯 {{< blue >}}/etc/yum.conf{{< /blue >}}，並將下面的參數更改為 2 或 3
+編輯 <span class="hl-blue">/etc/yum.conf</span>，並將下面的參數更改為 2 或 3
 
 ```bash
 installonly_limit=2

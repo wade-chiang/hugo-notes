@@ -55,21 +55,21 @@ sudo make install
 
 ## 設定 vlc-pause-click-plugin
 
-先重啟 VLC Player ，接著在主畫面中選擇「{{< blue >}}工具{{< /blue >}}」→「{{< blue >}}偏好設定{{< /blue >}}」，然後下面的「{{< blue >}}顯示設定{{< /blue >}}」點選「{{< blue >}}全部{{< /blue >}}」
+先重啟 VLC Player ，接著在主畫面中選擇「<span class="hl-blue">工具</span>」→「<span class="hl-blue">偏好設定</span>」，然後下面的「<span class="hl-blue">顯示設定</span>」點選「<span class="hl-blue">全部</span>」
 
 ![](https://image.wadeism.net/vlc01.png)
 
-在進階偏好設定裡選擇「{{< blue >}}介面{{< /blue >}}」→「{{< blue >}}控制介面{{< /blue >}}」，將右邊的 {{< green >}}Pause/Play video on mouse click{{< /green >}} 打勾
+在進階偏好設定裡選擇「<span class="hl-blue">介面</span>」→「<span class="hl-blue">控制介面</span>」，將右邊的 <span class="hl-green">Pause/Play video on mouse click</span> 打勾
 
 ![](https://image.wadeism.net/vlc02.png)
 
-選擇「{{< blue >}}視訊{{< /blue >}}」→「{{< blue >}}過濾器{{< /blue >}}」，將右邊的 {{< green >}}Pause/Play video on mouse click{{< /green >}} 打勾
+選擇「<span class="hl-blue">視訊</span>」→「<span class="hl-blue">過濾器</span>」，將右邊的 <span class="hl-green">Pause/Play video on mouse click</span> 打勾
 
 ![](https://image.wadeism.net/vlc03.png)
 
 接著重啟 VLC Player 設定就完成了，試著播放一部影片然後在影片上按一下滑鼠左鍵確認是否可以暫停/播放
 
 \
-有關這個外掛的自定義設定（如左鍵改右鍵）可以在「{{< blue >}}視訊{{< /blue >}}」→「{{< blue >}}過濾器{{< /blue >}}」→「{{< blue >}}Pause click{{< /blue >}}」裡面調整
+有關這個外掛的自定義設定（如左鍵改右鍵）可以在「<span class="hl-blue">視訊</span>」→「<span class="hl-blue">過濾器</span>」→「<span class="hl-blue">Pause click</span>」裡面調整
 
 ![](https://image.wadeism.net/vlc04.png)

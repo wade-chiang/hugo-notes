@@ -18,7 +18,7 @@ SAMBA 是一個很好用的檔案伺服器，優點在於可以讓 Windows 與 L
 
 以下就來介紹它的安裝與使用方法
 
-文章中如果看到 {{< red >}}[IP_Address]{{< /red >}} ，請替換成自己需要的 IP
+文章中如果看到 <span class="hl-red">[IP_Address]</span> ，請替換成自己需要的 IP
 
 
 ## 安裝 SAMBA
@@ -83,10 +83,10 @@ sudo vim /etc/samba/smb.conf
     directory mask = 0775
 ```
 
-{{< blue >}}[ global ]{{< /blue >}} 標籤裡是一些基本的設定，先照預設的就好。下面的每一個標籤代表著一個 SAMBA share 的設定，我們先仿照其中一個標籤來新增設定，基本上格式都要一樣，有關 SAMBA share 的意思在後面的指令中可以看得更明白。
+<span class="hl-blue">[ global ]</span> 標籤裡是一些基本的設定，先照預設的就好。下面的每一個標籤代表著一個 SAMBA share 的設定，我們先仿照其中一個標籤來新增設定，基本上格式都要一樣，有關 SAMBA share 的意思在後面的指令中可以看得更明白。
 
-{{< red >}}本次範例中，我們要讓 Client 端用 SAMBA 存取 Host 的 Web Server 根目錄{{< /red >}}：  
-{{< blue >}}/var/www/html{{< /blue >}}
+<span class="hl-red">本次範例中，我們要讓 Client 端用 SAMBA 存取 Host 的 Web Server 根目錄</span>：  
+<span class="hl-blue">/var/www/html</span>
 
 新增下面的內容到 /etc/samba/smb.conf 的最底下
     
@@ -100,13 +100,13 @@ sudo vim /etc/samba/smb.conf
     write list = @users
 ```
 
-* {{< green >}}{{< mono >}}[Web]{{< /green >}}{{< /mono >}}：SAMBA share 的 tag 名稱
-* {{< green >}}{{< mono >}}comment{{< /green >}}{{< /mono >}}：有關這個 SAMBA share 的敘述
-* {{< green >}}{{< mono >}}browseable{{< /green >}}{{< /mono >}}：該 tag 是否可以在列表中出現，後面會有範例
-* {{< green >}}{{< mono >}}read only{{< /green >}}{{< /mono >}}：該資料夾是否為「唯讀」狀態，意即無法寫入與修改裡面的資料
-* {{< green >}}{{< mono >}}writable{{< /green >}}{{< /mono >}}：該資料夾是否可寫入，與上面的選項功能相同，但意義相反
-* {{< green >}}{{< mono >}}path{{< /green >}}{{< /mono >}}：要分享的資料夾
-* {{< green >}}{{< mono >}}write list{{< /green >}}{{< /mono >}}：可存取這個 tag 的使用者，@users 表示SAMBA 帳號內的人員都可以，另外也可以指定單一對象
+* <span class="hl-green mono">[Web]</span>：SAMBA share 的 tag 名稱
+* <span class="hl-green mono">comment</span>：有關這個 SAMBA share 的敘述
+* <span class="hl-green mono">browseable</span>：該 tag 是否可以在列表中出現，後面會有範例
+* <span class="hl-green mono">read only</span>：該資料夾是否為「唯讀」狀態，意即無法寫入與修改裡面的資料
+* <span class="hl-green mono">writable</span>：該資料夾是否可寫入，與上面的選項功能相同，但意義相反
+* <span class="hl-green mono">path</span>：要分享的資料夾
+* <span class="hl-green mono">write list</span>：可存取這個 tag 的使用者，@users 表示SAMBA 帳號內的人員都可以，另外也可以指定單一對象
 
 
 ## 建立帳號與密碼
@@ -189,8 +189,8 @@ sudo smbclient -U wade -L $IP_Address
 "Enter wade's password": 
 ```
 
-* {{< green >}}{{< mono >}}-U{{< /green >}}{{< /mono >}}：使用者的名稱，記得要用剛剛以 pdbedit 建立的帳號
-* {{< green >}}{{< mono >}}-L{{< /green >}}{{< /mono >}}：list，將遠端的 share 資料列表出來
+* <span class="hl-green mono">-U</span>：使用者的名稱，記得要用剛剛以 pdbedit 建立的帳號
+* <span class="hl-green mono">-L</span>：list，將遠端的 share 資料列表出來
 
     
 ```bash
@@ -290,7 +290,7 @@ setsebool -P allow_smbd_anon_write 1
 setsebool -P allow_httpd_anon_write 1
 ```
 
-這個指令可讓 SAMBA 與 Apache 對任何帶 {{< blue >}}public_content_rw_t{{< /blue >}} 屬性的資料夾擁有存取的權限，但注意 chcon 這個指令只修改 /var/www 這個資料夾，之後在這裡面新建的檔案或資料夾也會是 {{< blue >}}public_content_rw_t{{< /blue >}} 的屬性，但如果是本來就在 /var/www 裡面的資料夾並不會被改到，因此如果我們想要修改 /var/www 與它底下所有東西的權限，要使用參數 -R
+這個指令可讓 SAMBA 與 Apache 對任何帶 <span class="hl-blue">public_content_rw_t</span> 屬性的資料夾擁有存取的權限，但注意 chcon 這個指令只修改 /var/www 這個資料夾，之後在這裡面新建的檔案或資料夾也會是 <span class="hl-blue">public_content_rw_t</span> 的屬性，但如果是本來就在 /var/www 裡面的資料夾並不會被改到，因此如果我們想要修改 /var/www 與它底下所有東西的權限，要使用參數 -R
     
 ```bash
 sudo chcon -R -t public_content_rw_t /var/www

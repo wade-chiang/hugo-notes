@@ -19,9 +19,9 @@ Hime + 嘸蝦米一直是我在 Linux 用起來最順手的中文輸入，最近
 
 ## 環境說明
 
-系統：{{< blue >}}Manjaro 21.1.4 Minimal{{< /blue >}} 版本
+系統：<span class="hl-blue">Manjaro 21.1.4 Minimal</span> 版本
 
-桌面環境：{{< blue >}}Gnome 40.4{{< /blue >}}
+桌面環境：<span class="hl-blue">Gnome 40.4</span>
 
 
 ## 安裝教學
@@ -33,7 +33,7 @@ sudo pacman-mirrors --country Taiwan
 ```
 
 \
-安裝 {{< blue >}}manjaro-keyring{{< /blue >}}、{{< blue >}}manjaro-system{{< /blue >}} 並更新套件
+安裝 <span class="hl-blue">manjaro-keyring</span>、<span class="hl-blue">manjaro-system</span> 並更新套件
 
 ```bash
 sudo pacman -Sy manjaro-keyring manjaro-system
@@ -50,7 +50,7 @@ sudo pacman -Su
 sudo pacman -S yay
 ```
 
-原本的 Manjaro 是用 {{< blue >}}yaourt{{< /blue >}} 來安裝 AUR (Arch User Repository) 社群套件庫裡的軟體，不過現在已改用 {{< blue >}}yay{{< /blue >}}
+原本的 Manjaro 是用 <span class="hl-blue">yaourt</span> 來安裝 AUR (Arch User Repository) 社群套件庫裡的軟體，不過現在已改用 <span class="hl-blue">yay</span>
 
 \
 安裝編譯用基礎套件
@@ -115,11 +115,11 @@ Type=wayland
 ```
 
 \
-檢查後如果的確使用 wayland 模式，這時候請登出，然後在登入時點選右下角的小齒輪圖示（齒輪會在點選使用者後出現），選擇 {{< blue >}}GNOME 採行 Xorg{{< /blue >}} 就可以用 X11 模式登入，登入後就能看到 Hime 圖示的出現。
+檢查後如果的確使用 wayland 模式，這時候請登出，然後在登入時點選右下角的小齒輪圖示（齒輪會在點選使用者後出現），選擇 <span class="hl-blue">GNOME 採行 Xorg</span> 就可以用 X11 模式登入，登入後就能看到 Hime 圖示的出現。
 
 ![](https://image.wadeism.net/manjaro_hime02.png)
 
-如果想直接關掉 wayland 的話，可以編輯 {{< blue >}}/etc/gdm/custom.conf{{< /blue >}} 這個檔案，把 WaylandEnable=true 改成 {{< blue >}}WaylandEnable=false{{< /blue >}}。
+如果想直接關掉 wayland 的話，可以編輯 <span class="hl-blue">/etc/gdm/custom.conf</span> 這個檔案，把 WaylandEnable=true 改成 <span class="hl-blue">WaylandEnable=false</span>。
 
 * * *
 

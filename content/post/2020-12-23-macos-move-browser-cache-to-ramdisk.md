@@ -15,7 +15,7 @@ tags:
 
 RamDisk 已經是行之有年的技術，我也經常在 Linux 上使用，雖然現在的 SSD 速度已經夠快了，不過為了延長 SSD 的壽命，減少寫入次數，所以新買的筆電還是打算用上 RamDisk（畢竟 Mac 的維修很貴）。即使 SSD 已經快到沒必要用 RamDisk，耐用度也有一定水準，用 RamDisk 就當作裝個心安吧。
 
-{{< red >}}本文使用版本為macOS Catalina{{< /red >}}
+<span class="hl-red">本文使用版本為macOS Catalina</span>
 
 
 ## 撰寫建立 RamDisk 的 Script
@@ -44,7 +44,7 @@ for fName in ${folder}; do
 done
 ```
 
-folder 變數內容為瀏覽器的資料夾名稱，下面的 for 迴圈用來將預設的 cache 路徑指向到 RamDisk 裡。實際上建立 RamDisk 的動作則是在 {{< blue >}}diskutil{{< /blue >}} 這行，其中 4096000 代表 2G，如果想換成不同的大小可以自行換算。
+folder 變數內容為瀏覽器的資料夾名稱，下面的 for 迴圈用來將預設的 cache 路徑指向到 RamDisk 裡。實際上建立 RamDisk 的動作則是在 <span class="hl-blue">diskutil</span> 這行，其中 4096000 代表 2G，如果想換成不同的大小可以自行換算。
 
 
 ## 編寫 plist 檔讓 script 開機時自動執行

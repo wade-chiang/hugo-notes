@@ -13,7 +13,7 @@ tags:
 - Ubuntu
 ---
 
-autofs 是自動掛載用的工具，它會偵測{{< red >}}當使用者進入要掛載的目錄時，才會把 nfs 給掛載起來，一段時間不用的時候就自動卸載掉{{< /red >}}，可以讓我們在需要使用時才連線，用完也不用手動 umount，可以相當程度上的避免突然的連線中斷導致無限 timeout
+autofs 是自動掛載用的工具，它會偵測<span class="hl-red">當使用者進入要掛載的目錄時，才會把 nfs 給掛載起來，一段時間不用的時候就自動卸載掉</span>，可以讓我們在需要使用時才連線，用完也不用手動 umount，可以相當程度上的避免突然的連線中斷導致無限 timeout
 
 
 安裝 autofs
@@ -22,7 +22,7 @@ autofs 是自動掛載用的工具，它會偵測{{< red >}}當使用者進入�
 sudo apt install autofs
 ```
 
-autofs 有兩個設定檔要編輯，首先在 {{< blue >}}/etc/auto.master.d{{< /blue >}} 裡建立一個新的 master conf，副檔名一定要用 {{< blue >}}.autofs{{< /blue >}}
+autofs 有兩個設定檔要編輯，首先在 <span class="hl-blue">/etc/auto.master.d</span> 裡建立一個新的 master conf，副檔名一定要用 <span class="hl-blue">.autofs</span>
 
 ```bash
 sudo vim /etc/auto.master.d/nfs.autofs
@@ -33,10 +33,10 @@ sudo vim /etc/auto.master.d/nfs.autofs
 /home/wade/nfs_mount    /etc/auto.nfs
 ```
 
-* {{< green >}}{{< mono >}}Mount Point{{< /green >}}{{< /mono >}}：nfs server 在本機的掛載目錄，{{< red >}}這個目錄不需要存在，當 autofs 啟動時會自動建立並且持續的監控該資料夾{{< /red >}}
-* {{< green >}}{{< mono >}}Map File{{< /green >}}{{< /mono >}}：autofs 會根據 map file 的內容來掛載遠端目錄到本機的 mount point，該設定檔名稱可以自訂
+* <span class="hl-green mono">Mount Point</span>：nfs server 在本機的掛載目錄，<span class="hl-red">這個目錄不需要存在，當 autofs 啟動時會自動建立並且持續的監控該資料夾</span>
+* <span class="hl-green mono">Map File</span>：autofs 會根據 map file 的內容來掛載遠端目錄到本機的 mount point，該設定檔名稱可以自訂
 
-將 master conf 放在 {{< blue >}}/etc/auto.master.d{{< /blue >}} 裡是比較建議的做法，不過{{< red >}}在 Ubuntu 18.04 以前，並沒有這個資料夾{{< /red >}}，所以也可以直接把 master conf 的內容寫到 {{< blue >}}/etc/auto.master{{< /blue >}} 裡
+將 master conf 放在 <span class="hl-blue">/etc/auto.master.d</span> 裡是比較建議的做法，不過<span class="hl-red">在 Ubuntu 18.04 以前，並沒有這個資料夾</span>，所以也可以直接把 master conf 的內容寫到 <span class="hl-blue">/etc/auto.master</span> 裡
 
 接著建立 Map File
 
@@ -49,13 +49,13 @@ sudo vim /etc/auto.nfs
 share        -rw,sync        192.168.199.169:/home/wade
 ```
 
-* {{< green >}}{{< mono >}}share{{< /green >}}{{< /mono >}}：子目錄名稱，指的是剛才 master conf 裡 mount point 底下的子目錄，名稱可以自訂，當我們進入 /home/wade/nfs_mount/share 的同時，autofs 就會幫我們把遠端目錄掛載到該處。  
-{{< red >}}因此實際上 192.168.199.169:/home/wade 會掛載到 /home/wade/nfs_mount/share，而不是 /home/wade/nfs_mount{{< /red >}}
-* {{< green >}}{{< mono >}}-rw,sync{{< /green >}}{{< /mono >}}：nfs 的掛載參數
-* {{< green >}}{{< mono >}}192.168.199.169:/home/wade{{< /green >}}{{< /mono >}}：NFS server 裡 /etc/exports 所設定的分享目錄，
+* <span class="hl-green mono">share</span>：子目錄名稱，指的是剛才 master conf 裡 mount point 底下的子目錄，名稱可以自訂，當我們進入 /home/wade/nfs_mount/share 的同時，autofs 就會幫我們把遠端目錄掛載到該處。  
+<span class="hl-red">因此實際上 192.168.199.169:/home/wade 會掛載到 /home/wade/nfs_mount/share，而不是 /home/wade/nfs_mount</span>
+* <span class="hl-green mono">-rw,sync</span>：nfs 的掛載參數
+* <span class="hl-green mono">192.168.199.169:/home/wade</span>：NFS server 裡 /etc/exports 所設定的分享目錄，
 
 \
-{{< blue >}}master conf{{< /blue >}} 與 {{< blue >}}map file{{< /blue >}} 都設定好之後，啟動 autofs 並設定自動開啟
+<span class="hl-blue">master conf</span> 與 <span class="hl-blue">map file</span> 都設定好之後，啟動 autofs 並設定自動開啟
 
 ```bash
 sudo systemctl start autofs && sudo systemctl enable autofs

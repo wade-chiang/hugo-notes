@@ -21,7 +21,7 @@ tags:
 
 ## 安裝 Nginx
 
-Debian 10 的套件庫裡已有包含 nginx 了，不過我這次想要裝新版的，因此就使用官方的安裝流程，功能上大同小異，{{< red >}}但安裝套件庫的版本或官方的版本在 conf 上會有些設定上的不同！{{< /red >}}
+Debian 10 的套件庫裡已有包含 nginx 了，不過我這次想要裝新版的，因此就使用官方的安裝流程，功能上大同小異，<span class="hl-red">但安裝套件庫的版本或官方的版本在 conf 上會有些設定上的不同！</span>
 
 雖然我還是會列出安裝的方式，因為大概不會有什麼變動，但可以的話還是建議大家先看一下[官網的流程](https://nginx.org/en/linux_packages.html#Debian)。
 
@@ -160,7 +160,7 @@ sudo apt-get install php7.4-{curl,mbstring,mysql,imagick,xml,zip,gd}
 
 ## 權限設定
 
-Debian 與 CentOS 比較不一樣的地方是預設了一個名為 {{< blue >}}www-data{{< /blue >}} 的 user 與 group，php-fpm 預設的執行者就是 www-data，因此建議將 nginx 放網頁的資料夾 owner 做為更改，以 nginx 預設的資料夾為例：
+Debian 與 CentOS 比較不一樣的地方是預設了一個名為 <span class="hl-blue">www-data</span> 的 user 與 group，php-fpm 預設的執行者就是 www-data，因此建議將 nginx 放網頁的資料夾 owner 做為更改，以 nginx 預設的資料夾為例：
 
 ```bash
 sudo chown -R www-data:www-data /usr/share/nginx/html
@@ -183,7 +183,7 @@ sudo systemctl restart nginx
 
 ## 為 PHP 建立 nginx 的 conf 檔
 
-LNMP 裝完後，{{< red >}}如果不做設定，php 網頁是不會經過 php 引擎的，所以打開 php 網頁只會變成下載網頁，而看不到實際的內容{{< /red >}}，這是因為 nginx 與 php 之間的關係類似反向代理，因此我們要先寫一個設定檔，告訴 nginx 要把 php 檔送到 php-fpm 去做解析
+LNMP 裝完後，<span class="hl-red">如果不做設定，php 網頁是不會經過 php 引擎的，所以打開 php 網頁只會變成下載網頁，而看不到實際的內容</span>，這是因為 nginx 與 php 之間的關係類似反向代理，因此我們要先寫一個設定檔，告訴 nginx 要把 php 檔送到 php-fpm 去做解析
 
 \
 建立 snippets 資料夾
@@ -192,7 +192,7 @@ LNMP 裝完後，{{< red >}}如果不做設定，php 網頁是不會經過 php �
 sudo mkdir /etc/nginx/conf.d/snippets
 ```
 
-這個資料夾用來放一些常重覆用到的 nginx 設定檔，例如 php 的解析，{{< green >}}如果是使用 Debian 內建的 repo 裝 nginx 的話，這個資料夾會在 /etc/nginx 裡，但如果是使用官方的 repo 最新版安裝，就不會有這個資料夾，需要自己建立{{< /green >}}，我放在 /etc/nginx/conf.d 裡只是為了備份方便。
+這個資料夾用來放一些常重覆用到的 nginx 設定檔，例如 php 的解析，<span class="hl-green">如果是使用 Debian 內建的 repo 裝 nginx 的話，這個資料夾會在 /etc/nginx 裡，但如果是使用官方的 repo 最新版安裝，就不會有這個資料夾，需要自己建立</span>，我放在 /etc/nginx/conf.d 裡只是為了備份方便。
 
 \
 建立解析 php 的 conf
@@ -212,12 +212,12 @@ fastcgi_param  PATH_INFO $fastcgi_path_info;
 fastcgi_pass   unix:/run/php/php7.4-fpm.sock;
 ```
 
-這段內容就是將 php 檔送到 {{< blue >}}unix:/run/php/php7.4-fpm.sock{{< /blue >}} 去解析，之後 nginx 設定裡如果有 php 的部分，都要引入這一塊內容，因此寫成 snippets 會比較方便，注意{{< red >}}如果不是裝 7.4 版的 php、php-fpm，要把最後一行的 sock 版本改掉。{{< /red >}}
+這段內容就是將 php 檔送到 <span class="hl-blue">unix:/run/php/php7.4-fpm.sock</span> 去解析，之後 nginx 設定裡如果有 php 的部分，都要引入這一塊內容，因此寫成 snippets 會比較方便，注意<span class="hl-red">如果不是裝 7.4 版的 php、php-fpm，要把最後一行的 sock 版本改掉。</span>
 
 
 ## WordPress 的 nginx conf 檔
 
-將下面的設定檔依自己的需求，放到 {{< blue >}}/etc/nginx/conf.d/{{< /blue >}} 裡面即可
+將下面的設定檔依自己的需求，放到 <span class="hl-blue">/etc/nginx/conf.d/</span> 裡面即可
 
 ```nginx
 server{
@@ -243,7 +243,7 @@ server{
 }
 ```
 
-{{< blue >}}location ~ .php${}{{< /blue >}} 這段裡面 include 了剛才寫好的 php.conf，全部的意思就是將 root 底下所有檔名為 php 結尾的檔案都要使用 php.conf 裡的設定，也就是送往 php-fpm 做解析，雖然 php.conf 裡的內容我們也可以直接貼到這段裡面，不過如果之後想針對其它後綴的網址做特別的處理，直接 include 一個檔案會比每次都重貼一大段來的簡潔。
+<span class="hl-blue">location ~ .php${}</span> 這段裡面 include 了剛才寫好的 php.conf，全部的意思就是將 root 底下所有檔名為 php 結尾的檔案都要使用 php.conf 裡的設定，也就是送往 php-fpm 做解析，雖然 php.conf 裡的內容我們也可以直接貼到這段裡面，不過如果之後想針對其它後綴的網址做特別的處理，直接 include 一個檔案會比每次都重貼一大段來的簡潔。
 
 * * *
 

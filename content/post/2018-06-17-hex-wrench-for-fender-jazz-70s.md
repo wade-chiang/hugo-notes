@@ -14,7 +14,7 @@ Fender 70s 的 bass 有幾個零件是比較不一樣的，在入手 1976 Jazz b
 
 特別的是在美國很多尺寸是習慣用英制的，反而歐洲現在是公制居多，因此像 fender 的一些零件、size 都是使用英制來表示。
 
-我這把 fender jazz bass 1976 的琴頸調整是使用子彈型的 truss rod nut，原名為 {{< blue >}}Bullet Truss Rod Nut{{< /blue >}} 而要調整它要使用的是 {{< blue >}}1/8 英吋{{< /blue >}}的六角扳手 ( 1/8″ hex key )
+我這把 fender jazz bass 1976 的琴頸調整是使用子彈型的 truss rod nut，原名為 <span class="hl-blue">Bullet Truss Rod Nut</span> 而要調整它要使用的是 <span class="hl-blue">1/8 英吋</span>的六角扳手 ( 1/8″ hex key )
 
 ![](https://image.wadeism.net/fender70head.jpg)
 ###### yeahmansguitars.com
@@ -36,9 +36,9 @@ AMERICAN ELITE JAZZ BASS
 
 ![](https://image.wadeism.net/70s_style_micro_tilt.jpg)
 
-就阿達表示，三顆螺絲的這種相對比較不穩，但多了一個很特別的東西叫 {{< blue >}}Micro Neck Adjust{{< /blue >}}，也就是最下面那顆小螺絲，這顆小螺絲的功用在於透過螺絲的深淺來調整琴頸與琴的角度，來改變手感或 tone，也因此琴頸的穩定度就會差一點，但如果想要 Marcus Miller 的 tone 就一定得挑這種的琴，有用 Micro Neck Adjust 的琴大概是 1976 ~ 1980 年之間的 Fender。
+就阿達表示，三顆螺絲的這種相對比較不穩，但多了一個很特別的東西叫 <span class="hl-blue">Micro Neck Adjust</span>，也就是最下面那顆小螺絲，這顆小螺絲的功用在於透過螺絲的深淺來調整琴頸與琴的角度，來改變手感或 tone，也因此琴頸的穩定度就會差一點，但如果想要 Marcus Miller 的 tone 就一定得挑這種的琴，有用 Micro Neck Adjust 的琴大概是 1976 ~ 1980 年之間的 Fender。
 
-這個裝置的全名為「{{< blue >}}70S-STYLE MICRO TILT{{< /blue >}}」使用 {{< blue >}}3/32{{< /blue >}} 英吋的六角扳手 ( 3/32” Allen wrench )
+這個裝置的全名為「<span class="hl-blue">70S-STYLE MICRO TILT</span>」使用 <span class="hl-blue">3/32</span> 英吋的六角扳手 ( 3/32” Allen wrench )
 
 雖然也是有人使用差不多 size 的公制 hex key，但英制的其實也不會難找，當然也可以像我一樣買一組 size超多的六角扳手，算是比較懶人的方法…
 

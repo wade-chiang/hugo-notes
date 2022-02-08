@@ -30,7 +30,7 @@ I Love Music
 ```
 
 如果只想 print 出特定幾個字，可以在 echo 的後面加上一些參數  
-格式為：{{< blue >}}echo ${VAR:Start:Count}{{< /blue >}}
+格式為：<span class="hl-blue">echo ${VAR:Start:Count}</span>
 
 ```bash
 echo ${demo:2}

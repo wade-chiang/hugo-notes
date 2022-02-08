@@ -143,7 +143,7 @@ icmp-blocks:
 rich rules:
 ```
 
-看到 {{< blue >}}masquerade{{< /blue >}} 這個選項是 no 的時候，突然想到 docker 算是虛擬環境，並且會建立一個自己的 interface，但它的網路流量終究要從實體的網路介面出去。之前我在架設 OpenVPN 與 WireGuard 時，它們也都是有自己的 interface 再透過實體的網卡出去，與 docker 的網路環境是有點類似的，而在架 VPN 的時候，masquerade 這個選項是一定要打開的，因此我試著把 masquerade 打開
+看到 <span class="hl-blue">masquerade</span> 這個選項是 no 的時候，突然想到 docker 算是虛擬環境，並且會建立一個自己的 interface，但它的網路流量終究要從實體的網路介面出去。之前我在架設 OpenVPN 與 WireGuard 時，它們也都是有自己的 interface 再透過實體的網卡出去，與 docker 的網路環境是有點類似的，而在架 VPN 的時候，masquerade 這個選項是一定要打開的，因此我試著把 masquerade 打開
 
 ```bash
 sudo firewall-cmd --add-masquerade --permanent && sudo firewall-cmd --reload

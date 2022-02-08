@@ -34,7 +34,7 @@ tmpfs           7.9G     0  7.9G   0% /sys/fs/cgroup
 /dev/sda1       511M  3.5M  508M   1% /boot/efi
 ```
 
-{{< green >}}/dev/shm 這個目錄就是 Linux 預設 ramdisk 的位置{{< /green >}}，這個分區的 Size 7.9G 也剛好是 16G 記憶體的一半。進去這個目錄看，會發現已經有很多的暫存檔放在這裡了，如果試著丟一些檔案在這裡，每次重開機過後檔案都會消失，因此也可以確定這個目錄就是 ramdisk。
+<span class="hl-green">/dev/shm 這個目錄就是 Linux 預設 ramdisk 的位置</span>，這個分區的 Size 7.9G 也剛好是 16G 記憶體的一半。進去這個目錄看，會發現已經有很多的暫存檔放在這裡了，如果試著丟一些檔案在這裡，每次重開機過後檔案都會消失，因此也可以確定這個目錄就是 ramdisk。
 
 雖然 /dev/shm 預設是實體記憶體的一半大小，但不代表你的電腦永遠只有一半的記憶體可用。基本上當沒有用到 /dev/shm 的時候，系統還是會儘量的使用實體記憶體，並不會為了 ramdisk 而保留一半的記憶體不去使用。只是當 ramdisk 裡塞好塞滿的話，系統就會開始使用 SWAP，如此一來效能就會有所打折，因此建議儘量不要把 /dev/shm 裡塞到太滿，除非實體記憶體真的夠大。
 
@@ -106,7 +106,7 @@ sudo ln -s /etc/init.d/ramdisk.sh /etc/rcS.d/S50_ramdisk.sh
 ```
 
 \
-在 /etc/rcS.d/ 裡的 script 都會在開機時自動處理，{{< red >}}S 開頭的檔案會自動執行{{< /red >}}，而 {{< red >}}K 開頭的檔案則會停止{{< /red >}}，因此這邊的檔名取作 S50_ramdisk.sh 如果改成 K50_ramdisk.sh 的話就不會自動執行了，另外後面的數字則是決定執行的順序，在 /etc/rcS.d 資料夾中的檔案，若檔名數字越小則越早被執行。
+在 /etc/rcS.d/ 裡的 script 都會在開機時自動處理，<span class="hl-red">S 開頭的檔案會自動執行</span>，而 <span class="hl-red">K 開頭的檔案則會停止</span>，因此這邊的檔名取作 S50_ramdisk.sh 如果改成 K50_ramdisk.sh 的話就不會自動執行了，另外後面的數字則是決定執行的順序，在 /etc/rcS.d 資料夾中的檔案，若檔名數字越小則越早被執行。
 
 
 ### After Ubuntu 15.04

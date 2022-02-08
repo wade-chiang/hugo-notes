@@ -25,17 +25,17 @@ caution: filename not matched:  b.zip
 caution: filename not matched:  c.zip
 ```
 
-不過從上面可以看到，使用 {{< blue >}}unzip *.zip{{< /blue >}} 來解壓縮只會顯示 {{< red >}}filename not matched{{< /red >}}
+不過從上面可以看到，使用 <span class="hl-blue">unzip *.zip</span> 來解壓縮只會顯示 <span class="hl-red">filename not matched</span>
 
 \
-這是因為對 unzip 而言，{{< blue >}}unzip *.zip{{< /blue >}} 的意思是指：
+這是因為對 unzip 而言，<span class="hl-blue">unzip *.zip</span> 的意思是指：
 
 
 ```bash
 unzip a.zip b.zip c.zip
 ```
 
-這段指令解釋為：{{< red >}}將 a.zip 這個壓縮檔裡面的 b.zip 與 c.zip 給解壓出來{{< /red >}}，因此會出現 b.zip 與 c.zip filename not matched
+這段指令解釋為：<span class="hl-red">將 a.zip 這個壓縮檔裡面的 b.zip 與 c.zip 給解壓出來</span>，因此會出現 b.zip 與 c.zip filename not matched
 
 如果想要用 wildcard 字元來解壓縮，必須在檔案的前後用引號包起來，單引號或雙引號皆可
 

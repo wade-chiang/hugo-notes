@@ -17,16 +17,16 @@ Wine 的設定中，可以針對想要執行的程式來安裝所需的函式庫
 
 如果我們有很多種程式想執行，而且每個程式都有它自己的特殊需求，例如有的遊戲需要裝 DirectX 9，有的遊戲需要裝日文，有的又是正體中文，這時候我們就可以在 Wine 上面建立多重環境，針對不同的遊戲使用專屬的 Wine 容器來執行
 
-本次的系統環境為 {{< green >}}Ubuntu 20.04.1{{< /green >}}
+本次的系統環境為 <span class="hl-green">Ubuntu 20.04.1</span>
 
 
 ## 建立 Wine prefix
 
 多重環境的作用方式就是在 Wine 執行時指定 prefix 名稱，每個 prefix 會連結到屬於它的 Wine 設定，也代表一個獨立的容器。
 
-在上一篇文章中有提過，初次執行 Wine 的時候，它會建立一個初始化的資料夾 {{< blue >}}~/.wine{{< /blue >}}，這個 ~/.wine 裡面包含 Wine 的環境資料、設定與所需的檔案、函式庫，還有 C:\ 之類的。
+在上一篇文章中有提過，初次執行 Wine 的時候，它會建立一個初始化的資料夾 <span class="hl-blue">~/.wine</span>，這個 ~/.wine 裡面包含 Wine 的環境資料、設定與所需的檔案、函式庫，還有 C:\ 之類的。
 
-從這邊就可以看得出來，只要我們新增幾個類似 {{< blue >}}~/.wine{{< /blue >}} 的資料夾，並讓程式執行時使用指定路徑的設定就可以了，建立的方法如下：
+從這邊就可以看得出來，只要我們新增幾個類似 <span class="hl-blue">~/.wine</span> 的資料夾，並讓程式執行時使用指定路徑的設定就可以了，建立的方法如下：
 
 \
 新增 wineprefix
@@ -50,14 +50,14 @@ wine: created the configuration directory '/home/wade/.wine-jpn'
 0012:err:ole:get_local_server_stream Failed: 80004002
 ```
 
-執行 {{< blue >}}winecfg{{< /blue >}} 後，wine 就會建立 {{< blue >}}~/.wine-jpn{{< /blue >}} 這個資料夾，並且再一次的進行初始化，新的設定會建在 {{< blue >}}~/.wine-jpn{{< /blue >}} 裡面，這時候就可以用它來安裝程式所需的日文環境，並且不會影響到預設的環境
+執行 <span class="hl-blue">winecfg</span> 後，wine 就會建立 <span class="hl-blue">~/.wine-jpn</span> 這個資料夾，並且再一次的進行初始化，新的設定會建在 <span class="hl-blue">~/.wine-jpn</span> 裡面，這時候就可以用它來安裝程式所需的日文環境，並且不會影響到預設的環境
 
 建好之後，我們照平常的方法使用 wine 來執行程式，就會是在 wine-jpn 這個容器下了
 
 
 ## 切換 Wine prefix
 
-如果要切換回預設的 prefix {{< blue >}}~/.wine{{< /blue >}}，只要將 {{< blue >}}WINEPREFIX{{< /blue >}} 變數給取消即可
+如果要切換回預設的 prefix <span class="hl-blue">~/.wine</span>，只要將 <span class="hl-blue">WINEPREFIX</span> 變數給取消即可
 
 ```bash
 unset WINEPREFIX
@@ -90,9 +90,9 @@ WINEARCH=win32 WINEPREFIX=~/.wine_32bit winecfg
 # wine64：64 位元
 ```
 
-上面的指令會建立 prefix，路徑為：{{< blue >}}~/.wine_32bit{{< /blue >}}
+上面的指令會建立 prefix，路徑為：<span class="hl-blue">~/.wine_32bit</span>
 
-建好之後，執行程式時只要指定 prefix 就可以，{{< blue >}}WINEARCH{{< /blue >}} 這個變數可以不用再指定，因為 {{< blue >}}~/.wine_32bit{{< /blue >}} 本身就是 32 位元的架構了
+建好之後，執行程式時只要指定 prefix 就可以，<span class="hl-blue">WINEARCH</span> 這個變數可以不用再指定，因為 <span class="hl-blue">~/.wine_32bit</span> 本身就是 32 位元的架構了
 
 
 ## 心得

@@ -24,9 +24,9 @@ tags:
 
 ## 環境說明
 
-* {{< green >}}{{< mono >}}User{{< /green >}}{{< /mono >}}：192.168.199.1
-* {{< green >}}{{< mono >}}Nginx{{< /green >}}{{< /mono >}}：172.17.0.1
-* {{< green >}}{{< mono >}}Tomcat{{< /green >}}{{< /mono >}}：172.17.0.2
+* <span class="hl-green mono">User</span>：192.168.199.1
+* <span class="hl-green mono">Nginx</span>：172.17.0.1
+* <span class="hl-green mono">Tomcat</span>：172.17.0.2
 
 ## 查看 Tomcat access log
 
@@ -74,13 +74,13 @@ server {
 }
 ```
 
-在 {{< blue >}}proxy_set_header{{< /blue >}} 中，我們賦予了幾種 IP 變數到 HTTP 的 header 裡
+在 <span class="hl-blue">proxy_set_header</span> 中，我們賦予了幾種 IP 變數到 HTTP 的 header 裡
 
-{{< blue >}}X-Real-IP{{< /blue >}}、{{< blue >}}X-Forwarded-For{{< /blue >}}、{{< blue >}}Forwarded{{< /blue >}} 這些就是 HTTP 的 header
+<span class="hl-blue">X-Real-IP</span>、<span class="hl-blue">X-Forwarded-For</span>、<span class="hl-blue">Forwarded</span> 這些就是 HTTP 的 header
 
-{{< blue >}}$remote_addr{{< /blue >}}、{{< blue >}}$proxy_add_x_forwarded_for{{< /blue >}} 這些變數則代表 IP
+<span class="hl-blue">$remote_addr</span>、<span class="hl-blue">$proxy_add_x_forwarded_for</span> 這些變數則代表 IP
 
-但 {{< blue >}}$proxy_add_x_forwarded_for{{< /blue >}} 這類的變數是 Nginx 的 IP 還是用戶端的 IP，並沒有一定，必須看網路的連線過程，是否有經過 CDN、中間的 header 有沒有再變過之類的，這部分頗為複雜，想深入了解的話可以搜尋有關 HTTP header 的資料
+但 <span class="hl-blue">$proxy_add_x_forwarded_for</span> 這類的變數是 Nginx 的 IP 還是用戶端的 IP，並沒有一定，必須看網路的連線過程，是否有經過 CDN、中間的 header 有沒有再變過之類的，這部分頗為複雜，想深入了解的話可以搜尋有關 HTTP header 的資料
 
 總之，我們就先以上面的設定來做測試
 
@@ -94,7 +94,7 @@ vi /apache-tomcat-9.0.37/conf/server.xml
 ```
 
 \
-在 xml 檔的最後可以看到一段 {{< blue >}}pattern={{< /blue >}}，這邊就是更改 log 格式的地方
+在 xml 檔的最後可以看到一段 <span class="hl-blue">pattern=</span>，這邊就是更改 log 格式的地方
 
 
 ```xml
@@ -150,11 +150,11 @@ log 已顯示正確的使用者 ip，並且調成比較多資訊的格式！
 
 ## 心得
 
-修改 Tomcat log 格式時，{{< blue >}}pattern="%{FORWARDED}i{{< /blue >}} 這邊就是指將 FORWARDED 的 header 值放入格式中，當然也可以改其它 header 值例如 {{< blue >}}pattern="%{X-FORWARDED-FOR}i{{< /blue >}} 之類的，看自己要怎麼用。
+修改 Tomcat log 格式時，<span class="hl-blue">pattern="%{FORWARDED}i</span> 這邊就是指將 FORWARDED 的 header 值放入格式中，當然也可以改其它 header 值例如 <span class="hl-blue">pattern="%{X-FORWARDED-FOR}i</span> 之類的，看自己要怎麼用。
 
-FORWARDED 的 header 值是什麼？這部分是由前端的 Nginx 設定檔所決定。在本例中，前端 Nginx 設定了 Forwarded 的值為 {{< blue >}}$proxy_add_x_forwarded_for{{< /blue >}}，至於 {{< blue >}}$proxy_add_x_forwarded_for{{< /blue >}} 又是指什麼 ip，就要看網路的連線過程了。
+FORWARDED 的 header 值是什麼？這部分是由前端的 Nginx 設定檔所決定。在本例中，前端 Nginx 設定了 Forwarded 的值為 <span class="hl-blue">$proxy_add_x_forwarded_for</span>，至於 <span class="hl-blue">$proxy_add_x_forwarded_for</span> 又是指什麼 ip，就要看網路的連線過程了。
 
-由於這次的環境並不複雜，所以變數 {{< blue >}}$remote_addr{{< /blue >}} 與 {{< blue >}}$proxy_add_x_forwarded_for{{< /blue >}} 裡面都是使用者的 ip 192.168.199.1，因此本例中的 tomcat log 格式，不管是 {{< blue >}}pattern="%{FORWARDED}i{{< /blue >}}、{{< blue >}}pattern="%{X-FORWARDED-FOR}i{{< /blue >}}、{{< blue >}}pattern="%{X-REAL-IP}i{{< /blue >}}，都可以取得正確的 ip，但如果是其它複雜一點的環境就得多做幾次測試了。
+由於這次的環境並不複雜，所以變數 <span class="hl-blue">$remote_addr</span> 與 <span class="hl-blue">$proxy_add_x_forwarded_for</span> 裡面都是使用者的 ip 192.168.199.1，因此本例中的 tomcat log 格式，不管是 <span class="hl-blue">pattern="%{FORWARDED}i</span>、<span class="hl-blue">pattern="%{X-FORWARDED-FOR}i</span>、<span class="hl-blue">pattern="%{X-REAL-IP}i</span>，都可以取得正確的 ip，但如果是其它複雜一點的環境就得多做幾次測試了。
 
 * * *
 

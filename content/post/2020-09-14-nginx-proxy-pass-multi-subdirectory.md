@@ -21,8 +21,8 @@ tags:
 
 ## 環境說明
 
-* Proxy Server：{{< green >}}192.168.199.171{{< /green >}}
-* Web Server：{{< green >}}192.168.199.172{{< /green >}}
+* Proxy Server：<span class="hl-green">192.168.199.171</span>
+* Web Server：<span class="hl-green">192.168.199.172</span>
 * 後端網站路徑：  
 /www/website/aoi/  
 /www/website/miyazaki/
@@ -185,9 +185,9 @@ server {
 
 ![](https://image.wadeism.net/reproxym02.png)
 
-可以看到網址連到 {{< green >}}192.168.199.171{{< /green >}}，但連線後顯示的是 {{< green >}}192.168.199.172{{< /green >}} 上的網頁檔，表示反向代理設定成功！
+可以看到網址連到 <span class="hl-green">192.168.199.171</span>，但連線後顯示的是 <span class="hl-green">192.168.199.172</span> 上的網頁檔，表示反向代理設定成功！
 
 
 ## 心得
 
-只要網站資料夾的目錄名稱與 log 名稱都用到域名來命名，nginx config 就可以大量的使用 {{< blue >}}server_name{{< /blue >}} 變數，每個不同 config 只要更改 server_name 即可，在佈署多個網站時可以簡化很多流程。
+只要網站資料夾的目錄名稱與 log 名稱都用到域名來命名，nginx config 就可以大量的使用 <span class="hl-blue">server_name</span> 變數，每個不同 config 只要更改 server_name 即可，在佈署多個網站時可以簡化很多流程。

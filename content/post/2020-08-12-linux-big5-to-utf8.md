@@ -36,7 +36,7 @@ work.txt:         ISO-8859 text
 翻譯 readme.txt:   ISO-8859 text
 ```
 
-使用 {{< blue >}}file{{< /blue >}} 指令可以看到檔案的格式，這邊顯示 {{< blue >}}ISO-8859{{< /blue >}} 的就是 {{< blue >}}BIG5{{< /blue >}} 編碼的檔案（也可以用 {{< blue >}}cat{{< /blue >}} 看一下檔案內容，有亂碼的話就是了）
+使用 <span class="hl-blue">file</span> 指令可以看到檔案的格式，這邊顯示 <span class="hl-blue">ISO-8859</span> 的就是 <span class="hl-blue">BIG5</span> 編碼的檔案（也可以用 <span class="hl-blue">cat</span> 看一下檔案內容，有亂碼的話就是了）
 
 \
 接著將這幾個 BIG5 的檔案存成一個列表，供等一下的轉檔使用
@@ -46,7 +46,7 @@ file *.txt | grep "ISO-8859" | awk 'BEGIN {FS=": "};{print $1}' > list
 ```
 
 \
-使用 while loop 與 {{< blue >}}iconv{{< /blue >}} 將列表中的檔案轉換成 UTF-8 格式
+使用 while loop 與 <span class="hl-blue">iconv</span> 將列表中的檔案轉換成 UTF-8 格式
 
 ```bash
 while read file; 
@@ -126,7 +126,7 @@ work.txt:         UTF-8 Unicode text
 
 ## 解決「no line terminators」的問題
 
-一般的文字檔在每一行的最後都會有個分行符號，如果在檔案的最末端沒有分行符號的話，用 {{< blue >}}cat{{< /blue >}} 查看檔案後，shell prompt 不會顯示在下一行，而是會接在查看的檔案後面，從上面的執行結果可以看到 a.txt 與 b.txt 顯示了 {{< red >}}with no line terminators{{< /red >}}，接著我們用 {{< blue >}}cat -A{{< /blue >}} 來查看：
+一般的文字檔在每一行的最後都會有個分行符號，如果在檔案的最末端沒有分行符號的話，用 <span class="hl-blue">cat</span> 查看檔案後，shell prompt 不會顯示在下一行，而是會接在查看的檔案後面，從上面的執行結果可以看到 a.txt 與 b.txt 顯示了 <span class="hl-red">with no line terminators</span>，接著我們用 <span class="hl-blue">cat -A</span> 來查看：
 
 ```bash
 cat -A b.txt
@@ -138,7 +138,7 @@ cat -A b.txt
 This is file b.txt Enjoy!!wade@ubuntu:~$
 ```
 
-可以看到 {{< blue >}}wade@ubuntu:~${{< /blue >}} 這個 shell prompt 果然沒有出現在下一行
+可以看到 <span class="hl-blue">wade@ubuntu:~$</span> 這個 shell prompt 果然沒有出現在下一行
 
 因此最後我們再把 line terminator 給加回來，這樣文字檔案的轉檔與整理就算是告一段落了（雖然這個步驟不加也不影響）
 

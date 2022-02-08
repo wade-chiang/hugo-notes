@@ -36,7 +36,7 @@ client 14: 'Midi Through' [type=內核]
     0 'Midi Through Port-0'
 ```
 
-{{< blue >}}aconnect -o{{< /blue >}} 可以查看目前 ALSA 音訊的 output 狀態，這邊只是先看一次狀態，之後設定完再來做比較。
+<span class="hl-blue">aconnect -o</span> 可以查看目前 ALSA 音訊的 output 狀態，這邊只是先看一次狀態，之後設定完再來做比較。
 
 
 ## 測試遊戲音樂
@@ -61,8 +61,8 @@ sudo apt install timidity
 timidity -iA -Os
 ```
 
-* {{< green >}}{{< mono >}}-iA{{< /green >}}{{< /mono >}}：以 ALSA sequencer client 的方式啟動 timidity
-* {{< green >}}{{< mono >}}-Os{{< /green >}}{{< /mono >}}：將音訊輸出到 ALSA
+* <span class="hl-green mono">-iA</span>：以 ALSA sequencer client 的方式啟動 timidity
+* <span class="hl-green mono">-Os</span>：將音訊輸出到 ALSA
 
 通常 Ubuntu 裡預設是用 ALSA 處理音訊，如果改用 JACK 或 PortAudio 的話就去 timidity 的 man page 查一下相應的參數
 

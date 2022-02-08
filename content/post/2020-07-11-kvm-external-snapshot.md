@@ -18,7 +18,7 @@ external snapshot 的機制與 internal 有很大的不同。internal snapshot �
 
 舉例來說，原始 image 就像一張白紙，external snapshot 會做出一張大小相同的透明紙並且疊在原本的白紙上，我可以恣意的加很多張透明紙，或是在透明紙上亂畫都不會影響到原本的白紙，等到我想還原了，把透明片拿掉就是了，但如果畫完的作品很滿意，我也可以把透明片與白紙永久的黏在一起。
 
-external snapshot 的好處在於快速、不易出錯，支援的 image 格式不限於 qcow2（raw、qcow、vmdk 皆可），但 {{< red >}}external snapshot 最大的缺點在於 libvirt 對它的支援還不是很完整，雖然可以使用 virsh 來建立 snapshot，但無法用指令還原{{< /red >}}。要還原 external snapshot 目前唯一的方法只有去手動改虛擬機的掛載磁碟，將 disk 從 overlay 改回原本的 image。
+external snapshot 的好處在於快速、不易出錯，支援的 image 格式不限於 qcow2（raw、qcow、vmdk 皆可），但 <span class="hl-red">external snapshot 最大的缺點在於 libvirt 對它的支援還不是很完整，雖然可以使用 virsh 來建立 snapshot，但無法用指令還原</span>。要還原 external snapshot 目前唯一的方法只有去手動改虛擬機的掛載磁碟，將 disk 從 overlay 改回原本的 image。
 
 
 ## 建立  external snapshot
@@ -52,8 +52,8 @@ sudo virsh snapshot-create-as \
 --atomic
 ```
 
-* {{< green >}}{{< mono >}}--disk-only{{< /green >}}{{< /mono >}}：單純對 disk image 做 snapshot
-* {{< green >}}{{< mono >}}--quiesce{{< /green >}}{{< /mono >}}：如果沒有加 quiesce 選項，在做 snapshot 過程中一些記憶體正要寫入磁碟的資料將不會被保存下來，且建 snapshot 過程中的一些變動也可能會毀損，因此該選項一定要加上！
+* <span class="hl-green mono">--disk-only</span>：單純對 disk image 做 snapshot
+* <span class="hl-green mono">--quiesce</span>：如果沒有加 quiesce 選項，在做 snapshot 過程中一些記憶體正要寫入磁碟的資料將不會被保存下來，且建 snapshot 過程中的一些變動也可能會毀損，因此該選項一定要加上！
 
 \
 檢視虛擬機儲存設備的掛載狀況
@@ -86,7 +86,7 @@ virsh snapshot-create-as \
 --atomic
 ```
 
-* {{< green >}}{{< mono >}}--diskspec{{< /green >}}{{< /mono >}}：指定 snapshot 的目錄磁碟（vda）、類型（external）、存放路徑與檔名（/kvm/test/test.take-2）
+* <span class="hl-green mono">--diskspec</span>：指定 snapshot 的目錄磁碟（vda）、類型（external）、存放路徑與檔名（/kvm/test/test.take-2）
 
 \
 檢視虛擬機的 image 掛載狀況
@@ -281,9 +281,9 @@ sudo rm /kvm/test/test.take2
 
 一般我們建 snapshot 多是為了測試方便，如果確定測試沒問題的話，可以將 external snapshot 與原始 backing file 合併。
 
-從書上看到{{< red >}}建議是盡量不要保留 snapshot ，用不到或測試 ok 的 snapshot 要嘛刪掉要嘛就是合併回去，snapshot 的意義應該是用來保存一個時間下的狀態，讓我們方便快速測試與還原，但不要將 snapshot 當作是一種備份的手段{{< /red >}}（這跟 Cloud 上 snapshot 的意義不太一樣）
+從書上看到<span class="hl-red">建議是盡量不要保留 snapshot ，用不到或測試 ok 的 snapshot 要嘛刪掉要嘛就是合併回去，snapshot 的意義應該是用來保存一個時間下的狀態，讓我們方便快速測試與還原，但不要將 snapshot 當作是一種備份的手段</span>（這跟 Cloud 上 snapshot 的意義不太一樣）
 
-合併 snapshot 與 backing file 也有兩種不同的模式：{{< blue >}}blockcommit{{< /blue >}} 與 {{< blue >}}blockpull{{< /blue >}}
+合併 snapshot 與 backing file 也有兩種不同的模式：<span class="hl-blue">blockcommit</span> 與 <span class="hl-blue">blockpull</span>
 
 ### 使用 blockcommit 將 snapshop 合併回 backing file
 

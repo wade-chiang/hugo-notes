@@ -15,7 +15,7 @@ tags:
 如果用過 Mac 的人應該都知道 expose 這個功能，不僅看起來很帥，實際上也真的蠻方便的。Linux 上當然也有，目前 Gnome 2 預設就開啟了 expose 的功能，只要滑鼠游標移到最左上角就會將所有的視窗縮小並排列在螢幕上。但如果不是使用 Gnome 2 的人一樣可以安裝 Skippy-XD 來用這項功能。
 
 {{< youtube dNkkCD2dfG4 >}}
-{{< center >}}expose in Mac OSX{{< /center >}}
+<div style="text-align: center">expose in Mac OSX</div>
 
 Skippy-XD 可以使用快捷鍵觸發，或是搭配每個 Desktop Environment 的 Hot Corner 套件，透過將滑鼠游標移到某個角落來觸發，
 

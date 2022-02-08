@@ -16,12 +16,12 @@ tags:
 記得以前在課堂上，老師介紹過兩種免費的方法來放我們的作品，Dropbox 的 Kissr 與 GitHub，一開始我是用 Kissr，不過後來覺得 GitHub 可以學比較多東西，所以就改用 GitHub 了，下面就來介紹一下怎麼使用 GitHub 來當網頁空間
 
 \
-首先當然是要有一個 GitHub 的帳號，建立帳號後，點選主頁面右上角的「{{< blue >}}+{{< /blue >}}」，並選擇 {{< blue >}}New repository{{< /blue >}}
+首先當然是要有一個 GitHub 的帳號，建立帳號後，點選主頁面右上角的「<span class="hl-blue">+</span>」，並選擇 <span class="hl-blue">New repository</span>
 
 ![](https://image.wadeism.net/github01.png)
 
 \
-幫 repository 取個名，本範例為：「 homepage 」，選 {{< blue >}}Public{{< /blue >}}（ Private 要收費），{{< blue >}}Initialize this repository with a README{{< /blue >}} 可打勾，會產生一個 readme 檔案可以編輯裡面的內容（授權方式亦可自選）
+幫 repository 取個名，本範例為：「 homepage 」，選 <span class="hl-blue">Public</span>（ Private 要收費），<span class="hl-blue">Initialize this repository with a README</span> 可打勾，會產生一個 readme 檔案可以編輯裡面的內容（授權方式亦可自選）
 
 ![](https://image.wadeism.net/github02.png)
 
@@ -59,7 +59,7 @@ git clone https://github.com/account/homepage.git
 
 ![](https://image.wadeism.net/github03.png)
 
-中間有個綠色的 「{{< blue >}}Clone or download{{< /blue >}}」，位址就在這邊
+中間有個綠色的 「<span class="hl-blue">Clone or download</span>」，位址就在這邊
 
 \
 Git_Project 裡會多出一個「 homepage 」的資料夾，這個資料夾就等於我們網站的根目錄，我們可以把所有的網頁相關檔案都丟進 homepage 裡
@@ -85,15 +85,15 @@ index.html README.md
 ```
 
 \
-在 GitHub 中，只有 {{< blue >}}master{{< /blue >}}、{{< blue >}}gh-pages{{< /blue >}} 這兩個 branch 與 master 底下的 /doc 可以當作靜態網頁空間來使用，這裡我們使用 {{< blue >}}gh-pages{{< /blue >}}，順便可以瞭解切換專案的方法
+在 GitHub 中，只有 <span class="hl-blue">master</span>、<span class="hl-blue">gh-pages</span> 這兩個 branch 與 master 底下的 /doc 可以當作靜態網頁空間來使用，這裡我們使用 <span class="hl-blue">gh-pages</span>，順便可以瞭解切換專案的方法
     
 ```git
 git checkout --orphan gh-pages
 ```
 
-* {{< green >}}{{< mono >}}checkout{{< /green >}}{{< /mono >}}：切換專案
-* {{< green >}}{{< mono >}}orphan{{< /green >}}{{< /mono >}}：獨立出來的意思
-* {{< green >}}{{< mono >}}gh-pages{{< /green >}}{{< /mono >}}：github 裡想放網頁一定只能放在這個專案名稱中
+* <span class="hl-green mono">checkout</span>：切換專案
+* <span class="hl-green mono">orphan</span>：獨立出來的意思
+* <span class="hl-green mono">gh-pages</span>：github 裡想放網頁一定只能放在這個專案名稱中
 
 \
 接下來開始進行把新增檔案上傳回 GitHub 的動作
@@ -115,7 +115,7 @@ git config --global user.email "YourName@gmail.com"
 git add -A
 ```
 
-* {{< green >}}{{< mono >}}-A{{< /green >}}{{< /mono >}}：選取全部的檔案
+* <span class="hl-green mono">-A</span>：選取全部的檔案
 
 \
 也可以使用下面的指令
@@ -141,10 +141,10 @@ git push origin gh-pages
 \
 git push 會要求輸入github的帳號密碼，輸入完成後就會正式上傳
 
-網址為：{{< blue >}}http://account.github.io/homepage/index.html{{< /blue >}}
+網址為：<span class="hl-blue">http://account.github.io/homepage/index.html</span>
 
 \
-回到 GitHub 的頁面中，選點「{{< blue >}}Branch{{< /blue >}}」可以看到我們剛才新建的 {{< blue >}}gh-pages{{< /blue >}}，點選它並切換過去
+回到 GitHub 的頁面中，選點「<span class="hl-blue">Branch</span>」可以看到我們剛才新建的 <span class="hl-blue">gh-pages</span>，點選它並切換過去
 
 ![](https://image.wadeism.net/github04.png)
 

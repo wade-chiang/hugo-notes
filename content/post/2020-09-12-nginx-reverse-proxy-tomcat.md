@@ -70,11 +70,11 @@ ff02::2 ip6-allrouters:
 # 172.17.0.2 就是 tomcat container 的 ip
 ```
 
-接著在 host 上連 {{< blue >}}172.17.0.2:8080{{< /blue >}} 就可以看到 tomcat 頁面
+接著在 host 上連 <span class="hl-blue">172.17.0.2:8080</span> 就可以看到 tomcat 頁面
 
 ## 安裝 Nginx
 
-{{< blue >}}172.17.0.2{{< /blue >}} 是只能在本機上連的內部 ip，外部機器如果也想看到 Tomcat 可以用 Nginx 的反向代理來連線
+<span class="hl-blue">172.17.0.2</span> 是只能在本機上連的內部 ip，外部機器如果也想看到 Tomcat 可以用 Nginx 的反向代理來連線
 
 \
 首先安裝 Nginx 並啟動
@@ -103,7 +103,7 @@ sudo setsebool -P httpd_can_network_connect on
 
 ## Nginx 反向代理設定
 
-將 nginx 設定檔存到 {{< blue >}}/etc/nginx/conf.d/myTomcat.conf{{< /blue >}} 後再重啟 nginx 即可，針對不同的域名型態設定內容也會有所不同
+將 nginx 設定檔存到 <span class="hl-blue">/etc/nginx/conf.d/myTomcat.conf</span> 後再重啟 nginx 即可，針對不同的域名型態設定內容也會有所不同
 
 ### 使用子網域 http://tomcat.docker
 
@@ -124,8 +124,8 @@ server {
 }
 ```
 
-* {{< blue >}}proxy_pass{{< /blue >}} 會把 request 轉到 {{< blue >}}172.17.0.2:8080/{{< /blue >}}，結尾的 {{< red >}}/{{< /red >}} 不要漏掉
-* 幾個 {{< blue >}}proxy_set_header{{< /blue >}} 與反向代理沒有直接的關係，還沒有特殊需求時可以不用加，但這些設定會影響後端拿到的  header 變數。
+* <span class="hl-blue">proxy_pass</span> 會把 request 轉到 <span class="hl-blue">172.17.0.2:8080/</span>，結尾的 <span class="hl-red">/</span> 不要漏掉
+* 幾個 <span class="hl-blue">proxy_set_header</span> 與反向代理沒有直接的關係，還沒有特殊需求時可以不用加，但這些設定會影響後端拿到的  header 變數。
 
 ![](https://image.wadeism.net/nginxt01.png)
 
@@ -154,8 +154,8 @@ server {
 }
 ```
 
-* {{< blue >}}location /tomcat/{{< /blue >}} 這邊要記得在 tomcat 的結尾加上 {{< red >}}/{{< /red >}} ，不能寫成 {{< blue >}}/tomcat{{< /blue >}}
-* {{< blue >}}location /{{< /blue >}} 這段處理子目錄後面的路徑連結，如果沒有加的話，雖然首頁正常，但首頁上的連結點進去還是會失敗
+* <span class="hl-blue">location /tomcat/</span> 這邊要記得在 tomcat 的結尾加上 <span class="hl-red">/</span> ，不能寫成 <span class="hl-blue">/tomcat</span>
+* <span class="hl-blue">location /</span> 這段處理子目錄後面的路徑連結，如果沒有加的話，雖然首頁正常，但首頁上的連結點進去還是會失敗
 
 ![](https://image.wadeism.net/nginxt02.png)
 
@@ -194,7 +194,7 @@ server {
 }
 ```
 
-與前例差在使用了 {{< red >}}~*{{< /red >}} 來做出 case insensitive（無視大小寫）的功能，讓使用者打錯大小寫也可以連到
+與前例差在使用了 <span class="hl-red">~*</span> 來做出 case insensitive（無視大小寫）的功能，讓使用者打錯大小寫也可以連到
 
 ![](https://image.wadeism.net/nginxt05.png)
 

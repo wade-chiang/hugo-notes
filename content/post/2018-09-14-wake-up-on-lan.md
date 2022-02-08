@@ -135,8 +135,8 @@ $MAC_ADD $Hostname
 $MAC_ADD $IP_ADD
 ```
 
-* {{< blue >}}$MAC_ADD{{< /blue >}} 代表要被喚醒的電腦的 MAC 位置
-* {{< blue >}}$Hostname{{< /blue >}} 及 {{< blue >}}$IP_ADD{{< /blue >}} 則分別為你想用的機器名稱或 IP 位置，要用 Hostname 的話可以在 {{< blue >}}/etc/hosts{{< /blue >}} 裡先做設定
+* <span class="hl-blue">$MAC_ADD</span> 代表要被喚醒的電腦的 MAC 位置
+* <span class="hl-blue">$Hostname</span> 及 <span class="hl-blue">$IP_ADD</span> 則分別為你想用的機器名稱或 IP 位置，要用 Hostname 的話可以在 <span class="hl-blue">/etc/hosts</span> 裡先做設定
 
 Hostname 與 IP 可以擇一就好。
 

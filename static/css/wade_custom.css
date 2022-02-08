@@ -1,17 +1,17 @@
 /* HighLight Green */
-.highLG {
+.hl-green {
   color: #008080;
   background-color: #daf2f1;
 }
 
 /* HighLight Blue */
-.highLB {
+.hl-blue {
   color: #004A99;
   background-color: #d9e4f2;
 }
 
 /* HighLight Red */
-.highLR {
+.hl-red {
   color: #B7013A;
   background-color: #F6E4E4;
 }

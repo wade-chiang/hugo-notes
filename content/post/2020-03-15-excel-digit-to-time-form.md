@@ -22,11 +22,11 @@ tags:
 
 ## 輸入 4 位數字自動顯示為時間格式
 
-想要輸入 {{< blue >}}1500{{< /blue >}} 就自動變成 {{< blue >}}15:00{{< /blue >}}，只要在格子上按右鍵，點選「儲存格格式」
+想要輸入 <span class="hl-blue">1500</span> 就自動變成 <span class="hl-blue">15:00</span>，只要在格子上按右鍵，點選「儲存格格式」
 
 ![](https://image.wadeism.net/excel001.png)
 
-在左邊的「類別」中選擇「自訂」並在「類型」中填上：{{< blue >}}00":"00{{< /blue >}}
+在左邊的「類別」中選擇「自訂」並在「類型」中填上：<span class="hl-blue">00":"00</span>
 
 ![](https://image.wadeism.net/excel002.png)
 
@@ -84,7 +84,7 @@ SUM(D2:D9)
 
 ![](https://image.wadeism.net/excel009.png)
 
-左邊的類別選擇「自訂」，接著右邊的類型填入：{{< blue >}}[hh]:mm;@{{< /blue >}}
+左邊的類別選擇「自訂」，接著右邊的類型填入：<span class="hl-blue">[hh]:mm;@</span>
 
 ![](https://image.wadeism.net/excel010.png)
 
@@ -92,7 +92,7 @@ SUM(D2:D9)
 
 ![](https://image.wadeism.net/excel011.png)
 
-{{< red >}}本文可同時適用於 LibreOffice Calc 與 Google Sheet{{< /red >}}
+<span class="hl-red">本文可同時適用於 LibreOffice Calc 與 Google Sheet</span>
 
 * * *
 

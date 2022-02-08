@@ -38,7 +38,7 @@ runlevel
 1 3
 ```
 
-multi-user 也就是傳統上的 runlevel 3，而打 runlevel 指令所輸出的兩個數字是{{< blue >}}前一個 runlevel{{< /blue >}} 與 {{< blue >}}當前的 runlevel{{< /blue >}}，所以範例中看得出來系統目前是 runlevel 3，前一次則是 runlevel 1
+multi-user 也就是傳統上的 runlevel 3，而打 runlevel 指令所輸出的兩個數字是<span class="hl-blue">前一個 runlevel</span> 與 <span class="hl-blue">當前的 runlevel</span>，所以範例中看得出來系統目前是 runlevel 3，前一次則是 runlevel 1
 
 \
 將系統切換到一般的文字模式

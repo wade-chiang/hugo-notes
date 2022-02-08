@@ -42,7 +42,7 @@ docker run --rm -u $(id -u):$(id -g) -v $(pwd):/work mnuessler/pdftk
 mkdir ~/bin
 ```
 
-使用 {{< blue >}}echo $PATH{{< /blue >}}，查看 {{< blue >}}/home/user/bin{{< /blue >}} 是否有在 PATH 變數裡，沒有的話把下面的指令寫入 {{< blue >}}~/.bash_profile{{< /blue >}}
+使用 <span class="hl-blue">echo $PATH</span>，查看 <span class="hl-blue">/home/user/bin</span> 是否有在 PATH 變數裡，沒有的話把下面的指令寫入 <span class="hl-blue">~/.bash_profile</span>
 
 ```bash
 # User specific environment and startup programs
@@ -52,7 +52,7 @@ export PATH
 ```
 
 
-將下面這段指令存到 {{< blue >}}~/bin/pdftk{{< /blue >}}
+將下面這段指令存到 <span class="hl-blue">~/bin/pdftk</span>
 
 ```bash
 #!/bin/bash
@@ -60,7 +60,7 @@ export PATH
 docker run --rm -u $(id -u):$(id -g) -v $(pwd):/work mnuessler/pdftk "$@"
 ```
 
-給予 {{< blue >}}~/bin/pdftk{{< /blue >}} 執行權限，就可以在任何路徑底下執行 pdftk 指令了
+給予 <span class="hl-blue">~/bin/pdftk</span> 執行權限，就可以在任何路徑底下執行 pdftk 指令了
 
 ```bash
 chmod +x ~/bin/pdftk
@@ -85,8 +85,8 @@ pdftk demo.pdf dump_data | grep NumberOfPages
 pdftk demo.pdf burst output page-%03d.pdf
 ```
 
-* {{< green >}}{{< mono >}}page-{{< /green >}}{{< /mono >}}：檔名的前綴，可以自訂
-* {{< green >}}{{< mono >}}%03d{{< /green >}}{{< /mono >}}：數字排序長度，03d 表示第 1 頁的檔名會從 page-001.pdf 開始排序，02d 則表示從 page-01.pdf 開始，建議先用上面的指令查看總頁數來決定數字的長度
+* <span class="hl-green mono">page-</span>：檔名的前綴，可以自訂
+* <span class="hl-green mono">%03d</span>：數字排序長度，03d 表示第 1 頁的檔名會從 page-001.pdf 開始排序，02d 則表示從 page-01.pdf 開始，建議先用上面的指令查看總頁數來決定數字的長度
 
 \
 將資料夾底下的所有 pdf 檔合併成一個檔案

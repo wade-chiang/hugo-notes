@@ -61,9 +61,9 @@ The key's randomart image is:
 +----[SHA256]-----+
 ```
 
-{{< green >}}{{< mono >}}ssh-keygen -t rsa{{< /green >}}{{< /mono >}} 會指定使用 RSA 加密演算法來生成金鑰，金鑰預設名稱為 id_rsa 並且會放在使用者 home 目錄底下的 .ssh 目錄中，{{< red >}}如果會有很多組不同的金鑰配對的話，建議在第二步時自訂一個名稱，如本例中的 remote1{{< /red >}}，但路徑最好還是統一放在 ~/.ssh 裡面比較方便。
+<span class="hl-green mono">ssh-keygen -t rsa</span> 會指定使用 RSA 加密演算法來生成金鑰，金鑰預設名稱為 id_rsa 並且會放在使用者 home 目錄底下的 .ssh 目錄中，<span class="hl-red">如果會有很多組不同的金鑰配對的話，建議在第二步時自訂一個名稱，如本例中的 remote1</span>，但路徑最好還是統一放在 ~/.ssh 裡面比較方便。
 
-{{< green >}}{{< mono >}}Enter passphrase{{< /green >}}{{< /mono >}} 則是為這組金鑰再額外設定密碼，之後使用金鑰登入的話，就還是要再輸入這組密碼，算是加強防護，但也很麻煩，可視所需的安全性來設定。
+<span class="hl-green mono">Enter passphrase</span> 則是為這組金鑰再額外設定密碼，之後使用金鑰登入的話，就還是要再輸入這組密碼，算是加強防護，但也很麻煩，可視所需的安全性來設定。
 
 輸入完之後，會顯示這組 private key 與 public key 的路徑與 fingerprint，一組新的金鑰就完成了。
 
@@ -111,7 +111,7 @@ Last login: Sun Oct 14 21:18:17 2018 from gateway
 
 目前為止我們每次連線都要指定使用者名稱，還要記 ip 與使用的 key，有時候甚至還要使用不同的 port 來連線，有這麼多的東西要記，如果主機一多就更加頭痛，其實 ssh 有提供了一個設定檔讓我們把常用的主機與需要的參數都記下來，並且簡化連線的指令，下面就來介紹一下這個設定檔
 
-首先編輯 {{< blue >}}~/.ssh/config{{< /blue >}} 這個檔案，沒有的話可以手動新增
+首先編輯 <span class="hl-blue">~/.ssh/config</span> 這個檔案，沒有的話可以手動新增
 
 ```bash
 # 檔案的內容格式範例如下
@@ -123,11 +123,11 @@ IdentityFile ~/.ssh/remote1
 User         stanley
 ```
 
-* {{< green >}}{{< mono >}}Host{{< /green >}}{{< /mono >}}：自訂連線名稱
-* {{< green >}}{{< mono >}}HostName{{< /green >}}{{< /mono >}}：目標主機的 ip 或 domain name
-* {{< green >}}{{< mono >}}Port{{< /green >}}{{< /mono >}}：使用的 port，沒有的話預設為22
-* {{< green >}}{{< mono >}}IdentityFile{{< /green >}}{{< /mono >}}：使用的金鑰（私鑰）
-* {{< green >}}{{< mono >}}User{{< /green >}}{{< /mono >}}：登入的使用者名稱
+* <span class="hl-green mono">Host</span>：自訂連線名稱
+* <span class="hl-green mono">HostName</span>：目標主機的 ip 或 domain name
+* <span class="hl-green mono">Port</span>：使用的 port，沒有的話預設為22
+* <span class="hl-green mono">IdentityFile</span>：使用的金鑰（私鑰）
+* <span class="hl-green mono">User</span>：登入的使用者名稱
 
 本例中我們自訂了 Host 的名稱，這也是我們之後唯一需要記的東西，而且使用的方法也很簡單，只要把 ssh 的指令後面接自訂的 Host 名稱， ex. ssh myServer，這樣就會自動的連入 myServer
 

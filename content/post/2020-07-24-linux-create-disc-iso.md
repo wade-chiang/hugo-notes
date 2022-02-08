@@ -11,14 +11,14 @@ categories:
 
 ## 從光碟建立 iso 映像檔
 
-現在光碟逐漸勢微，所以想保存的資料光碟我都會把它轉成 iso 檔，使用 Linux 內建的 {{< blue >}}dd{{< /blue >}} 指令即可
+現在光碟逐漸勢微，所以想保存的資料光碟我都會把它轉成 iso 檔，使用 Linux 內建的 <span class="hl-blue">dd</span> 指令即可
 
 ```bash
 dd if =/dev/cdrom of=/mnt/myDisc.iso
 ```
 
-* {{< green >}}{{< mono >}}if={{< /green >}}{{< /mono >}}：從檔案讀取（/dev/cdrom，在 Linux 中也是一個檔案）
-* {{< green >}}{{< mono >}}of={{< /green >}}{{< /mono >}}：寫入到指定的檔案
+* <span class="hl-green mono">if=</span>：從檔案讀取（/dev/cdrom，在 Linux 中也是一個檔案）
+* <span class="hl-green mono">of=</span>：寫入到指定的檔案
 
 \
 檢查 iso 檔
@@ -68,8 +68,8 @@ CARDDATA.DAT  MOA.PVS      NUM32.FON   PPW.MKF     SS.PCX
 mkisofs -R -o /home/user/RICH3.iso /home/user/RICH3/
 ```
 
-* {{< green >}}{{< mono >}}-R{{< /green >}}{{< /mono >}}：用 Rock Ridge 建立支援完整的 POSIX 檔案系統的內容，例如檔案的權限，{{< red >}}如果不加這個選項，英文大寫的檔名都會被改成小寫{{< /red >}}
-* {{< green >}}{{< mono >}}-o{{< /green >}}{{< /mono >}}：指定輸出的檔案路徑
+* <span class="hl-green mono">-R</span>：用 Rock Ridge 建立支援完整的 POSIX 檔案系統的內容，例如檔案的權限，<span class="hl-red">如果不加這個選項，英文大寫的檔名都會被改成小寫</span>
+* <span class="hl-green mono">-o</span>：指定輸出的檔案路徑
 
 
 ```bash

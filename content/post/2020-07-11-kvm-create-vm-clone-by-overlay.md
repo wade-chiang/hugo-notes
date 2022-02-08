@@ -35,7 +35,7 @@ Target     Source
 vda        /kvm/centos8-initial.qcow2
 ```
 
-本次範例系統中已存在一台虛擬機，虛擬機名稱 {{< blue >}}CentOS_8-Initial{{< /blue >}}，該虛擬機使用的 image 為 {{< blue >}}/kvm/centos8-initial.qcow2{{< /blue >}}
+本次範例系統中已存在一台虛擬機，虛擬機名稱 <span class="hl-blue">CentOS_8-Initial</span>，該虛擬機使用的 image 為 <span class="hl-blue">/kvm/centos8-initial.qcow2</span>
 
 \
 為 disk image 建立 overlay
@@ -54,11 +54,11 @@ sudo qemu-img create -b centos8-initial.qcow2 -F qcow2 centos8-docker.ovl -f qco
 Formatting 'centos8-docker.ovl', fmt=qcow2 size=8589934592 backing_file=centos8-initial.qcow2 cluster_size=65536 lazy_refcounts=off refcount_bits=16
 ```
 
-* {{< green >}}{{< mono >}}-b{{< /green >}}{{< /mono >}}：指定要當來源的 backing file
-* {{< green >}}{{< mono >}}-F{{< /green >}}{{< /mono >}}：表明來源 image 的格式，本例為 qcow2（非必須，但有些版本的 qemu-img 需要此項目才能成功建立）
-* {{< green >}}{{< mono >}}-f{{< /green >}}{{< /mono >}}：指定 disk image 的格式，這邊使用與來源相同的 qcow2
+* <span class="hl-green mono">-b</span>：指定要當來源的 backing file
+* <span class="hl-green mono">-F</span>：表明來源 image 的格式，本例為 qcow2（非必須，但有些版本的 qemu-img 需要此項目才能成功建立）
+* <span class="hl-green mono">-f</span>：指定 disk image 的格式，這邊使用與來源相同的 qcow2
 
-上面的指令會以 {{< blue >}}centos8-initial.qcow2{{< /blue >}} 為基底 backing file，去做出相依於它的 overlay，本例中 overlay 檔名取為 {{< blue >}}centos8-docker.ovl{{< /blue >}}
+上面的指令會以 <span class="hl-blue">centos8-initial.qcow2</span> 為基底 backing file，去做出相依於它的 overlay，本例中 overlay 檔名取為 <span class="hl-blue">centos8-docker.ovl</span>
 
 \
 使用 overlay 新建虛擬機
@@ -89,7 +89,7 @@ Domain installation still in progress.
 Waiting for installation to complete.
 ```
 
-使用 overlay 新建虛擬機的方法就跟[之前的教學](https://notes.wadeism.net/post/kvm-create-vm-in-terminal/)一樣，只要注意 {{< green >}}--disk{{< /green >}} 部分改為指定的 overlay 檔然後不要漏掉 {{< green >}}--import{{< /green >}} 參數即可。
+使用 overlay 新建虛擬機的方法就跟[之前的教學](https://notes.wadeism.net/post/kvm-create-vm-in-terminal/)一樣，只要注意 <span class="hl-green">--disk</span> 部分改為指定的 overlay 檔然後不要漏掉 <span class="hl-green">--import</span> 參數即可。
 
 指令輸入後，螢幕上的內容會是等待虛擬機的安裝，但因為這是一台 clone 出來的虛擬機，系統早就已經安裝好了，所以開啟之後並不會有安裝的過程，因此這時候我們可以用之前教的方式 vnc 遠端連進機器裡去做一次手動關機，或是用 arp 指令看一下虛擬機的 ip 是多少，再 ssh 連進去手動關機
 

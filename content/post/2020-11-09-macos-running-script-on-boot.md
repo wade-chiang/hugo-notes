@@ -13,29 +13,29 @@ tags:
 - macOS
 ---
 
-在 Linux 裡我們很習慣用 rc.local 或是自製 systemd 的 unit 來讓開機時自動執行某個程式或是 script，而在 Mac 上目前我所知道的方法有 {{< blue >}}Launchd{{< /blue >}} 與 {{< blue >}}Automator{{< /blue >}} 兩種，本篇要講的 launchd 就是個類似 Linux systemd 的工具。
+在 Linux 裡我們很習慣用 rc.local 或是自製 systemd 的 unit 來讓開機時自動執行某個程式或是 script，而在 Mac 上目前我所知道的方法有 <span class="hl-blue">Launchd</span> 與 <span class="hl-blue">Automator</span> 兩種，本篇要講的 launchd 就是個類似 Linux systemd 的工具。
 
 Launchd 是 Mac 上用來控制、管理 Daemon 與程序的工具，用 ps 可以看到它的 pid 為 1，表示它是系統第一個執行的 process，而用來控制 launchd 的工具 launchctl，也類似 Linux 的 systemctl，基本上可以用 systemd 的概念來理解它，不過使用的方法當然還是很不一樣，下面就來紀錄這次的使用過程。
 
-{{< red >}}本文使用版本為macOS Catalina{{< /red >}}
+<span class="hl-red">本文使用版本為macOS Catalina</span>
 
 
 ## launchd 設定檔種類與路徑
 
-Launchd 設定檔的內容為程式的啟動方式與流程，類似於 systemd 的 unit，分為 {{< blue >}}Agent{{< /blue >}} 與 {{< blue >}}Daemon{{< /blue >}} 兩種，Agent 是使用者登入時載入，而 Daemon 則是系統開機時載入，較屬於常駐型的程式。因不同的使用情況與權限會放到下面不同的路徑中：
+Launchd 設定檔的內容為程式的啟動方式與流程，類似於 systemd 的 unit，分為 <span class="hl-blue">Agent</span> 與 <span class="hl-blue">Daemon</span> 兩種，Agent 是使用者登入時載入，而 Daemon 則是系統開機時載入，較屬於常駐型的程式。因不同的使用情況與權限會放到下面不同的路徑中：
 
-* {{< green >}}{{< mono >}}~/Library/LaunchAgents{{< /green >}}{{< /mono >}}：存放各別使用者的 agent 設定
-* {{< green >}}{{< mono >}}/Library/LaunchAgents{{< /green >}}{{< /mono >}}：由系統管理者所提供的 agent，每個使用者登入時都會執行
-* {{< green >}}{{< mono >}}/Library/LaunchDaemons{{< /green >}}{{< /mono >}}：由系統管理者提供的全域 daemon，不過設定檔中可以用 UserName 這個 tag 來指定要執行的使用者
-* {{< green >}}{{< mono >}}/System/Library/LaunchAgents{{< /green >}}{{< /mono >}}：系統 agent 的路徑
-* {{< green >}}{{< mono >}}/System/Library/LaunchDaemons{{< /green >}}{{< /mono >}}：系統 daemon 的路徑，建議與前面的系統 agent 一樣都不要去動到！
+* <span class="hl-green mono">~/Library/LaunchAgents</span>：存放各別使用者的 agent 設定
+* <span class="hl-green mono">/Library/LaunchAgents</span>：由系統管理者所提供的 agent，每個使用者登入時都會執行
+* <span class="hl-green mono">/Library/LaunchDaemons</span>：由系統管理者提供的全域 daemon，不過設定檔中可以用 UserName 這個 tag 來指定要執行的使用者
+* <span class="hl-green mono">/System/Library/LaunchAgents</span>：系統 agent 的路徑
+* <span class="hl-green mono">/System/Library/LaunchDaemons</span>：系統 daemon 的路徑，建議與前面的系統 agent 一樣都不要去動到！
 
 
 ## launchd 設定檔範例
 
-launchd 的設定檔格式為 xml，副檔名為 {{< blue >}}.plist{{< /blue >}}。
+launchd 的設定檔格式為 xml，副檔名為 <span class="hl-blue">.plist</span>。
 
-本次的範例是想在{{< blue >}}開機時自動在自己的 home 目錄中建立 AA、BB、CC 三個空資料夾{{< /blue >}}，以下為 agent 的 plist 檔 take1.plist 的內容：
+本次的範例是想在<span class="hl-blue">開機時自動在自己的 home 目錄中建立 AA、BB、CC 三個空資料夾</span>，以下為 agent 的 plist 檔 take1.plist 的內容：
 
 
 ```xml
@@ -64,17 +64,17 @@ launchd 的設定檔格式為 xml，副檔名為 {{< blue >}}.plist{{< /blue >}}
 </plist>
 ```
 
-{{< blue >}}&lt;key&gt;{{< /blue >}} 用來定義項目名稱，例如{{< blue >}}&lt;key&gt;Label&lt;/key&gt;{{< /blue >}} 就是指這個 agent 在 launchd 裡的名字，而它底下的 {{< blue >}}&lt;string&gt;{{< /blue >}} 則是該項目的值，從上面的例子可以知道，這個 agent 在 launchctl 裡看到的名稱即為「com.wade.take1」，下面簡單介紹幾個比較重要的 key tag：
+<span class="hl-blue">&lt;key&gt;</span> 用來定義項目名稱，例如<span class="hl-blue">&lt;key&gt;Label&lt;/key&gt;</span> 就是指這個 agent 在 launchd 裡的名字，而它底下的 <span class="hl-blue">&lt;string&gt;</span> 則是該項目的值，從上面的例子可以知道，這個 agent 在 launchctl 裡看到的名稱即為「com.wade.take1」，下面簡單介紹幾個比較重要的 key tag：
 
-* {{< green >}}{{< mono >}}EnvironmentVariables{{< /green >}}{{< /mono >}}：底下加入 PATH 的 key值可以定義 PATH 環境變數，這個選項在一些範例中不一定會有，但如果 script 執行上有問題時，可以試著加上這個選項。
-* {{< green >}}{{< mono >}}Label{{< /green >}}{{< /mono >}}：agent 的名稱，使用 launchctl list 可以看到。
-* {{< green >}}{{< mono >}}ProgramArguments{{< /green >}}{{< /mono >}}：要執行的指令或 script，使用 <array> tag 可以執行複數的物件（執行單一指令時可以改用 <key>Program</key>）
-* {{< green >}}{{< mono >}}RunAtLoad{{< /green >}}{{< /mono >}}：下面將該值設定為 <true/>，表示這個 agent 在被 launchd 讀取時就會被執行。
-* {{< green >}}{{< mono >}}StandardErrorPath{{< /green >}}{{< /mono >}}：將執行結果的 standard error 訊息存到指定的檔案裡。
-* {{< green >}}{{< mono >}}StandardOutPath{{< /green >}}{{< /mono >}}：將執行結果的 standard out 訊息存到指定的檔案裡，{{< red >}}與上面選項都是非必要的，但如果設定檔裡的程式執行有問題時，拿來除錯非常的實用！{{< /red >}}
+* <span class="hl-green mono">EnvironmentVariables</span>：底下加入 PATH 的 key值可以定義 PATH 環境變數，這個選項在一些範例中不一定會有，但如果 script 執行上有問題時，可以試著加上這個選項。
+* <span class="hl-green mono">Label</span>：agent 的名稱，使用 launchctl list 可以看到。
+* <span class="hl-green mono">ProgramArguments</span>：要執行的指令或 script，使用 <array> tag 可以執行複數的物件（執行單一指令時可以改用 <key>Program</key>）
+* <span class="hl-green mono">RunAtLoad</span>：下面將該值設定為 <true/>，表示這個 agent 在被 launchd 讀取時就會被執行。
+* <span class="hl-green mono">StandardErrorPath</span>：將執行結果的 standard error 訊息存到指定的檔案裡。
+* <span class="hl-green mono">StandardOutPath</span>：將執行結果的 standard out 訊息存到指定的檔案裡，<span class="hl-red">與上面選項都是非必要的，但如果設定檔裡的程式執行有問題時，拿來除錯非常的實用！</span>
 
 \
-{{< blue >}}/Users/wade/mkdir.sh{{< /blue >}} 的內容如下：
+<span class="hl-blue">/Users/wade/mkdir.sh</span> 的內容如下：
 
 ```bash
 #!/bin/zsh
@@ -92,14 +92,14 @@ for fName in ${folder}; do
 done
 ```
 
-script 的內容就是在 /User/wade 裡建立 AA、BB、CC 三個空資料夾，因為 Catalina 開始的預設 shell 是 zsh，因此前面的 shell 宣告使用 {{< blue >}}#!/bin/zsh{{< /blue >}}
+script 的內容就是在 /User/wade 裡建立 AA、BB、CC 三個空資料夾，因為 Catalina 開始的預設 shell 是 zsh，因此前面的 shell 宣告使用 <span class="hl-blue">#!/bin/zsh</span>
 
 有了 plist 檔與 script 後，接著我們就要用 launchctl 這個操作工具來讓設定檔生效。
 
 
 ## 以 launchctl 啟用 agent
 
-因為這次的範例只是在自己的 home 目錄建資料夾，因此我們將 take1.plist 檔放到 {{< blue >}}~/Library/LaunchAgents{{< /blue >}} 裡。
+因為這次的範例只是在自己的 home 目錄建資料夾，因此我們將 take1.plist 檔放到 <span class="hl-blue">~/Library/LaunchAgents</span> 裡。
 
 ```bash
 mv take1.plist ~/Library/LaunchAgents/
@@ -158,14 +158,14 @@ cat ~/take1.err
 
 ## 允許 zsh 存取檔案
 
-為了允許 zsh 存取檔案，我們首先打開 {{< blue >}}系統偏好設定{{< /blue >}}，接著選取 {{< blue >}}安全性與隱私權{{< /blue >}} → {{< blue >}}隱私權{{< /blue >}}
+為了允許 zsh 存取檔案，我們首先打開 <span class="hl-blue">系統偏好設定</span>，接著選取 <span class="hl-blue">安全性與隱私權</span> → <span class="hl-blue">隱私權</span>
 
 ![](https://image.wadeism.net/launchd01.png)
 
 ![](https://image.wadeism.net/launchd02.png)
 
 \
-在左邊視窗中找到 {{< blue >}}完全取用磁碟{{< /blue >}}
+在左邊視窗中找到 <span class="hl-blue">完全取用磁碟</span>
 
 ![](https://image.wadeism.net/launchd03.png)
 
@@ -173,11 +173,11 @@ cat ~/take1.err
 
 ![](https://image.wadeism.net/launchd04.png)
 
-預設我們是無法在 Finder 裡看到 /bin 資料夾的，這時按組合鍵「{{< blue >}}Shift{{< /blue >}}」+「{{< blue >}}Command{{< /blue >}}」+「{{< blue >}}.{{< /blue >}}」就會跳出隱藏的系統檔案
+預設我們是無法在 Finder 裡看到 /bin 資料夾的，這時按組合鍵「<span class="hl-blue">Shift</span>」+「<span class="hl-blue">Command</span>」+「<span class="hl-blue">.</span>」就會跳出隱藏的系統檔案
 
 ![](https://image.wadeism.net/launchd05.png)
 
-找到 {{< blue >}}Macintosh HD{{< /blue >}} → {{< blue >}}bin{{< /blue >}} 裡面的 zsh，將它打開就可以把 zsh 加入「完全取用磁碟」的權限。
+找到 <span class="hl-blue">Macintosh HD</span> → <span class="hl-blue">bin</span> 裡面的 zsh，將它打開就可以把 zsh 加入「完全取用磁碟」的權限。
 
 ![](https://image.wadeism.net/launchd06.png)
 

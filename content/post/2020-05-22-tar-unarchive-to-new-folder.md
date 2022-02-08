@@ -64,7 +64,7 @@ vmware-root_832-2730693535
 ```
 
 \
-{{< blue >}}使用 --one-top-level 參數解壓縮，會在目的地裡建一個資料夾，並將檔案全部放在該資料夾底下{{< /blue >}}
+<span class="hl-blue">使用 --one-top-level 參數解壓縮，會在目的地裡建一個資料夾，並將檔案全部放在該資料夾底下</span>
 
 ```bash
 tar -zxvf /opt/home.tgz -C /tmp --one-top-level="homeBackup"

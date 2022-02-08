@@ -12,7 +12,7 @@ tags:
 - Ubuntu
 ---
 
-在試過 scim、fcitx 與 hime 之後，覺得 hime 配上嘸蝦米還是最順手的組合，稍微紀錄一下安裝的方法，之後如果重灌時有保留 {{< blue >}}~/.confg/hime{{< /blue >}} 資料夾的話基本上是不用重新設定的，只要安裝輸入法與選擇 hime 為預設輸入法即可。
+在試過 scim、fcitx 與 hime 之後，覺得 hime 配上嘸蝦米還是最順手的組合，稍微紀錄一下安裝的方法，之後如果重灌時有保留 <span class="hl-blue">~/.confg/hime</span> 資料夾的話基本上是不用重新設定的，只要安裝輸入法與選擇 hime 為預設輸入法即可。
 
 \
 安裝 hime 輸入法
@@ -22,8 +22,8 @@ sudo apt-get install hime
 ```
 
 \
-執行{{< blue >}}語言支援{{< /blue >}}，設定 hime 為預設輸入法  
-（找不到的話可在 terminal 中執行 {{< blue >}}gnome-language-selector{{< /blue >}}）
+執行<span class="hl-blue">語言支援</span>，設定 hime 為預設輸入法  
+（找不到的話可在 terminal 中執行 <span class="hl-blue">gnome-language-selector</span>）
 
 ![](https://image.wadeism.net/hime08.png)
 

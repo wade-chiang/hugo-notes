@@ -11,7 +11,7 @@ tags:
 - Bash
 ---
 
-有時候不想切換到 root 帳號，但又想把文字寫入沒有權限的檔案時，可以使用 {{< blue >}}tee{{< /blue >}} 這個指令
+有時候不想切換到 root 帳號，但又想把文字寫入沒有權限的檔案時，可以使用 <span class="hl-blue">tee</span> 這個指令
 
 
 ## 使用 sudo 權限 echo 一行文字
@@ -20,9 +20,9 @@ tags:
 echo 'I Love Music' | sudo tee -a /etc/demo
 ```
 
-* {{< green >}}{{< mono >}}-a{{< /green >}}{{< /mono >}}：append，文字會以附加的方式插入，{{< red >}}沒有加 -a 的話檔案會被清空只剩下你 echo 的文字！{{< /red >}}
+* <span class="hl-green mono">-a</span>：append，文字會以附加的方式插入，<span class="hl-red">沒有加 -a 的話檔案會被清空只剩下你 echo 的文字！</span>
 
-tee 會將文字導入檔案同時也會輸出到螢幕，如果不想在螢幕上看到，再用 {{< blue >}}> /dev/null{{< /blue >}} 就可以
+tee 會將文字導入檔案同時也會輸出到螢幕，如果不想在螢幕上看到，再用 <span class="hl-blue">> /dev/null</span> 就可以
 
 ```bash
 echo 'I Love Music' | sudo tee -a /etc/demo > /dev/null
@@ -40,7 +40,7 @@ I Love Music
 [空行]
 ```
 
-一樣可以使用 tee 再搭配 {{< blue >}}EOF{{< /blue >}}（End of File）來寫入
+一樣可以使用 tee 再搭配 <span class="hl-blue">EOF</span>（End of File）來寫入
 
 ```bash
 cat << EOF | sudo tee -a /etc/demo

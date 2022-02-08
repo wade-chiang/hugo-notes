@@ -42,18 +42,18 @@ sudo systemctl stop firewalld
 
 firewalld 使用 zone 作為管理連線的框架，舉例來說，有點像手機鈴聲的情境模式，例如在家裡鈴聲要正常，在看電影時調成靜音模式就會靜音只剩下震動，在睡覺時開勿擾模式變成靜音與無震動，只有緊急電話才會響…等等，firewalld 也內建了許多模式（zone），一些 zone 有預設的規則，有的則是需要自己去設定，下面講一下每個 zone 的作用
 
-* {{< green >}}{{< mono >}}drop{{< /green >}}{{< /mono >}}：所有進來的連線都會被丟掉，而且不會有所回應，除了本機發起的 request 以外，外來連線只出不進
-* {{< green >}}{{< mono >}}block{{< /green >}}{{< /mono >}}：所有進來的連線會被阻擋（reject），與 drop 不同的是被 reject 的話，對方會知道連線是被阻擋，但 drop 對方只會知道無法連線，但無法得知連線是被封鎖，還是機器掛掉，因此通常在做測試時會用 block，正式防護時會用 drop
-* {{< green >}}{{< mono >}}external{{< /green >}}{{< /mono >}}：主要用在內部網路與 NAT 轉址，只有允許的 port 可以連入，external 預設開啟 {{< blue >}}masquerade{{< /blue >}}，作為 VPN server 時都會要開啟該選項
-* {{< green >}}{{< mono >}}trusted{{< /green >}}{{< /mono >}}：所有的連線都將被允許！
-* {{< green >}}{{< mono >}}dmz{{< /green >}}{{< /mono >}}：給置於 dmz zone裡的電腦使用，允許讓特定的連線進入內部網路，但也只接受有被允許的連線
+* <span class="hl-green mono">drop</span>：所有進來的連線都會被丟掉，而且不會有所回應，除了本機發起的 request 以外，外來連線只出不進
+* <span class="hl-green mono">block</span>：所有進來的連線會被阻擋（reject），與 drop 不同的是被 reject 的話，對方會知道連線是被阻擋，但 drop 對方只會知道無法連線，但無法得知連線是被封鎖，還是機器掛掉，因此通常在做測試時會用 block，正式防護時會用 drop
+* <span class="hl-green mono">external</span>：主要用在內部網路與 NAT 轉址，只有允許的 port 可以連入，external 預設開啟 <span class="hl-blue">masquerade</span>，作為 VPN server 時都會要開啟該選項
+* <span class="hl-green mono">trusted</span>：所有的連線都將被允許！
+* <span class="hl-green mono">dmz</span>：給置於 dmz zone裡的電腦使用，允許讓特定的連線進入內部網路，但也只接受有被允許的連線
 
 接下來幾個 zone 比較類似，都是只有被允許的連線可以連入，其它的連線都會擋掉，分成這麼多的 zone 可能是讓使用者好作切換，例如說在家裡就切換到 home ，讓家中其它電腦可以連入，到了公司就切換到 work ，只有工作上需要的連線可以連入
 
 
-* {{< green >}}{{< mono >}}public{{< /green >}}{{< /mono >}}：通常系統預設就是 public zone，是給使用者在公眾場合下使用的，基本上會阻擋所有連入，有設定放行的 port 或服務才可以連入
-* {{< green >}}{{< mono >}}work{{< /green >}}{{< /mono >}}：工作環境中使用的 zone
-* {{< green >}}{{< mono >}}home{{< /green >}}{{< /mono >}}：給使用者在家中使用的 zone
+* <span class="hl-green mono">public</span>：通常系統預設就是 public zone，是給使用者在公眾場合下使用的，基本上會阻擋所有連入，有設定放行的 port 或服務才可以連入
+* <span class="hl-green mono">work</span>：工作環境中使用的 zone
+* <span class="hl-green mono">home</span>：給使用者在家中使用的 zone
 
 \
 查看目前使用的 zone
@@ -124,7 +124,7 @@ sudo vim /lib/firewalld/services/http.xml
 
 可以看到 http.xml 裡有個 &lt;port protocol="tcp" port="80"/&gt;，把這邊的 80 改成 8080，再使用第一種方法來開啟 http，那所開通的就會是我們要的 8080 port 了
 
-{{< red >}}上面我們開通的方法，在系統上會立即生效，但如果下一次開機設定就失效了，所以如果想讓設定永久有效，要在設定時加入 --permanet 參數{{< /red >}}：
+<span class="hl-red">上面我們開通的方法，在系統上會立即生效，但如果下一次開機設定就失效了，所以如果想讓設定永久有效，要在設定時加入 --permanet 參數</span>：
     
 ```bash
 sudo firewall-cmd --add-port=80/tcp --permanent

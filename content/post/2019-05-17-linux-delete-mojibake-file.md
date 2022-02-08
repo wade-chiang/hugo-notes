@@ -16,7 +16,7 @@ categories:
 
 ## 刪除檔案或空資料夾
 
-ls 加上 {{< blue >}}-i{{< /blue >}} 的參數就可以顯示出資料夾底下所有檔案、資料夾的 inode
+ls 加上 <span class="hl-blue">-i</span> 的參數就可以顯示出資料夾底下所有檔案、資料夾的 inode
     
 ```basj
 ls -i

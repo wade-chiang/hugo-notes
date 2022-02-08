@@ -20,9 +20,9 @@ NFS（Network File System）是很早期就有的網路檔案分享功能，幾�
 
 ## 環境說明
 
-{{< green >}}NFS Server{{< /green >}}：CentOS 8 Minimal install（IP：192.168.199.169）
+<span class="hl-green">NFS Server</span>：CentOS 8 Minimal install（IP：192.168.199.169）
 
-{{< green >}}Client{{< /green >}}：Ubuntu 20.04.1（IP：192.168.199.168）
+<span class="hl-green">Client</span>：Ubuntu 20.04.1（IP：192.168.199.168）
 
 
 ## CentOS 8 安裝 NFS-Server
@@ -86,7 +86,7 @@ sudo firewall-cmd --reload
 
 ## NFS Server 設定
 
-先簡單的讓 NFS server 分享每個使用者在 server 上各自的 home 目錄讓他們遠端存取，要設定 share folder 及權限只要編輯 {{< blue >}}/etc/exports{{< /blue >}} 這個檔案即可
+先簡單的讓 NFS server 分享每個使用者在 server 上各自的 home 目錄讓他們遠端存取，要設定 share folder 及權限只要編輯 <span class="hl-blue">/etc/exports</span> 這個檔案即可
 
 ```bash
 # 要分享的目錄    # 允許連線的主機與參數
@@ -101,29 +101,29 @@ sudo firewall-cmd --reload
 ．網段（如 192.168.199.0/24）  
 ．網域（可使用 wildcard 「*」字元）
 
-* {{< green >}}{{< mono >}}rw{{< /green >}}{{< /mono >}}：可讀可寫
-* {{< green >}}{{< mono >}}ro{{< /green >}}{{< /mono >}}：唯讀
-* {{< green >}}{{< mono >}}sync{{< /green >}}{{< /mono >}}：資料會同步寫入到記憶體與硬碟裡，nfs-utils 1.0.0 版之後該選項為預設
-* {{< green >}}{{< mono >}}async{{< /green >}}{{< /mono >}}：資料會先暫存在記憶體，不會直接寫入硬碟，該選項可以增加效能，但如果機器突然掛掉可能會導致資料不見，在nfs-utils 1.0.0 以前的版本，該選項為預設
-* {{< green >}}{{< mono >}}root_squash{{< /green >}}{{< /mono >}}：如果使用 root 帳號（uid/gid=0）存取資料夾，它的 user 與 groups 會變成 nobody 與 nogroup，安全性上會比較好，該選項為預設
-* {{< green >}}{{< mono >}}no_root_squash{{< /green >}}{{< /mono >}}：不要限縮 root 帳號，可以讓遠端使用者以 root 帳號來存取
-* {{< green >}}{{< mono >}}all_squash{{< /green >}}{{< /mono >}}：無論使用者的身份，一律將身份限縮成 nobody
-* {{< green >}}{{< mono >}}no_all_squash{{< /green >}}{{< /mono >}}：與上面選項相反，一律不限縮為 nobody
-* {{< green >}}{{< mono >}}anonuid{{< /green >}}{{< /mono >}}：自訂匿名使用者的 uid，上面有提到像 all_squash 會把所有使用者變成 nobody，anonuid 可以將遠端使用者的身份指定為 server 上現有的使用者，例如 nfsUser 的 uid 是 1002，如果設定 anonuid=1002，那麼 client 建立檔案時，檔案的擁有者就會是 nfsUser
-* {{< green >}}{{< mono >}}anongid{{< /green >}}{{< /mono >}}：功能同上，自訂匿名使用者的 gid
+* <span class="hl-green mono">rw</span>：可讀可寫
+* <span class="hl-green mono">ro</span>：唯讀
+* <span class="hl-green mono">sync</span>：資料會同步寫入到記憶體與硬碟裡，nfs-utils 1.0.0 版之後該選項為預設
+* <span class="hl-green mono">async</span>：資料會先暫存在記憶體，不會直接寫入硬碟，該選項可以增加效能，但如果機器突然掛掉可能會導致資料不見，在nfs-utils 1.0.0 以前的版本，該選項為預設
+* <span class="hl-green mono">root_squash</span>：如果使用 root 帳號（uid/gid=0）存取資料夾，它的 user 與 groups 會變成 nobody 與 nogroup，安全性上會比較好，該選項為預設
+* <span class="hl-green mono">no_root_squash</span>：不要限縮 root 帳號，可以讓遠端使用者以 root 帳號來存取
+* <span class="hl-green mono">all_squash</span>：無論使用者的身份，一律將身份限縮成 nobody
+* <span class="hl-green mono">no_all_squash</span>：與上面選項相反，一律不限縮為 nobody
+* <span class="hl-green mono">anonuid</span>：自訂匿名使用者的 uid，上面有提到像 all_squash 會把所有使用者變成 nobody，anonuid 可以將遠端使用者的身份指定為 server 上現有的使用者，例如 nfsUser 的 uid 是 1002，如果設定 anonuid=1002，那麼 client 建立檔案時，檔案的擁有者就會是 nfsUser
+* <span class="hl-green mono">anongid</span>：功能同上，自訂匿名使用者的 gid
 
 
-編輯完後用 {{< blue >}}exportfs{{< /blue >}} 可以重新掛載 {{< blue >}}/etc/exports{{< /blue >}} 裡的內容而不用重啟 NFS server
+編輯完後用 <span class="hl-blue">exportfs</span> 可以重新掛載 <span class="hl-blue">/etc/exports</span> 裡的內容而不用重啟 NFS server
 
 
 ```bash
 exportfs -arv
 ```
 
-* {{< green >}}{{< mono >}}-a{{< /green >}}{{< /mono >}}：掛載或卸載 /etc/exports 裡的所有資料夾
-* {{< green >}}{{< mono >}}-r{{< /green >}}{{< /mono >}}：重新掛載 /etc/exports 裡的所有資料夾，並同步 /etc/exports  與 /var/lib/nfs/etab
-* {{< green >}}{{< mono >}}-u{{< /green >}}{{< /mono >}}：卸載某個資料夾，搭配 -a 參數就是卸載全部的路徑
-* {{< green >}}{{< mono >}}-v{{< /green >}}{{< /mono >}}：執行指令時將結果輸出到螢幕
+* <span class="hl-green mono">-a</span>：掛載或卸載 /etc/exports 裡的所有資料夾
+* <span class="hl-green mono">-r</span>：重新掛載 /etc/exports 裡的所有資料夾，並同步 /etc/exports  與 /var/lib/nfs/etab
+* <span class="hl-green mono">-u</span>：卸載某個資料夾，搭配 -a 參數就是卸載全部的路徑
+* <span class="hl-green mono">-v</span>：執行指令時將結果輸出到螢幕
 
 ```bash
 # 執行結果：
@@ -155,14 +155,14 @@ exportfs -v
 
 ## 使用 Ubuntu 掛載 NFS Server
 
-安裝 {{< blue >}}nfs-common{{< /blue >}}
+安裝 <span class="hl-blue">nfs-common</span>
 
 ```bash
 sudo apt install nfs-common
 ```
 
 \
-使用 {{< blue >}}showmount{{< /blue >}} 指令可以列出 nfs server 目前可以掛載的內容及允許的主機
+使用 <span class="hl-blue">showmount</span> 指令可以列出 nfs server 目前可以掛載的內容及允許的主機
 
 ```bash
 showmount -e 192.168.199.169
@@ -194,7 +194,7 @@ sudo mount -t nfs 192.168.199.169:/home/wade  /home/wade/nfs_mount
 掛載完可以進去 nfs_mount 目錄建個新檔案來測試
 
 \
-NFS Server 有個比較討厭的地方，{{< red >}}如果 clinet 正在掛載中，突然 server 或 client 端死了，或是 service 掛掉，那麼它們其中一邊的連線就會 timeout 並且整個卡死{{< /red >}}，連帶也影響 df 之類的指令，因此下面一篇就要來介紹 autofs 這個好用的工具
+NFS Server 有個比較討厭的地方，<span class="hl-red">如果 clinet 正在掛載中，突然 server 或 client 端死了，或是 service 掛掉，那麼它們其中一邊的連線就會 timeout 並且整個卡死</span>，連帶也影響 df 之類的指令，因此下面一篇就要來介紹 autofs 這個好用的工具
 
 ### NFS Server 系列文章：
 

@@ -32,14 +32,14 @@ zh_TW.UTF-8
 \
 下面就來說明如何讓 tty console 正確的顯示英文
 
-編輯 {{< blue >}}~/.bashrc{{< /blue >}} 檔
+編輯 <span class="hl-blue">~/.bashrc</span> 檔
     
 ```bash
 vim ~/.bashrc
 ```
 
 \
-將下面的 script 加到 {{< blue >}}.bashrc{{< /blue >}} 檔的最底下後存檔離開
+將下面的 script 加到 <span class="hl-blue">.bashrc</span> 檔的最底下後存檔離開
     
 ```bash
 for ttyi in 1 2 3 4 5 6

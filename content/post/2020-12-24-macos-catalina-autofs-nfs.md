@@ -22,21 +22,21 @@ tags:
 
 ## 環境說明
 
-{{< green >}}Server{{< /green >}}：192.168.1.10，CentOS 8 minimal with NFS v4
+<span class="hl-green">Server</span>：192.168.1.10，CentOS 8 minimal with NFS v4
 
-{{< green >}}Client{{< /green >}}：192.168.1.20，macOS Catalina
+<span class="hl-green">Client</span>：192.168.1.20，macOS Catalina
 
 
 ## Server 端設定
 
-編輯 {{< blue >}}/etc/exports{{< /blue >}} 檔案，內容如下：
+編輯 <span class="hl-blue">/etc/exports</span> 檔案，內容如下：
 
 ```bash
 # 要分享的目錄     # 允許連線的主機與參數
 /home/user/share 192.168.1.20(rw,sync,all_squash,anonuid=1000,anongid=1000)
 ```
 
-參數的內容都可以參考[前面的教學](https://notes.wadeism.net/post/centos8-nfs-server/)，只是這次要注意：{{< red >}}anonuid 與 anongid 一定要指定在 Server 上對該資料夾有權限的 user id{{< /red >}}。例如我在 server 的使用者 uid、gid 皆為 1000（只有一個使用者的話通常都是 1000），那就要指定 client 端連上之後可以取得 uid、gid 為 1000 的身份，{{< red >}}沒有指定的話，會發生掛載成功，但無法進入資料夾的問題（權限不足）{{< /red >}}，這個是我在之前使用時沒有出現過的問題。
+參數的內容都可以參考[前面的教學](https://notes.wadeism.net/post/centos8-nfs-server/)，只是這次要注意：<span class="hl-red">anonuid 與 anongid 一定要指定在 Server 上對該資料夾有權限的 user id</span>。例如我在 server 的使用者 uid、gid 皆為 1000（只有一個使用者的話通常都是 1000），那就要指定 client 端連上之後可以取得 uid、gid 為 1000 的身份，<span class="hl-red">沒有指定的話，會發生掛載成功，但無法進入資料夾的問題（權限不足）</span>，這個是我在之前使用時沒有出現過的問題。
 
 設定完成後，一樣重新掛載即可
 
@@ -47,7 +47,7 @@ exportfs -arv
 
 ## Client 端設定
 
-首先，編輯 {{< blue >}}/etc/auto_master{{< /blue >}} 檔案
+首先，編輯 <span class="hl-blue">/etc/auto_master</span> 檔案
 
 ```bash
 #
@@ -63,7 +63,7 @@ exportfs -arv
 /Users/wade/nfs_share    /etc/auto.nfs
 ```
 
-{{< blue >}}/Users/wade/nfs_share{{< /blue >}} 為 client 端用來掛載 NFS 用的資料夾，{{< blue >}}/etc/auto.nfs{{< /blue >}} 則是掛載的設定檔，接著我們就來建立 {{< blue >}}/etc/auto.nfs{{< /blue >}} 這個設定檔：
+<span class="hl-blue">/Users/wade/nfs_share</span> 為 client 端用來掛載 NFS 用的資料夾，<span class="hl-blue">/etc/auto.nfs</span> 則是掛載的設定檔，接著我們就來建立 <span class="hl-blue">/etc/auto.nfs</span> 這個設定檔：
 
 ```bash
 sudo vim /etc/auto.nfs
@@ -75,7 +75,7 @@ sudo vim /etc/auto.nfs
 share  -rw,resvport,nfsv4  192.168.1.10:/home/user/share
 ```
 
-share 為掛載 NFS 用的目錄，resvport 的參數在[前面的文章](https://notes.wadeism.net/post/mac-nfs-mount-operation-not-permitted/)中也提過了，這邊的重點為 {{< blue >}}nfsv4{{< /blue >}} 這個參數，{{< red >}}由於 CentOS 8 預設的 NFS 是v4 版本，因此這個參數一定要加，不加的話無法掛載{{< /red >}}。
+share 為掛載 NFS 用的目錄，resvport 的參數在[前面的文章](https://notes.wadeism.net/post/mac-nfs-mount-operation-not-permitted/)中也提過了，這邊的重點為 <span class="hl-blue">nfsv4</span> 這個參數，<span class="hl-red">由於 CentOS 8 預設的 NFS 是v4 版本，因此這個參數一定要加，不加的話無法掛載</span>。
 
 
 ## 掛載與驗證

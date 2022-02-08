@@ -20,12 +20,12 @@ tags:
 
 起初是打算使用 VPN 掛載 NFS，用 Mac 上的 Music Player 來播遠端的檔案，不過 NFS 的外網速度實在差強人意，連音樂檔的 index 都跑不完全，所以就放棄這招了（也許之後可以用 SAMBA 再試一次）。
 
-後來我想到了自架串流 server 的方式，不過串流 server 一些比較細部的功能可能就不會有了。我除了介面要看了順眼之外，最重要是需要{{< blue >}}短秒數前進與倒帶的功能{{< /blue >}}，這個在練琴時非常的實用。因此就以這兩個方向去找，總算找到了一個介面算好看，又有倒帶功能的 [mStream](https://www.mstream.io/)，雖然一次倒帶的單位是30秒，不過總比沒有好的多！
+後來我想到了自架串流 server 的方式，不過串流 server 一些比較細部的功能可能就不會有了。我除了介面要看了順眼之外，最重要是需要<span class="hl-blue">短秒數前進與倒帶的功能</span>，這個在練琴時非常的實用。因此就以這兩個方向去找，總算找到了一個介面算好看，又有倒帶功能的 [mStream](https://www.mstream.io/)，雖然一次倒帶的單位是30秒，不過總比沒有好的多！
 
 
 ## 環境說明
 
-{{< green >}}Server{{< /green >}}：192.168.199.180，CentOS 8 minimal with Docker installed
+<span class="hl-green">Server</span>：192.168.199.180，CentOS 8 minimal with Docker installed
 
 
 ## 安裝與啟動 mStream
@@ -83,12 +83,12 @@ ghcr.io/linuxserver/mstream
 \
 基本上兩種啟動方式的意思一樣，docker-compose 會比較好管理與修改，下面我用 cli 的選項來做說明
 
-* {{< green >}}{{< mono >}}-e USER{{< /green >}}{{< /mono >}}：登入用的帳號
-* {{< green >}}{{< mono >}}-e PASSWORD{{< /green >}}{{< /mono >}}：帳號的登入密碼
-* {{< green >}}{{< mono >}}-e TZ{{< /green >}}{{< /mono >}}：Time Zone，在台灣的話就寫 Asia/Taipei
-* {{< green >}}{{< mono >}}-p 3000:3000{{< /green >}}{{< /mono >}}：將 Server 上的 3000 port 與 container 裡的 3000 port 做綁定，可視需求調整 Server 上想開的 port
-* {{< green >}}{{< mono >}}-v /pathToConfig:/config{{< /green >}}{{< /mono >}}：選一個 server 上的資料夾掛載到 container 裡的 {{< blue >}}/config{{< /blue >}} 上， 例如 {{< blue >}}/etc/opt/mstream{{< /blue >}}，{{< blue >}}/etc/opt{{< /blue >}} 是我習慣拿來統一放置 container 設定檔的地方。掛載後，裡面會存放 mstream 的設定檔與 db 資料
-* {{< green >}}{{< mono >}}-v /pathToMusic:/music{{< /green >}}{{< /mono >}}：將 server 裡的存放音樂檔的資料夾掛載到 container 裡的 {{< blue >}}/music{{< /blue >}}
+* <span class="hl-green mono">-e USER</span>：登入用的帳號
+* <span class="hl-green mono">-e PASSWORD</span>：帳號的登入密碼
+* <span class="hl-green mono">-e TZ</span>：Time Zone，在台灣的話就寫 Asia/Taipei
+* <span class="hl-green mono">-p 3000:3000</span>：將 Server 上的 3000 port 與 container 裡的 3000 port 做綁定，可視需求調整 Server 上想開的 port
+* <span class="hl-green mono">-v /pathToConfig:/config</span>：選一個 server 上的資料夾掛載到 container 裡的 <span class="hl-blue">/config</span> 上， 例如 <span class="hl-blue">/etc/opt/mstream</span>，<span class="hl-blue">/etc/opt</span> 是我習慣拿來統一放置 container 設定檔的地方。掛載後，裡面會存放 mstream 的設定檔與 db 資料
+* <span class="hl-green mono">-v /pathToMusic:/music</span>：將 server 裡的存放音樂檔的資料夾掛載到 container 裡的 <span class="hl-blue">/music</span>
 
 \
 開啟防火牆
@@ -100,25 +100,25 @@ sudo firewall-cmd --add-port=3000/tcp --permanent && sudo firewall-cmd --reload
 
 ## 測試登入與使用
 
-用瀏覽器前往 {{< blue >}}192.168.199.180:3000{{< /blue >}}，應該就可以看到登入畫面
+用瀏覽器前往 <span class="hl-blue">192.168.199.180:3000</span>，應該就可以看到登入畫面
 
 ![](https://image.wadeism.net/mStream01.png)
 
 ![](https://image.wadeism.net/mStream02.png)
 
-不過要注意一點，{{< red >}}mStream 在 FireFox 會無法正常播放音樂，要改用其它瀏覽器{{< /red >}}
+不過要注意一點，<span class="hl-red">mStream 在 FireFox 會無法正常播放音樂，要改用其它瀏覽器</span>
 
 
 ## 將 mStream 的 Artist tag 轉為 Album Artist tag
 
-常用 Mp3Tag 來編輯音樂檔 tag 的朋友們應該都知道，音樂檔的 tag 有 {{< blue >}}Artist{{< /blue >}} 與 {{< blue >}}Album Artist{{< /blue >}} 兩種，一般是使用 Artist，不過碰到一些大合輯的時候就會出現個麻煩的問題，以 {{< green >}}[Who Loves You? A Tribute to Jaco Pastorius]{{< /green >}} 這張專輯為例：
+常用 Mp3Tag 來編輯音樂檔 tag 的朋友們應該都知道，音樂檔的 tag 有 <span class="hl-blue">Artist</span> 與 <span class="hl-blue">Album Artist</span> 兩種，一般是使用 Artist，不過碰到一些大合輯的時候就會出現個麻煩的問題，以 <span class="hl-green">[Who Loves You? A Tribute to Jaco Pastorius]</span> 這張專輯為例：
 
 ![](https://image.wadeism.net/mStream03.png)
 
 每一首歌的演奏者（Artist）都不同，有的還有多位樂手，這樣的音樂資訊，放到只支援 Artist tag 的播放器中，會無法好好的分類。因為太多樂手了，如果用 Artist 來分類會變得相當凌亂，像 mStream 目前也只有支援 Artist tag 的，自然也不意外
 
 ![](https://image.wadeism.net/mStream04.png)
-{{< center >}}變成有一大堆的 Artists，非常亂！{{< /center >}}
+<div style="text-align: center">變成有一大堆的 Artists，非常亂！</div>
 
 但這張專輯實際上我會想把它歸到 Jaco 的作品（畢竟是為他致敬之作），同樣的情況在現代很多 feat. 的專輯上也會出現，也因此有了 Album Artist  tag 的誕生。
 
@@ -141,7 +141,7 @@ root@d34e21dccb2b:/#
 ```
 
 \
-接著編輯 {{< blue >}}/opt/mstream/modules/db-write/database-default-loki.js{{< /blue >}} 這個檔案
+接著編輯 <span class="hl-blue">/opt/mstream/modules/db-write/database-default-loki.js</span> 這個檔案
 
 ```bash
 vi /opt/mstream/modules/db-write/database-default-loki.js
@@ -189,7 +189,7 @@ fileCollection.insert({
 });
 ```
 
-{{< red >}}主要就是把 artist 字串直接改成  albumartist 字串{{< /red >}}
+<span class="hl-red">主要就是把 artist 字串直接改成  albumartist 字串</span>
 
 \
 存檔後離開 container，回到 server 並移除 mStream 的 db

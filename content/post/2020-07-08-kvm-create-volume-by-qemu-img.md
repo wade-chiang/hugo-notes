@@ -73,7 +73,7 @@ qemu-img resize --shrink test.qcow2 -1G
 qemu-img resize test.qcow2 7G
 ```
 
-這邊的指令基本上都差不多，特別注意只要是將 image 縮小的動作，不管減少 1G 還是直接指定更小 的 size，resize 的後面都要加上 {{< blue >}}--shrink{{< /blue >}}，而且 image 裡已經有資料的話，減少它的容量有可能會導致資料毀損遺失
+這邊的指令基本上都差不多，特別注意只要是將 image 縮小的動作，不管減少 1G 還是直接指定更小 的 size，resize 的後面都要加上 <span class="hl-blue">--shrink</span>，而且 image 裡已經有資料的話，減少它的容量有可能會導致資料毀損遺失
 
 ### KVM 虛擬機系列文章：
 

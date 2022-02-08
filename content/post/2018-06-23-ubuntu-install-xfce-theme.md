@@ -24,4 +24,4 @@ mkdir /home/$USER/.local/share/themes/
 \
 把下載來的主題解壓縮後放到上面的路徑 /home/$USER/.local/share/themes/ 裡面
 
-{{< red >}}注意佈景主題的資料夾裡必須要有「xfwm4」這個目錄，代表該主題有適用於 xfce 的版本{{< /red >}}
+<span class="hl-red">注意佈景主題的資料夾裡必須要有「xfwm4」這個目錄，代表該主題有適用於 xfce 的版本</span>

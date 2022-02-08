@@ -13,7 +13,7 @@ tags:
 
 記錄一些我用過的批次處理，基本上都是指令加上迴圈搞定
 
-{{< red >}}處理檔名時，最好保持將檔名用「" "」包起來的習慣！！{{< /red >}}
+<span class="hl-red">處理檔名時，最好保持將檔名用「" "」包起來的習慣！！</span>
 
 
 ## 將資料夾分別壓縮成 zip（cbz）檔
@@ -71,7 +71,7 @@ convert-im6.q16: attempt to perform an operation not allowed by the security pol
 ```
 
 \
-可以將下面的內容貼到 {{< blue >}}/etc/ImageMagick-X/policy.xml{{< /blue >}} 的 {{< blue >}}&lt;/policymap&gt;{{< /blue >}} 之前
+可以將下面的內容貼到 <span class="hl-blue">/etc/ImageMagick-X/policy.xml</span> 的 <span class="hl-blue">&lt;/policymap&gt;</span> 之前
 
 ```xml
 <policy domain="coder" rights="read | write" pattern="PDF" />

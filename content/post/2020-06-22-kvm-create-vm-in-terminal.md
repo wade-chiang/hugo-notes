@@ -29,8 +29,8 @@ KVM 是款基於 Linux 核心的虛擬化技術，搭配 gui 操作介面後就�
 
 ## 檢查環境
 
-{{< green >}}本機{{< /green >}}：Ubuntu 18.04  
-{{< green >}}Remote Host{{< /green >}}：CentOS 8 Minimal Install （headless）
+<span class="hl-green">本機</span>：Ubuntu 18.04  
+<span class="hl-green">Remote Host</span>：CentOS 8 Minimal Install （headless）
 
 這次的目標就是在沒有 gui 的 CentOS 8 上面安裝 KVM 並且使用 KVM 來安裝虛擬機。
 
@@ -146,7 +146,7 @@ sudo firewall-cmd --add-port=5900/tcp --permanent && sudo firewall-cmd --reload
 ```
 
 \
-使用{{< blue >}}virt-install{{< /blue >}} 指令來安裝一個新的虛擬機
+使用<span class="hl-blue">virt-install</span> 指令來安裝一個新的虛擬機
 
 ```bash
 sudo virt-install \
@@ -162,15 +162,15 @@ sudo virt-install \
 --graphics vnc,listen=0.0.0.0,password=1234
 ```
 
-* {{< green >}}{{< mono >}}--name{{< /green >}}{{< /mono >}}：虛擬機的名稱
-* {{< green >}}{{< mono >}}--memory{{< /green >}}{{< /mono >}}：虛擬機的記憶體大小，單位為 MB
-* {{< green >}}{{< mono >}}--vcpus{{< /green >}}{{< /mono >}}：要使用的 cpu 核心數，沒有特殊用途的話 1 顆就夠
-* {{< green >}}{{< mono >}}--cpu{{< /green >}}{{< /mono >}}：cpu 的類型，使用 host-model-only 讓虛擬機也使用與本機相同的 cpu，可以有較好的效能
-* {{< green >}}{{< mono >}}--os-variant{{< /green >}}{{< /mono >}}（選填）：要安裝的 os 範本，有指定的話效能表現會比較好，可以用 osinfo-query os 這個指令來查看支援的範本，將查到的 os Short ID 填在這個項目即可，如果想裝的 os 沒有在裡面，可以參考[這個網站](https://askubuntu.com/questions/1070500/why-doesnt-osinfo-query-os-detect-ubuntu-18-04) 來更新 os 列表
-* {{< green >}}{{< mono >}}--cdrom{{< /green >}}{{< /mono >}}：指定系統 iso 光碟檔的路徑
-* {{< green >}}{{< mono >}}--disk{{< /green >}}{{< /mono >}}：設定虛擬機硬碟的存放位置及大小，size 的單位為 GB，format 一般常用 qcow2
-* {{< green >}}{{< mono >}}--network{{< /green >}}{{< /mono >}}：配給虛擬機的網路卡及其設定，這邊我給虛擬機裝了兩張網卡，{{< blue >}}network=default,model=virto{{< /blue >}} 這個設定就是使用剛才提到的 default NAT，{{< blue >}}type=direct,source=ens3,source_mode=bridge,model=virtio{{< /blue >}} 則是設定了 MacVTap 的橋接方式，可以讓 guest 與 host 拿到同一個網段的 ip，詳細說明可以看[這篇](https://notes.wadeism.net/post/kvm-network-setup/)
-* {{< green >}}{{< mono >}}--graphics{{< /green >}}{{< /mono >}}：虛擬機要使用的遠端螢幕設定，vnc 是比較普遍的選項，另外也可以改用 spice，listen 部分是允許連入這台虛擬機的網段，password 則是 vnc 連線時所需的密碼
+* <span class="hl-green mono">--name</span>：虛擬機的名稱
+* <span class="hl-green mono">--memory</span>：虛擬機的記憶體大小，單位為 MB
+* <span class="hl-green mono">--vcpus</span>：要使用的 cpu 核心數，沒有特殊用途的話 1 顆就夠
+* <span class="hl-green mono">--cpu</span>：cpu 的類型，使用 host-model-only 讓虛擬機也使用與本機相同的 cpu，可以有較好的效能
+* <span class="hl-green mono">--os-variant</span>（選填）：要安裝的 os 範本，有指定的話效能表現會比較好，可以用 osinfo-query os 這個指令來查看支援的範本，將查到的 os Short ID 填在這個項目即可，如果想裝的 os 沒有在裡面，可以參考[這個網站](https://askubuntu.com/questions/1070500/why-doesnt-osinfo-query-os-detect-ubuntu-18-04) 來更新 os 列表
+* <span class="hl-green mono">--cdrom</span>：指定系統 iso 光碟檔的路徑
+* <span class="hl-green mono">--disk</span>：設定虛擬機硬碟的存放位置及大小，size 的單位為 GB，format 一般常用 qcow2
+* <span class="hl-green mono">--network</span>：配給虛擬機的網路卡及其設定，這邊我給虛擬機裝了兩張網卡，<span class="hl-blue">network=default,model=virto</span> 這個設定就是使用剛才提到的 default NAT，<span class="hl-blue">type=direct,source=ens3,source_mode=bridge,model=virtio</span> 則是設定了 MacVTap 的橋接方式，可以讓 guest 與 host 拿到同一個網段的 ip，詳細說明可以看[這篇](https://notes.wadeism.net/post/kvm-network-setup/)
+* <span class="hl-green mono">--graphics</span>：虛擬機要使用的遠端螢幕設定，vnc 是比較普遍的選項，另外也可以改用 spice，listen 部分是允許連入這台虛擬機的網段，password 則是 vnc 連線時所需的密碼
 
 ```bash
 # 執行結果：
@@ -185,7 +185,7 @@ Domain installation still in progress.
 Waiting for installation to complete.
 ```
 
-根據自己想要的設定執行 virt-install，出現上面的畫面時，從{{< red >}}本機{{< /red >}}打開任何可以遠端連 vnc 的軟體，並將連線位址打上 {{< blue >}}vnc://Remote_Host_IP:5900{{< /blue >}}，就可以看到安裝畫面了
+根據自己想要的設定執行 virt-install，出現上面的畫面時，從<span class="hl-red">本機</span>打開任何可以遠端連 vnc 的軟體，並將連線位址打上 <span class="hl-blue">vnc://Remote_Host_IP:5900</span>，就可以看到安裝畫面了
 
 ![](https://image.wadeism.net/kvm02.png)
 
@@ -204,7 +204,7 @@ Waiting for installation to complete.
 
 上面的步驟透過光碟 iso 檔來建立虛擬機，算是從無到有最基本的方法，不過如果我們已經有一個裝好系統的硬碟 image 檔，也可以直接用這個 image 來建立虛擬機，可以省掉安裝系統的步驟。
 
-用 image 建立虛擬機也一樣是使用 {{< blue >}}virt-install{{< /blue >}}，不過執行 virt-install 前，我們先多開一個 terminal-2 然後 ssh 連進我們的 remote hot，接著回到原本的 terminal 執行 virt-install import 的指令
+用 image 建立虛擬機也一樣是使用 <span class="hl-blue">virt-install</span>，不過執行 virt-install 前，我們先多開一個 terminal-2 然後 ssh 連進我們的 remote hot，接著回到原本的 terminal 執行 virt-install import 的指令
 
 ```bash
 sudo virt-install \
@@ -220,8 +220,8 @@ sudo virt-install \
 --graphics spice,listen=0.0.0.0,password=asdf
 ```
 
-* {{< green >}}{{< mono >}}--import{{< /green >}}{{< /mono >}}：跳過 os 的安裝步驟，直接以現有的 disk image 來建立虛擬機
-* {{< green >}}{{< mono >}}--disk{{< /green >}}{{< /mono >}}：指定 disk image 的位置，如果有多個 --disk 參數，則第一個 disk 將會是虛擬機的開機碟
+* <span class="hl-green mono">--import</span>：跳過 os 的安裝步驟，直接以現有的 disk image 來建立虛擬機
+* <span class="hl-green mono">--disk</span>：指定 disk image 的位置，如果有多個 --disk 參數，則第一個 disk 將會是虛擬機的開機碟
 
 ```bash
 # 執行結果：
@@ -248,12 +248,12 @@ tcp        0      0 0.0.0.0:5900            0.0.0.0:*               LISTEN      
 tcp        0      0 0.0.0.0:5901            0.0.0.0:*               LISTEN      6599/qemu-kvm
 ```
 
-{{< red >}}注意{{< /red >}}：  
+<span class="hl-red">注意</span>：  
 KVM 的 vnc 或 spice service 預設的 listen port 是 5900，所以如果我們已經有一台啟動中主機，那麼再新增虛擬機時，第二台虛擬機的 vnc listen port 就不會是 5900，因為系統已經把 5900 port 給了第一台虛擬機使用，這時 KVM 會將 5900 +1 的 port 開給新的虛擬機 vnc service，因此想用 vnc 看第二台虛擬機的畫面，就必須使用 5901 port
 
 以上面的輸出結果來看 0.0.0.0: 5900 是第一台虛擬機的 listen port，第二行的 5901 就是我們新建第二台虛擬機的 vnc listen port
 
-此時 vnc 連線軟體就要改用 {{< blue >}}vnc://Remote_Host_IP:5901{{< /blue >}} 來看第二台虛擬機的畫面
+此時 vnc 連線軟體就要改用 <span class="hl-blue">vnc://Remote_Host_IP:5901</span> 來看第二台虛擬機的畫面
 
 如果再開啟第三台基本上就是使用 5902 port 了。記得防火牆要打開這些 port ！
 

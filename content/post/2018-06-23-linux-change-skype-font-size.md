@@ -12,7 +12,7 @@ tags:
 - Ubuntu
 ---
 
-將下面的參數加到 {{< blue >}}~/.config/Trolltech.conf{{< /blue >}} 中，即可修改 Skype 的字體與字體大小
+將下面的參數加到 <span class="hl-blue">~/.config/Trolltech.conf</span> 中，即可修改 Skype 的字體與字體大小
 
 ```toml
 [Qt]

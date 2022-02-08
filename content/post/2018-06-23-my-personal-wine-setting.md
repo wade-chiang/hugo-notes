@@ -26,7 +26,7 @@ tags:
 ![](https://image.wadeism.net/mywine05.png#center)
 
 ![](https://image.wadeism.net/mywine06.png#center)
-{{< center >}}字體部分，Droid Sans Fallback 大小 12 是我覺得比較好的組合{{< /center >}}
+<div style="text-align: center">字體部分，Droid Sans Fallback 大小 12 是我覺得比較好的組合</div>
 
 * * *
 

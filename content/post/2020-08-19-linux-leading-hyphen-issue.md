@@ -11,7 +11,7 @@ tags:
 - Bash
 ---
 
-在 Bash 裡，如果檔案的檔名開頭是連字號「{{< blue >}}-{{< /blue >}}」（hyphen），你會發現對這些檔案下任何指令都會出問題
+在 Bash 裡，如果檔案的檔名開頭是連字號「<span class="hl-blue">-</span>」（hyphen），你會發現對這些檔案下任何指令都會出問題
 
 ```bash
 ls -l
@@ -52,7 +52,7 @@ rm -- -a
 
 ## 為檔案加上路徑
 
-{{< red >}}推薦{{< /red >}}
+<span class="hl-red">推薦</span>
 
 ```bash
 cp ./--b b

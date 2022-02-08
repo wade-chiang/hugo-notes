@@ -25,4 +25,4 @@ joyce:x:1001:1001::/home/joyce:/bin/bash
 
 兩者都是 alias 到 BusyBox 這個 shell。
 
-{{< red >}}如果將帳號（例如上面的 centos）的 shell 設為 /sbin/nologin，會禁止該使用者以 ssh 登入，可避免有心人士亂 try{{< /red >}}
+<span class="hl-red">如果將帳號（例如上面的 centos）的 shell 設為 /sbin/nologin，會禁止該使用者以 ssh 登入，可避免有心人士亂 try</span>

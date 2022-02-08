@@ -9,7 +9,7 @@ categories:
 - Linux
 ---
 
-在 Linux 裡，可以使用 {{< blue >}}find{{< /blue >}} 這個指令來搜尋檔案，另外還可以搭配其它複合指令來達成一些批次工作，非常的方便。
+在 Linux 裡，可以使用 <span class="hl-blue">find</span> 這個指令來搜尋檔案，另外還可以搭配其它複合指令來達成一些批次工作，非常的方便。
 
 \
 從全系統尋找特定檔案
@@ -61,4 +61,4 @@ find . -type f
 sudo find / -name "Thumb.db" -exec rm {} \;
 ```
 
-在上面指令中，{{< red >}}{} 代表的意義為前面 find 所找出來的東西，因此是一個變數，任何找到的Thumb.db檔案都會被 rm 所刪除{{< /red >}}
+在上面指令中，<span class="hl-red">{} 代表的意義為前面 find 所找出來的東西，因此是一個變數，任何找到的Thumb.db檔案都會被 rm 所刪除</span>

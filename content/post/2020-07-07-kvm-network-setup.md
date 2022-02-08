@@ -57,7 +57,7 @@ valid_lft forever preferred_lft forever
 link/ether 52:54:00:fa:15:28 brd ff:ff:ff:ff:ff:ff
 ```
 
-{{< blue >}}ens3{{< /blue >}} 是 host 上的實體網卡，{{< blue >}}virbr0{{< /blue >}} 則是 kvm 自動新增的 NAT 虛擬網卡。  
+<span class="hl-blue">ens3</span> 是 host 上的實體網卡，<span class="hl-blue">virbr0</span> 則是 kvm 自動新增的 NAT 虛擬網卡。  
 建立虛擬機預設使用 default 網路，機器會在 192.168.199.1/24 的這個網段當中
 
 
@@ -84,7 +84,7 @@ sudo virsh net-edit --network default
 </network>
 ```
 
-使用 {{< blue >}}virsh net-edit{{< /blue >}} 編輯 defulat 的設定檔，在這裡我把 192.168.199.x 改成 192.168.123.x
+使用 <span class="hl-blue">virsh net-edit</span> 編輯 defulat 的設定檔，在這裡我把 192.168.199.x 改成 192.168.123.x
 
 ```xml
 <network>
@@ -167,11 +167,11 @@ KVM 使用虛擬網路來管理與控制 guest 的網路連線，每個虛擬網
 </network>
 ```
 
-* {{< green >}}{{< mono >}}&lt;name&gt;{{< /green >}}{{< /mono >}}：KVM 中的虛擬網路名稱，也就是 virsh net-list 所列出的名稱
-* {{< green >}}{{< mono >}}&lt;forward mode&gt;{{< /green >}}{{< /mono >}}：這邊一樣是選 nat
-* {{< green >}}{{< mono >}}&lt;ip address&gt;{{< /green >}}{{< /mono >}}：網段的 gateway（host 上的 ip）與 netmask
-* {{< green >}}{{< mono >}}&lt;range start, end&gt;{{< /green >}}{{< /mono >}}：網段的範圍
-* {{< green >}}{{< mono >}}&lt;host&gt;{{< /green >}}{{< /mono >}}：這邊可以根據 guest 的網卡 mac address 來綁定 ip，這樣即使是用 dhcp，有設定到的機器都會分派到固定的 ip
+* <span class="hl-green mono">&lt;name&gt;</span>：KVM 中的虛擬網路名稱，也就是 virsh net-list 所列出的名稱
+* <span class="hl-green mono">&lt;forward mode&gt;</span>：這邊一樣是選 nat
+* <span class="hl-green mono">&lt;ip address&gt;</span>：網段的 gateway（host 上的 ip）與 netmask
+* <span class="hl-green mono">&lt;range start, end&gt;</span>：網段的範圍
+* <span class="hl-green mono">&lt;host&gt;</span>：這邊可以根據 guest 的網卡 mac address 來綁定 ip，這樣即使是用 dhcp，有設定到的機器都會分派到固定的 ip
 
 \
 virsh 透過 xml 檔建立網路
@@ -265,7 +265,7 @@ NAT 網路卡設定範本 new-nic.xml
   <model type='virtio'/>
 </interface>
 ```
-source network 填上虛擬網路的名稱。用 {{< blue >}}virsh net-list{{< /blue >}} 可以查看
+source network 填上虛擬網路的名稱。用 <span class="hl-blue">virsh net-list</span> 可以查看
 
 \
 為虛擬機掛載新的網路卡
@@ -274,11 +274,11 @@ source network 填上虛擬網路的名稱。用 {{< blue >}}virsh net-list{{< /
 sudo virsh attach-device --domain [VM_Name] --file new-nic.xml [ --persistent / --config / --live ]
 ```
 
-* {{< green >}}{{< mono >}}--domain{{< /green >}}{{< /mono >}}：虛擬機的名稱
-* {{< green >}}{{< mono >}}--file{{< /green >}}{{< /mono >}}：網卡的設定檔
-* {{< green >}}{{< mono >}}--persistenet{{< /green >}}{{< /mono >}}：讓 device 永遠掛載，沒有這個選項的話，用 KVM 重啟虛擬機後新網卡會消失
-* {{< green >}}{{< mono >}}--config{{< /green >}}{{< /mono >}}：guest 未啟動時用，掛載會在下次開機時生效
-* {{< green >}}{{< mono >}}--live{{< /green >}}{{< /mono >}}：guest 已啟動時用，掛載的設備可在執行中的虛擬機中生效
+* <span class="hl-green mono">--domain</span>：虛擬機的名稱
+* <span class="hl-green mono">--file</span>：網卡的設定檔
+* <span class="hl-green mono">--persistenet</span>：讓 device 永遠掛載，沒有這個選項的話，用 KVM 重啟虛擬機後新網卡會消失
+* <span class="hl-green mono">--config</span>：guest 未啟動時用，掛載會在下次開機時生效
+* <span class="hl-green mono">--live</span>：guest 已啟動時用，掛載的設備可在執行中的虛擬機中生效
 
 ### 新增網路卡 for internal local only
 
@@ -328,7 +328,7 @@ sudo virsh detach-interface --domain [VM_Name] --mac 52:54:00:ef:0a:1e --type ne
 
 ## 為虛擬機新增 MacVTap 橋接網卡
 
-MacVTap 是一種 bridge 的技術，可以讓 guest 拿到與 host 同網段的 ip，而且相較傳統的 bridge 效能比較好，不過缺點是 {{< red >}}MacVTap bridge 的網卡，會讓 guest 無法與 host 連線，只能和 host 以外的同網段機器相通{{< /red >}}。所以設定 MacVTap 網卡的 guest 通常都會再配一張 local only 的網卡讓 host 與 guest 互連。
+MacVTap 是一種 bridge 的技術，可以讓 guest 拿到與 host 同網段的 ip，而且相較傳統的 bridge 效能比較好，不過缺點是 <span class="hl-red">MacVTap bridge 的網卡，會讓 guest 無法與 host 連線，只能和 host 以外的同網段機器相通</span>。所以設定 MacVTap 網卡的 guest 通常都會再配一張 local only 的網卡讓 host 與 guest 互連。
 
 在[安裝虛擬機的文章](https://notes.wadeism.net/post/kvm-create-vm-in-terminal/)裡，我都是直接在建新機器時就把 MacVTap 的網卡也一併裝上，如果一開始沒有設定，之後想裝時只要建一個 bridge 的網路卡設定檔，然後再掛載給虛擬機就可以，不需要為 bridge 新增虛擬網路（但傳統的 bridge 就需要）
 

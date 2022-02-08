@@ -27,21 +27,21 @@ sudo yum install rsync
 
 ## rsync 基本參數
 
-* {{< green >}}{{< mono >}}-a{{< /green >}}{{< /mono >}}：最常用的備份模式，等同於 -rlptgoD
-* {{< green >}}{{< mono >}}-r{{< /green >}}{{< /mono >}}：--recursive，遞歸模式，備份目錄時必用
-* {{< green >}}{{< mono >}}-l{{< /green >}}{{< /mono >}}：--links，單純的以符號連結的樣態來備份符號連結
-* {{< green >}}{{< mono >}}-p{{< /green >}}{{< /mono >}}：--perms，維持原檔案的權限屬性
-* {{< green >}}{{< mono >}}-t{{< /green >}}{{< /mono >}}：--times，維持檔案的 modification time
-* {{< green >}}{{< mono >}}-g{{< /green >}}{{< /mono >}}：--group，維持檔案原本的所屬群組
-* {{< green >}}{{< mono >}}-o{{< /green >}}{{< /mono >}}：--owner，維持檔案原本的擁有者
-* {{< green >}}{{< mono >}}-D{{< /green >}}{{< /mono >}}：--devices、--specials，允許同步裝置檔案與特殊檔案
-* {{< green >}}{{< mono >}}-v{{< /green >}}{{< /mono >}}：--verbose，詳細模式，在 terminal 中列出所有的詳細過程
-* {{< green >}}{{< mono >}}-P{{< /green >}}{{< /mono >}}：等同 --partial --progress --partial：當傳輸中斷時，保留不完整的檔案
-* {{< green >}}{{< mono >}}--progress{{< /green >}}{{< /mono >}}：讓傳輸過程有進度可看
-* {{< green >}}{{< mono >}}--dry-run{{< /green >}}{{< /mono >}}：測試指令的結果，但不會真的進行同步，可用在先檢查哪些檔案會同步，很重要的參數
-* {{< green >}}{{< mono >}}--delete{{< /green >}}{{< /mono >}}：沒有加這個參數的時候，來源端只會不斷的把新東西同步到目的端，一旦加了 --delete，rsync 會把來源端沒有但目的端有的檔案刪掉，讓兩個資料夾完完全全的呈現一致的內容
-* {{< green >}}{{< mono >}}--exclude=PATTERN{{< /green >}}{{< /mono >}}：排除不想同步的檔案
-* {{< green >}}{{< mono >}}--exclude-from=FILE{{< /green >}}{{< /mono >}}：讀取自訂的列表，使用列表的內容來排除不想同步的檔案，在排除多個檔案時較為實用。列表中的路徑必須是以來源端來看的相對路徑，每一行為一個要排除的資料夾或檔案
+* <span class="hl-green mono">-a</span>：最常用的備份模式，等同於 -rlptgoD
+* <span class="hl-green mono">-r</span>：--recursive，遞歸模式，備份目錄時必用
+* <span class="hl-green mono">-l</span>：--links，單純的以符號連結的樣態來備份符號連結
+* <span class="hl-green mono">-p</span>：--perms，維持原檔案的權限屬性
+* <span class="hl-green mono">-t</span>：--times，維持檔案的 modification time
+* <span class="hl-green mono">-g</span>：--group，維持檔案原本的所屬群組
+* <span class="hl-green mono">-o</span>：--owner，維持檔案原本的擁有者
+* <span class="hl-green mono">-D</span>：--devices、--specials，允許同步裝置檔案與特殊檔案
+* <span class="hl-green mono">-v</span>：--verbose，詳細模式，在 terminal 中列出所有的詳細過程
+* <span class="hl-green mono">-P</span>：等同 --partial --progress --partial：當傳輸中斷時，保留不完整的檔案
+* <span class="hl-green mono">--progress</span>：讓傳輸過程有進度可看
+* <span class="hl-green mono">--dry-run</span>：測試指令的結果，但不會真的進行同步，可用在先檢查哪些檔案會同步，很重要的參數
+* <span class="hl-green mono">--delete</span>：沒有加這個參數的時候，來源端只會不斷的把新東西同步到目的端，一旦加了 --delete，rsync 會把來源端沒有但目的端有的檔案刪掉，讓兩個資料夾完完全全的呈現一致的內容
+* <span class="hl-green mono">--exclude=PATTERN</span>：排除不想同步的檔案
+* <span class="hl-green mono">--exclude-from=FILE</span>：讀取自訂的列表，使用列表的內容來排除不想同步的檔案，在排除多個檔案時較為實用。列表中的路徑必須是以來源端來看的相對路徑，每一行為一個要排除的資料夾或檔案
 
 
 ## 使用方法
@@ -136,7 +136,7 @@ rsync 另外還有一種 daemon 模式，用起來跟 samba 與 nfs 類似，必
 
 ### Server 端設定
 
-首先要在 server 與 client 都安裝 rsync，然後編輯 server 端的 {{< blue >}}/etc/rsyncd.conf{{< /blue >}}
+首先要在 server 與 client 都安裝 rsync，然後編輯 server 端的 <span class="hl-blue">/etc/rsyncd.conf</span>
 
 ```bash
 vim /etc/rsyncd.conf
@@ -168,11 +168,11 @@ auth users= fox  # 允許的使用者
 secrets file = /etc/rsyncd.secrets
 ```
 
-有關 uid 與 gid，{{< green >}}可以的話最好是 server 端與 client 的使用者都要同一個 uid 與 gid ，然後 server 的帳號大小寫一定要正確{{< /green >}}！！不然 uid gid 即使設為 server 使用者的所屬，一樣會有問題。以我自己用 NAS 的例子，原本用 root 讓 NAS 裡的同步檔案全變成 1000:1000 是因為在 clinet 裡我的帳號 fox 的 uid 與 gid 就是1000，所以同步上傳後，那些檔案的擁有者也改變了，而因為NAS裡沒有 fox，Fox 的 uid 也不是1000
+有關 uid 與 gid，<span class="hl-green">可以的話最好是 server 端與 client 的使用者都要同一個 uid 與 gid ，然後 server 的帳號大小寫一定要正確</span>！！不然 uid gid 即使設為 server 使用者的所屬，一樣會有問題。以我自己用 NAS 的例子，原本用 root 讓 NAS 裡的同步檔案全變成 1000:1000 是因為在 clinet 裡我的帳號 fox 的 uid 與 gid 就是1000，所以同步上傳後，那些檔案的擁有者也改變了，而因為NAS裡沒有 fox，Fox 的 uid 也不是1000
 
 auth users 必須參照 secrets file，file 裡面沒有的帳號無法使用，例如當 secrets file 裡的帳號是 acid :111，那 clinet 端使用 rynsc 時就要用 acid 來登入，ex. acid@192.168.122.xx::backup，這裡跟 samba 很類似，不看 server 端的帳號而是看 rsync 自己的帳號密碼系統。
 
-新增 {{< blue >}}/etc/rsyncd.secrets{{< /blue >}} 檔，格式為：「{{< blue >}}使用者：密碼{{< /blue >}}」，並將該文件權限設為600  (必要！)
+新增 <span class="hl-blue">/etc/rsyncd.secrets</span> 檔，格式為：「<span class="hl-blue">使用者：密碼</span>」，並將該文件權限設為600  (必要！)
 
 ```bash
 echo "fox:123" | sudo tee /etc/rsyncd.secrets
@@ -216,8 +216,8 @@ sudo chcon -t public_content_rw_t /home/[UserName]/Music
 sudo chcon -t public_content_rw_t /home/[UserName]
 ```
 
-* {{< red >}}chcon 加上參數 -R 可以連同該目錄下的次目錄也同時修改{{< /red >}}
-* {{< red >}}target 資料夾與它上一層的資料夾都必須設定！！{{< /red >}}
+* <span class="hl-red">chcon 加上參數 -R 可以連同該目錄下的次目錄也同時修改</span>
+* <span class="hl-red">target 資料夾與它上一層的資料夾都必須設定！！</span>
 
 \
 如果有開啟 firewalld，檢查防火牆的狀態

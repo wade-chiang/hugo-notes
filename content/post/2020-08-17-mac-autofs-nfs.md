@@ -35,7 +35,7 @@ sudo vim /etc/auto_master
 Mac 的 auto_master 裡已經有一些預設的路徑了，我們把自己的設定寫在最下面就好
 
 \
-接著建立 map file {{< blue >}}/etc/auto.nfs{{< /blue >}}
+接著建立 map file <span class="hl-blue">/etc/auto.nfs</span>
 
 ```bash
 share -rw,resvport 192.168.199.169:/home/wade
@@ -50,7 +50,7 @@ sudo automount -vc
 ```
 
 \
-重啟後，試著進入剛才指定的目錄 {{< blue >}}/Users/Wade/nfs_mount{{< /blue >}}，就會自動掛載 NFS 了
+重啟後，試著進入剛才指定的目錄 <span class="hl-blue">/Users/Wade/nfs_mount</span>，就會自動掛載 NFS 了
 
 ```bash
 cd /Users/Wade/nfs_mount/share && ls -al

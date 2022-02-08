@@ -22,7 +22,7 @@ Wine 是讓 Linux、macOS 執行 Windows 程式的一個軟體。全名為「Win
 
 ## 安裝 Wine
 
-前往 [Wine Download](https://wiki.winehq.org/Download) 頁面選擇適用的版本，本篇使用 {{< green >}}Ubuntu 20.04.1{{< /green >}}，安裝步驟建議以官網為主。
+前往 [Wine Download](https://wiki.winehq.org/Download) 頁面選擇適用的版本，本篇使用 <span class="hl-green">Ubuntu 20.04.1</span>，安裝步驟建議以官網為主。
 
 如果系統是 64 位元的話（應該大多都是了），先允許安裝 32 位元架構的程式
 
@@ -51,7 +51,7 @@ sudo add-apt-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal mai
 sudo apt install --install-recommends winehq-stable
 ```
 
-也可以選擇安裝 {{< blue >}}winehq-staging{{< /blue >}}，可以有更多最新的功能與較好的效能，不過個人偏好穩定版
+也可以選擇安裝 <span class="hl-blue">winehq-staging</span>，可以有更多最新的功能與較好的效能，不過個人偏好穩定版
 
 ## 初次設定 Wine
 
@@ -60,7 +60,7 @@ sudo apt install --install-recommends winehq-stable
 winecfg
 ```
 
-執行 {{< blue >}}winecfg{{< /blue >}} 可以進行 Wine 的設定，首次執行時會請使用者安裝幾個套件如 wine-mono 及 Gecko，然後會建立初始化的資料夾在 {{< blue >}}~/.wine{{< /blue >}} 裡面，接著就可以進入設定畫面
+執行 <span class="hl-blue">winecfg</span> 可以進行 Wine 的設定，首次執行時會請使用者安裝幾個套件如 wine-mono 及 Gecko，然後會建立初始化的資料夾在 <span class="hl-blue">~/.wine</span> 裡面，接著就可以進入設定畫面
 
 ### 應用程式
 
@@ -90,7 +90,7 @@ Wine 可以針對不同的程式選擇適合的 Windows 版本，有點類似 Wi
 
 ![](https://image.wadeism.net/wine05.png)
 
-設定讓 Windows 的 C 槽、D 槽之類的儲存裝置連結到本機的資料夾或是光碟機等設備，預設 C 槽會連結到 {{< blue >}}/home/user/.wine/drive_c{{< /blue >}}，Z 槽會連結到本機的根目錄 {{< blue >}}/{{< /blue >}}
+設定讓 Windows 的 C 槽、D 槽之類的儲存裝置連結到本機的資料夾或是光碟機等設備，預設 C 槽會連結到 <span class="hl-blue">/home/user/.wine/drive_c</span>，Z 槽會連結到本機的根目錄 <span class="hl-blue">/</span>
 
 ### 音效
 
@@ -118,11 +118,11 @@ Wine 可以針對不同的程式選擇適合的 Windows 版本，有點類似 Wi
 
 ![](https://image.wadeism.net/wine10.png)
 
-預設的安裝目錄 {{< blue >}}C:\users\wade\Mp3tag{{< /blue >}} 其實就是 {{< blue >}}~/.wine/drive_c/users/wade{{< /blue >}}，因為 C 槽預設已經跟 {{< blue >}}~/.wine/drive_c{{< /blue >}} 做連結了
+預設的安裝目錄 <span class="hl-blue">C:\users\wade\Mp3tag</span> 其實就是 <span class="hl-blue">~/.wine/drive_c/users/wade</span>，因為 C 槽預設已經跟 <span class="hl-blue">~/.wine/drive_c</span> 做連結了
 
 ## 使用 Wine 執行 Windows 程式
 
-安裝完後，通常 Wine 會自動在系統的程式集裡面建立捷徑，如果沒有的話，手動執行的方法也跟安裝一樣，先到 {{< blue >}}~/.wine/drive_c/users/wade/Mp3tag{{< /blue >}} 裡找到程式的執行檔 {{< blue >}}Mp3tag.exe{{< /blue >}}
+安裝完後，通常 Wine 會自動在系統的程式集裡面建立捷徑，如果沒有的話，手動執行的方法也跟安裝一樣，先到 <span class="hl-blue">~/.wine/drive_c/users/wade/Mp3tag</span> 裡找到程式的執行檔 <span class="hl-blue">Mp3tag.exe</span>
 
 ![](https://image.wadeism.net/wine11.png)
 
@@ -140,7 +140,7 @@ Wine 可以針對不同的程式選擇適合的 Windows 版本，有點類似 Wi
 wine ./Mp3tag
 ```
 
-{{< red >}}建議優先選擇免安裝版本的軟體，通常都可以直接用 Wine 順利執行，省去安裝的麻煩{{< /red >}}。（但盡量以官方的免安裝版為主）
+<span class="hl-red">建議優先選擇免安裝版本的軟體，通常都可以直接用 Wine 順利執行，省去安裝的麻煩</span>。（但盡量以官方的免安裝版為主）
 
 如果安裝時沒有自動建立捷徑，或是使用免安裝的程式，我們也可以為這些 Windows 程式建一個捷徑來開啟它，在 GUI 的環境中非常的實用，建立的方法可以參考 [Ubuntu 自訂應用程式捷徑](https://notes.wadeism.net/post/ubuntu-custom-app-shortcut/) 這篇文章
 

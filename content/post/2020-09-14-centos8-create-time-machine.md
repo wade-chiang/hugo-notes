@@ -14,14 +14,14 @@ tags:
 
 Time Machine 是 Mac 上的備份功能，以往要買貴貴的 AirPort Time Capsule 才能使用，後來市售的 NAS 也多半有這項功能，現在也可以用外接硬碟來做，不過其實家裡如果有台 Linux Server 的話也是可以搞一台 custom 的 Time Machine Server 來玩，不僅便宜，而且容量也可以弄比較充裕。
 
-大家應該多少聽過 [SAMBA ](https://notes.wadeism.net/post/learning-samba/)這個 Windows 與 Linux 通用的 File Server，Mac 則是有它專屬的協定叫 {{< blue >}}AFP{{< /blue >}}，基本上 Time Machine 就是利用 AFP File Server 來做備份檔的 storage，現在似乎也可以用 SAMBA 來做 Time Machine 的 Server，不過這邊還是先介紹用 Linux 建一個 AFP Server 來給 macOS 使用。
+大家應該多少聽過 [SAMBA ](https://notes.wadeism.net/post/learning-samba/)這個 Windows 與 Linux 通用的 File Server，Mac 則是有它專屬的協定叫 <span class="hl-blue">AFP</span>，基本上 Time Machine 就是利用 AFP File Server 來做備份檔的 storage，現在似乎也可以用 SAMBA 來做 Time Machine 的 Server，不過這邊還是先介紹用 Linux 建一個 AFP Server 來給 macOS 使用。
 
 
 ## 環境說明
 
-系統：{{< green >}}CentOS 8 minimal install{{< /green >}}
+系統：<span class="hl-green">CentOS 8 minimal install</span>
 
-Time Machine 使用的備份目錄：{{< blue >}}/media/tmBackup{{< /blue >}}（已掛載一顆 200G  的空白磁區到該目錄）
+Time Machine 使用的備份目錄：<span class="hl-blue">/media/tmBackup</span>（已掛載一顆 200G  的空白磁區到該目錄）
 
 
 ## Server side
@@ -82,12 +82,12 @@ time machine = yes
 EOF
 ```
 
-* {{< green >}}{{< mono >}}[My Time Machine]{{< /green >}}{{< /mono >}}：AFP 的 share name，也是 macOS 裡顯示的磁碟名稱
-* {{< green >}}{{< mono >}}path{{< /green >}}{{< /mono >}}：備份檔存放的目錄
-* {{< green >}}{{< mono >}}valid users{{< /green >}}{{< /mono >}}：可使用的 user，這邊新增一個叫 {{< blue >}}tmUser{{< /blue >}} 的使用者
-* {{< green >}}{{< mono >}}time machine = yes{{< /green >}}{{< /mono >}}：宣告該目錄可被 Time Machine 使用
+* <span class="hl-green mono">[My Time Machine]</span>：AFP 的 share name，也是 macOS 裡顯示的磁碟名稱
+* <span class="hl-green mono">path</span>：備份檔存放的目錄
+* <span class="hl-green mono">valid users</span>：可使用的 user，這邊新增一個叫 <span class="hl-blue">tmUser</span> 的使用者
+* <span class="hl-green mono">time machine = yes</span>：宣告該目錄可被 Time Machine 使用
 
-{{< red >}}/etc/netatalk/afp.conf，這個設定檔就跟 SAMBA 的 config 一樣，裡面可以定義許多不同的 share point 讓 macOS 來掛載{{< /red >}}
+<span class="hl-red">/etc/netatalk/afp.conf，這個設定檔就跟 SAMBA 的 config 一樣，裡面可以定義許多不同的 share point 讓 macOS 來掛載</span>
 
 \
 新增 netatalk 的 afpd 設定檔
@@ -107,11 +107,11 @@ cat << EOF | sudo tee -a /etc/netatalk/AppleVolumes.default
 EOF
 ```
 
-* {{< green >}}{{< mono >}}/media/tmBackup{{< /green >}}{{< /mono >}}：備份檔存放的目錄，請依環境自訂
-* {{< green >}}{{< mono >}}allow{{< /green >}}{{< /mono >}}： 要使用的 user，本例為 {{< blue >}}tmUser{{< /blue >}}
+* <span class="hl-green mono">/media/tmBackup</span>：備份檔存放的目錄，請依環境自訂
+* <span class="hl-green mono">allow</span>： 要使用的 user，本例為 <span class="hl-blue">tmUser</span>
 
 \
-編輯 {{< blue >}}/etc/nsswitch.conf{{< /blue >}} 檔
+編輯 <span class="hl-blue">/etc/nsswitch.conf</span> 檔
 
 ```bash
 cat << EOF | sudo tee -a /etc/nsswitch.conf
@@ -132,14 +132,14 @@ sudo passwd tmUser
 ```
 
 \
-調整 Time Machine 備份路徑 {{< blue >}}/media/tmBackup{{< /blue >}} 的權限
+調整 Time Machine 備份路徑 <span class="hl-blue">/media/tmBackup</span> 的權限
 
 ```bash
 sudo chown tmUser: /media/tmBackup
 ```
 
 \
-設定防火牆，開啟 {{< blue >}}tcp 548 port{{< /blue >}} 給 afpd、{{< blue >}}udp 5353 port{{< /blue >}} 給 avahi
+設定防火牆，開啟 <span class="hl-blue">tcp 548 port</span> 給 afpd、<span class="hl-blue">udp 5353 port</span> 給 avahi
 
 ```bash
 sudo firewall-cmd --add-port=548/tcp --permanent
@@ -170,22 +170,22 @@ sudo systemctl start avahi-daemon netatalk
 
 Server 設定好之後，要在 macOS 上開啟 Time Machine 基本上就是照一般的流程即可
 
-首先開啟 {{< blue >}}系統偏好設定{{< /blue >}} 接著選 {{< blue >}}Time Machine{{< /blue >}}
+首先開啟 <span class="hl-blue">系統偏好設定</span> 接著選 <span class="hl-blue">Time Machine</span>
 
 ![](https://image.wadeism.net/tm01.png)
 
 \
-接著點選 {{< blue >}}選擇備份磁碟{{< /blue >}}
+接著點選 <span class="hl-blue">選擇備份磁碟</span>
 
 ![](https://image.wadeism.net/tm02.png)
 
 \
-選擇 {{< blue >}}My Time Machine{{< /blue >}}
+選擇 <span class="hl-blue">My Time Machine</span>
 
 ![](https://image.wadeism.net/tm03.png)
 
 \
-選完後會跳出輸入使用者名稱與密碼，用剛才另外建立的 {{< blue >}}tmUser{{< /blue >}}
+選完後會跳出輸入使用者名稱與密碼，用剛才另外建立的 <span class="hl-blue">tmUser</span>
 
 ![](https://image.wadeism.net/tm04.png)
 
@@ -199,7 +199,7 @@ Server 設定好之後，要在 macOS 上開啟 Time Machine 基本上就是照�
 ![](https://image.wadeism.net/tm07.png)
 
 \
-回到 Server 上看，{{< blue >}}/media/tmBackup{{< /blue >}} 裡出現 Time Machine 的檔案了，記得先切換到 tmUser
+回到 Server 上看，<span class="hl-blue">/media/tmBackup</span> 裡出現 Time Machine 的檔案了，記得先切換到 tmUser
 
 ```bash
 ls -al /media/tmBackup/

@@ -20,9 +20,9 @@ tags:
 
 這麼常用到的軟體，如果每次都要這樣開實在是非常的麻煩，其實我們可以使用自訂捷徑的方式，將這些非常規的軟體放入 app 列表中，如此一來就會像我們平常在開 native 的程式一樣簡單許多。
 
-首先，在網路上找該軟體的 PNG icon，例如我想要做 foobar2000 與 mp3tag 的捷徑，就去網站上找這兩個軟體的圖示，外型可以隨自己的喜好，但最好是 PNG 檔，下載後請固定放在一個地方，本例的存放位置為 {{< blue >}}~/.icons{{< /blue >}}
+首先，在網路上找該軟體的 PNG icon，例如我想要做 foobar2000 與 mp3tag 的捷徑，就去網站上找這兩個軟體的圖示，外型可以隨自己的喜好，但最好是 PNG 檔，下載後請固定放在一個地方，本例的存放位置為 <span class="hl-blue">~/.icons</span>
 
-在 {{< blue >}}~/.local/share/applications{{< /blue >}} 目錄底下新增一個捷徑檔，本例為 foobar2000
+在 <span class="hl-blue">~/.local/share/applications</span> 目錄底下新增一個捷徑檔，本例為 foobar2000
     
 ```bash
 sudo vim ~/.local/share/applications/foobar2000.desktop
@@ -42,11 +42,11 @@ Type=Application
 Categories=Audio;
 ```
 
-* {{< green >}}{{< mono >}}Name{{< /green >}}{{< /mono >}}：軟體名稱，這個名稱會是之後在軟體列表裡所看到的名字
-* {{< green >}}{{< mono >}}Exec{{< /green >}}{{< /mono >}}：軟體的執行方式，上面的例子表示，{{< red >}}使用 wine 來執行 foobar 的執行檔{{< /red >}}
-* {{< green >}}{{< mono >}}Icon{{< /green >}}{{< /mono >}}：軟體的圖示，後面接圖示的路徑即可
-* {{< green >}}{{< mono >}}Type{{< /green >}}{{< /mono >}}：該物件屬於 Application
-* {{< green >}}{{< mono >}}Categories{{< /green >}}{{< /mono >}}：該程式的分類，這個分類似乎是有一個固定規範的，不是隨便亂取就可以，app 列表可能會依照這個來歸類這個軟體
+* <span class="hl-green mono">Name</span>：軟體名稱，這個名稱會是之後在軟體列表裡所看到的名字
+* <span class="hl-green mono">Exec</span>：軟體的執行方式，上面的例子表示，<span class="hl-red">使用 wine 來執行 foobar 的執行檔</span>
+* <span class="hl-green mono">Icon</span>：軟體的圖示，後面接圖示的路徑即可
+* <span class="hl-green mono">Type</span>：該物件屬於 Application
+* <span class="hl-green mono">Categories</span>：該程式的分類，這個分類似乎是有一個固定規範的，不是隨便亂取就可以，app 列表可能會依照這個來歸類這個軟體
 
 
 存檔離開後，就可以在 App 列表中找到我們自訂的軟體捷徑了

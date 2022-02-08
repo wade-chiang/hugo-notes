@@ -11,7 +11,7 @@ tags:
 - Ubuntu
 ---
 
-在 Ubuntu 裡可以用 {{< blue >}}bchunk{{< /blue >}} 這個軟體來轉檔，方法很簡單
+在 Ubuntu 裡可以用 <span class="hl-blue">bchunk</span> 這個軟體來轉檔，方法很簡單
 
 \
 安裝 bchunk
@@ -49,7 +49,7 @@ Writing tracks:
 6: Rich3-06.cdr   17/17   MB  [********************] 100 %
 ```
 
-程式後的第一個選項為 *.bin，第二個選項為 *.cue，最後一個選項則是轉檔出來的 iso 檔名，{{< red >}}建議在檔名最後加個「 - 」，這樣轉出來的檔名也會比較整齊{{< /red >}}
+程式後的第一個選項為 *.bin，第二個選項為 *.cue，最後一個選項則是轉檔出來的 iso 檔名，<span class="hl-red">建議在檔名最後加個「 - 」，這樣轉出來的檔名也會比較整齊</span>
 
 如果 cue 與 bin 的映像檔裡沒有 cd 音軌的話，應該只會轉出一個 iso 檔，但由於這次我要轉的是有 cd 音軌的映像檔，所以轉檔後資料部分在 .iso，音軌部分會照軌數轉成 .cdr 檔（原生的 CD 音源格式，可以用來燒錄成 Audio CD，也可以轉成 wav 檔）
 
@@ -84,7 +84,7 @@ Writing tracks:
 
 不過說真的，把 cue & bin 轉成 iso 檔其實是蠻沒必要的行為，畢竟會用這種格式的 cd 很多都是有 audio track 的，轉換後檔案還被分的更多，感覺並沒有比較方便。
 
-就我的印象中，可以將帶 audio track 的 cd 轉成唯一單檔 image 的格式好像是 {{< blue >}}.img{{< /blue >}} 與 {{< blue >}}.nrg{{< /blue >}}，不過一般最常用的還是  cue + bin，純 audio cd 的話則是  cue + wav
+就我的印象中，可以將帶 audio track 的 cd 轉成唯一單檔 image 的格式好像是 <span class="hl-blue">.img</span> 與 <span class="hl-blue">.nrg</span>，不過一般最常用的還是  cue + bin，純 audio cd 的話則是  cue + wav
 
 * * *
 

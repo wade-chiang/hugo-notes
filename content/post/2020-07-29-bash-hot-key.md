@@ -18,112 +18,112 @@ tags:
 
 ## 超好用必學快捷鍵
 
-* {{< green >}}{{< mono >}}Ctrl + J{{< /green >}}{{< /mono >}}
+* <span class="hl-green mono">Ctrl + J</span>
 
-  同 {{< blue >}}Enter{{< /blue >}}，用 HHKB 的話手可以不用離開鍵盤！
+  同 <span class="hl-blue">Enter</span>，用 HHKB 的話手可以不用離開鍵盤！
 
-* {{< green >}}{{< mono >}}Ctrl + L{{< /green >}}{{< /mono >}}
+* <span class="hl-green mono">Ctrl + L</span>
 
-  將畫面清除乾淨，同 {{< blue >}}clear{{< /blue >}} 指令
+  將畫面清除乾淨，同 <span class="hl-blue">clear</span> 指令
 
-* {{< green >}}{{< mono >}}Ctrl + R{{< /green >}}{{< /mono >}}
+* <span class="hl-green mono">Ctrl + R</span>
 
-  搜尋指令的 history 並自動補齊，按下 {{< blue >}}Ctrl + R{{< /blue >}} 後再打上指令會就最近的相同指令補齊
+  搜尋指令的 history 並自動補齊，按下 <span class="hl-blue">Ctrl + R</span> 後再打上指令會就最近的相同指令補齊
 
-* {{< green >}}{{< mono >}}Alt + .{{< /green >}}{{< /mono >}}
+* <span class="hl-green mono">Alt + .</span>
 
-  自動貼上最後輸入的文字，例如上次執行了 cat abc，按 {{< blue >}}Alt + .{{< /blue >}} 後就會出現 abc
+  自動貼上最後輸入的文字，例如上次執行了 cat abc，按 <span class="hl-blue">Alt + .</span> 後就會出現 abc
 
-* {{< green >}}{{< mono >}}Tab{{< /green >}}{{< /mono >}}
+* <span class="hl-green mono">Tab</span>
 
-  鼎鼎大名的自動補齊，可以補齊指令與檔案，配上 {{< blue >}}bash-completion{{< /blue >}} 更是如虎添翼
+  鼎鼎大名的自動補齊，可以補齊指令與檔案，配上 <span class="hl-blue">bash-completion</span> 更是如虎添翼
 
 
 ## 程式切換與停止
 
-* {{< green >}}{{< mono >}}Ctrl + Z{{< /green >}}{{< /mono >}}
+* <span class="hl-green mono">Ctrl + Z</span>
 
   將目前的程式丟到背景執行，有點類似 Windows 裡的縮到最小
 
-* {{< green >}}{{< mono >}}fg{{< /green >}}{{< /mono >}}
+* <span class="hl-green mono">fg</span>
 
   把剛才丟到背景執行的程式叫回來
 
-* {{< green >}}{{< mono >}}Ctrl + C{{< /green >}}{{< /mono >}}
+* <span class="hl-green mono">Ctrl + C</span>
 
-  關閉目前的程式，同 {{< blue >}}kill -2{{< /blue >}}
+  關閉目前的程式，同 <span class="hl-blue">kill -2</span>
 
 
 ## 取代方向鍵
 
-* {{< green >}}{{< mono >}}Ctrl + P{{< /green >}}{{< /mono >}}
+* <span class="hl-green mono">Ctrl + P</span>
 
   同方向鍵 ↑，找前面的指令
 
-* {{< green >}}{{< mono >}}Ctrl + N{{< /green >}}{{< /mono >}}
+* <span class="hl-green mono">Ctrl + N</span>
 
   同方向鍵 ↓，找後面的指令
 
-* {{< green >}}{{< mono >}}Ctrl + B{{< /green >}}{{< /mono >}}
+* <span class="hl-green mono">Ctrl + B</span>
 
   同方向鍵 ←，游標往左移一格
 
-* {{< green >}}{{< mono >}}Ctrl + F{{< /green >}}{{< /mono >}}
+* <span class="hl-green mono">Ctrl + F</span>
 
   同方向鍵 →，游標左右移一格
 
 ## 快速移動游標
 
-* {{< green >}}{{< mono >}}Ctrl + A{{< /green >}}{{< /mono >}}
+* <span class="hl-green mono">Ctrl + A</span>
 
-  同 {{< blue >}}Home{{< /blue >}} 鍵，移到該行的最前面
+  同 <span class="hl-blue">Home</span> 鍵，移到該行的最前面
 
-* {{< green >}}{{< mono >}}Ctrl + E{{< /green >}}{{< /mono >}}
+* <span class="hl-green mono">Ctrl + E</span>
 
-  同 {{< blue >}}End{{< /blue >}} 鍵，移到該行的最後面
+  同 <span class="hl-blue">End</span> 鍵，移到該行的最後面
 
-* {{< green >}}{{< mono >}}Alt + B{{< /green >}}{{< /mono >}}
+* <span class="hl-green mono">Alt + B</span>
 
   將游標往左移動一個單字
 
-* {{< green >}}{{< mono >}}Alt + F{{< /green >}}{{< /mono >}}
+* <span class="hl-green mono">Alt + F</span>
 
   將游標往右移動一個單字
 
 
 ## 字元刪除
 
-* {{< green >}}{{< mono >}}Ctrl + W{{< /green >}}{{< /mono >}}
+* <span class="hl-green mono">Ctrl + W</span>
 
   刪除游標前面的最後一個單字
 
-* {{< green >}}{{< mono >}}Alt + D{{< /green >}}{{< /mono >}}
+* <span class="hl-green mono">Alt + D</span>
 
   刪除游標後面的一個單字
 
-* {{< green >}}{{< mono >}}Ctrl + H{{< /green >}}{{< /mono >}}
+* <span class="hl-green mono">Ctrl + H</span>
 
-  同 {{< blue >}}Backspace{{< /blue >}}，刪除游標前的一個字元
+  同 <span class="hl-blue">Backspace</span>，刪除游標前的一個字元
 
-* {{< green >}}{{< mono >}}Ctrl + D{{< /green >}}{{< /mono >}}
+* <span class="hl-green mono">Ctrl + D</span>
 
-  移除游標後的一個字元，{{< red >}}在沒有任何的字元的空行狀態下，會變成離開 shell{{< /red >}}
+  移除游標後的一個字元，<span class="hl-red">在沒有任何的字元的空行狀態下，會變成離開 shell</span>
 
-* {{< green >}}{{< mono >}}Ctrl + K{{< /green >}}{{< /mono >}}
+* <span class="hl-green mono">Ctrl + K</span>
 
   刪除游標之後的所有文字
 
-* {{< green >}}{{< mono >}}Ctrl + U{{< /green >}}{{< /mono >}}
+* <span class="hl-green mono">Ctrl + U</span>
 
   刪除游標之前的所有文字
 
 
 ## 字元互換
 
-* {{< green >}}{{< mono >}}Ctrl + T{{< /green >}}{{< /mono >}}
+* <span class="hl-green mono">Ctrl + T</span>
 
   相鄰的兩個字元會互換位置，例如打 ih，再打 Ctrl + T 會變成 hi
 
-* {{< green >}}{{< mono >}}Esc + T{{< /green >}}{{< /mono >}}
+* <span class="hl-green mono">Esc + T</span>
 
   相鄰的兩個單字會互換位置，例如打 take one，再打 ESC + T 會變成 one take

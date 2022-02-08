@@ -18,16 +18,16 @@ tags:
 
 我家有台 Brother 的 MFC-L2740DW 雷射複合機。是台不算太新，但功能齊全、CP值又高的黑白雷射複合機，可影印、掃瞄、傳真、列印，基本上想拿 Manjaro 來當日常環境的話，掃瞄跟列印算是很必要的功能。
 
-在 [Brother 的官網](https://support.brother.com/g/b//downloadtop.aspx?branch=apweb&c=tw&lang=zh&prod=mfcl2740dw_us_eu_as)裡一直都有提供 Linux 的驅動程式，分別是 deb 與 rpm 的安裝包，也算是涵蓋了兩大陣營，但並沒有 Arch 系的安裝方法，初入 Arch 體系的我雖然一開始有點不知所措，但在 {{< blue >}}yay{{< /blue >}} 的指令下去之後，真的是被 AUR 的完整度嚇到了，下面就來介紹我的安裝過程：
+在 [Brother 的官網](https://support.brother.com/g/b//downloadtop.aspx?branch=apweb&c=tw&lang=zh&prod=mfcl2740dw_us_eu_as)裡一直都有提供 Linux 的驅動程式，分別是 deb 與 rpm 的安裝包，也算是涵蓋了兩大陣營，但並沒有 Arch 系的安裝方法，初入 Arch 體系的我雖然一開始有點不知所措，但在 <span class="hl-blue">yay</span> 的指令下去之後，真的是被 AUR 的完整度嚇到了，下面就來介紹我的安裝過程：
 
 
 ## 環境說明
 
-系統：{{< blue >}}Manjaro 21.1.4 Minimal{{< /blue >}} 版本
+系統：<span class="hl-blue">Manjaro 21.1.4 Minimal</span> 版本
 
 複合機連接方式：內部網路 IP 連線
 
-（本例事務機的 IP 為 {{< blue >}}192.168.1.210{{< /blue >}}）
+（本例事務機的 IP 為 <span class="hl-blue">192.168.1.210</span>）
 
 
 ## 列印功能安裝教學
@@ -170,7 +170,7 @@ Register the new print at "http://localhost:631/".
 (1/1) Arming ConditionNeedsUpdate...
 ```
 
-仔細看安裝過程的訊息，可以看到有個叫 {{< blue >}}mfcl2740dwlpr-3.2.0-1.i386.rpm{{< /blue >}} 與 {{< blue >}}mfcl2740dwcupswrapper-3.2.0-1.i386.rpm{{< /blue >}} 的東東，感覺很像是 Brother 官網裡的 rpm 包，也許這代表 Arch 是可以安裝 deb 或 rpm？可能之後有機會可以再來研究。
+仔細看安裝過程的訊息，可以看到有個叫 <span class="hl-blue">mfcl2740dwlpr-3.2.0-1.i386.rpm</span> 與 <span class="hl-blue">mfcl2740dwcupswrapper-3.2.0-1.i386.rpm</span> 的東東，感覺很像是 Brother 官網裡的 rpm 包，也許這代表 Arch 是可以安裝 deb 或 rpm？可能之後有機會可以再來研究。
 
 \
 安裝印表機的設定套件
@@ -192,14 +192,14 @@ sudo systemctl enable cups.service && sudo systemctl start cups.service
 ![](https://image.wadeism.net/manjaro_l2740dw_01.png#center)
 
 \
-開啟後先點選右上的解除鎖定，輸入密碼後再點選畫面正中央的「{{< blue >}}加入{{< /blue >}}」
+開啟後先點選右上的解除鎖定，輸入密碼後再點選畫面正中央的「<span class="hl-blue">加入</span>」
 
 ![](https://image.wadeism.net/manjaro_l2740dw_02.png#center)
 
 ![](https://image.wadeism.net/manjaro_l2740dw_03.png#center)
 
 \
-在選取裝置的畫面中的「{{< blue >}}網路印表機{{< /blue >}}」→「{{< blue >}}尋找網路印表機{{< /blue >}}」裡打上印表機的 IP 就可以找到 Brother MFC-L2740DW
+在選取裝置的畫面中的「<span class="hl-blue">網路印表機</span>」→「<span class="hl-blue">尋找網路印表機</span>」裡打上印表機的 IP 就可以找到 Brother MFC-L2740DW
 
 ![](https://image.wadeism.net/manjaro_l2740dw_04.png#center)
 
@@ -254,7 +254,7 @@ brsaneconfig4 -a name="Brother" model="YOURMODELHERE" ip=YOUR.SCANNER.IP.HERE
 (2/2) Arming ConditionNeedsUpdate...
 ```
 
-在安裝訊息的最後，有一段設定掃瞄器的指令「{{< blue >}}brsaneconfig4 -a name="Brother" model="YOURMODELHERE" ip=YOUR.SCANNER.IP.HERE{{< /blue >}}」
+在安裝訊息的最後，有一段設定掃瞄器的指令「<span class="hl-blue">brsaneconfig4 -a name="Brother" model="YOURMODELHERE" ip=YOUR.SCANNER.IP.HERE</span>」
 
 我們就按照上面的指令，改成事務機的型號與 IP 即可
 

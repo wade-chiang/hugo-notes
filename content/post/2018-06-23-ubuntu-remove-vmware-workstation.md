@@ -11,7 +11,7 @@ tags:
 - Ubuntu
 ---
 
-一般在 Linux 安裝 VMWare 時，不管是 player 還是 workstation 都是下載官網的 {{< blue >}}.bundle{{< /blue >}} 檔來安裝，不過安裝完後常常不知道要怎麼移除。其實在安裝過後，系統會多出一個「vmware-installer」的小程式，這個程式就是拿來移除 VMWare 用的，另外也有其它的功能可詳見說明檔（本例為 Ubuntu，其它版本的 Linux 應該也可以使用）
+一般在 Linux 安裝 VMWare 時，不管是 player 還是 workstation 都是下載官網的 <span class="hl-blue">.bundle</span> 檔來安裝，不過安裝完後常常不知道要怎麼移除。其實在安裝過後，系統會多出一個「vmware-installer」的小程式，這個程式就是拿來移除 VMWare 用的，另外也有其它的功能可詳見說明檔（本例為 Ubuntu，其它版本的 Linux 應該也可以使用）
 
 顯示 vmware-installer 的功能
 
