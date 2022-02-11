@@ -1,11 +1,11 @@
-baseurl = "https://lab.wadeism.net/"
+baseurl = "https://notes.wadeism.net/"
 title = "Nothing but.."
 theme = "hugo-nederburg-theme"
 languageCode = "en-us"
 # Enable comments by entering your Disqus shortname
 disqusShortname = ""
 # Enable Google Analytics by entering your tracking code
-googleAnalytics = ""
+googleAnalytics = "UA-120924943-1"
 preserveTaxonomyNames = true
 paginate = 20 #frontpage pagination
 
@@ -25,7 +25,7 @@ summaryLength = 20
 [params]
   # Unmark to use post folder for images. Default is static folder.
   #usepostimgfolder = true
-  slogan = "..Something"
+  slogan = "Something here"
   description = "Describe your website" # meta description
   # You need to set author to have an author bio. If you have a writer in the markdown file it will override this.
   author = "wade"

@@ -4,7 +4,7 @@ date: 2020-12-05 15:04:52+00:00
 draft: false
 title: 使用 Linux 或 Mac 下單買賣股票
 type: post
-url: /post/stock-for-linux-and-mac/
+url: /post/stock-trading-on-linux-and-mac/
 image: "https://image.wadeism.net/esun00.jpg"
 categories:
 - Linux

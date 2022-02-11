@@ -237,3 +237,8 @@ code[class*="language-"], pre[class*="language-"] {
 	font-family:'Fira Code','xingothic-tc';
 	font-weight: 700;
 }
+
+.more-link {
+  font-family: 'Raleway';
+  font-size: 0.625em;
+}

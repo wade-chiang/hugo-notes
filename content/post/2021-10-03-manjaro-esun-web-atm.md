@@ -82,7 +82,6 @@ Sun Oct  3 19:24:28 2021
  Reader 1: Alcor Micro AU9520 01 00
   Event number: 1
   Card state: Card removed,
-\
 ```
 
 \

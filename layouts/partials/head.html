@@ -27,3 +27,24 @@
 <link href="{{ with .OutputFormats.Get "RSS" }}{{ .RelPermalink }}{{ end }}" rel="feed" type="application/rss+xml" title="{{ .Site.Title | default "" }}" />
 {{ end }}
 {{ template "_internal/google_analytics_async.html" . }}
+
+<!---------- Google Analytics ---------->
+{{ if not .Site.IsServer }}
+{{ template "_internal/google_analytics_async.html" . }}
+{{ end }}
+
+<!---------- Custom CSS Import ---------->
+
+<!--  Prism.css for code block style -->
+<link rel="stylesheet" href="{{ "css/prism.css" | absURL }}" >
+
+<!-- Google Font Style -->
+<style>
+  /* Roboto Mono 400, Fira Code 500 */
+  /* @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@500&family=Roboto+Mono&display=swap'); */
+  /* Roboto Mono 400, Fira Code 400 */
+  @import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Roboto+Mono&display=swap');
+</style>
+
+<!-- My Custom CSS Style -->
+<link href="{{ "css/wade_custom.css" | absURL }}?v={{ now.Unix }}" rel="stylesheet" type='text/css' media='all'>
