@@ -176,6 +176,10 @@ h2.excerpt-title {
 	.excerpt-content>article {
 	    font-size: 1.3em;
 	}
+
+    blockquote{
+        font-size: 1.5em;
+    }
 }
 
 
@@ -219,6 +223,10 @@ h2.excerpt-title {
 	/* .excerpt-content{
 		margin-top:1.5em;
 	} */
+
+    blockquote{
+        font-size: 1.3em;
+    }
 }
 
 

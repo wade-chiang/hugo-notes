@@ -28,7 +28,7 @@ SELinux 的全名為 Security Enhanced Linux，顧名思義就是為 Linux 提�
 
 舉例來說，常見的網頁 server Apache 預設都可讀取 /var/www/html 裡的內容，但如果今天我程式寫錯了，讓我的 php 網頁去讀 /tmp 裡的東西，由於 /tmp 在系統裡預設的權限是 777，表示 apache 是可以隨意讀寫 /tmp 的，如果 /tmp 裡有什麼特別的資料，等於全世界連上我的網站的人都有機會看到我的敏感資料了，SELinux 就是在避免這種情況的發生。
 
-><span class="hl-red">基本上 SELinux 的安全機制就是在管理 process 是否可以讀寫檔案、資料夾或是使用 port</span>。它為每個檔案、資料夾、p  ort 加上了專屬的標籤，稱為 SELinux context（SELinux 安全脈絡），透過這個標籤，可以區分每個程式所能讀寫的檔案、資料夾，或是允許使用的 port 是什麼。
+><span class="hl-red">基本上 SELinux 的安全機制就是在管理 process 是否可以讀寫檔案、資料夾或是使用 port</span>。它為每個檔案、資料夾、port 加上了專屬的標籤，稱為 SELinux context（SELinux 安全脈絡），透過這個標籤，可以區分每個程式所能讀寫的檔案、資料夾，或是允許使用的 port 是什麼。
 
 例如我們用 Apache 架網站的內容一般都是放在 /var/www/ 裡面，這個資料夾預設的標籤通常是允許 Apache 來讀取，但如果今天我不想把網頁資料放 /var/www，想放在我的 home 目錄，一般而言 home 目錄預設的標籤是不允許讓 httpd 來存取的，所以瀏覽網頁時一定會失敗，即使 Home 目錄的擁有者是 Apache，權限還設成 777。因此這時要將 home 目錄的 context type 改成與 /var/www 一樣，Apache 才能正常的讀取網頁的資料。
 
