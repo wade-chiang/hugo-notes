@@ -3,7 +3,7 @@ title = "Nothing but.."
 theme = "hugo-nederburg-theme"
 languageCode = "en-us"
 # Enable comments by entering your Disqus shortname
-disqusShortname = ""
+disqusShortname = "notes-wadeism"
 # Enable Google Analytics by entering your tracking code
 googleAnalytics = "UA-120924943-1"
 preserveTaxonomyNames = true
