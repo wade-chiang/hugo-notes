@@ -26,7 +26,7 @@ summaryLength = 20
   # Unmark to use post folder for images. Default is static folder.
   #usepostimgfolder = true
   slogan = "Something here"
-  description = "Describe your website" # meta description
+  description = "My notes for everyone" # meta description
   # You need to set author to have an author bio. If you have a writer in the markdown file it will override this.
   author = "wade"
   authorLink = "https://notes.wadeism.net/"
@@ -34,7 +34,7 @@ summaryLength = 20
     "本站站長"
   ]
   copyright = [
-    "&copy; 2018 Göran Svensson",
+    "&copy; 2022 Wade",
     "Nederburg Hugo Theme by [Appernetic](https://appernetic.io).",
     "A port of Tracks by Compete Themes."
   ]

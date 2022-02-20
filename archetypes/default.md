@@ -2,7 +2,7 @@
 title: 
 date: {{ .Date }}
 type: post
-draft: false
+draft: true
 url: /post/{{ .File.BaseFileName }}
 image: ""
 categories:

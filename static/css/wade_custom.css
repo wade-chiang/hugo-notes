@@ -114,15 +114,19 @@ h2.excerpt-title {
 	}
 
 	/* li裡的p font-size，但li最好保持單純，因此暫無使用  */
-	li>p {
+	/* li>p {
 		font-size: 1.375em;
+	} */
+
+	/* li 的 font-size，原本上面的設定會有點問題，有 p 沒 p會大小不同，因此先改設在 li */
+	li {
+	    font-size: 1.375em;
 	}
 
-	ul {
-		/* font-size: 1.4em; */
-    font-size: 1.37em;
-		/* margin-top: 3em; ul與上排*/
-	}
+	/* ul {
+        font-size: 1.37em;
+		margin-top: 3em; ul與上排
+	} */
 
 	ol {
 		/* font-size: 1.4em; */
