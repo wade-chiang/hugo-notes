@@ -2,7 +2,7 @@
 author: wade
 date: 2018-06-18 07:55:17+00:00
 draft: false
-title: CentOS 7 安裝 XFCE, VM Tools
+title: CentOS 7 安裝 XFCE、VM Tools
 type: post
 url: /post/centos7-install-xfce-vmtools/
 categories:

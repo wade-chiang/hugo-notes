@@ -47,7 +47,7 @@
         <div class="entry-container">
           <div class="entry-content">
             <article>
-              {{ .Content }}
+              {{ replace .Content "<!--adsense-->" (partial "adsense-inarticle.html" .) | safeHTML }}
             </article>
           </div>
           <!--  <div class="sidebar sidebar-after-post-content" id="sidebar-after-post-content">
