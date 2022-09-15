@@ -6,26 +6,30 @@ const mkNode = () => {
   const div2 = document.createElement("div");
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-  const target = document.querySelector(".div2");
+
+  // setup where to append the button
+  const target = document.querySelector("footer");
 
   div1.classList.add("outer");
   div2.classList.add("back-to-top");
   svg.setAttribute('viewBox', "0 0 24 24");
   path.setAttribute("d", "M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z");
 
-  const el = [target,div1, div2, svg, path];
+  const el = [target, div1, div2, svg, path];
 
   for (let i = 1; i < el.length; i++) {
-    el[i-1].appendChild(el[i])
+    el[i - 1].appendChild(el[i])
   }
 }
 
 // addCss function is for adding stytle for back-to-top button
-const addCss = () => {
+const addCss = (color) => {
   document.querySelector(".back-to-top").style.cssText = `
-  background: rgb(255, 82, 82);
+  // background: rgb(255, 82, 82);
+  background: ${color};
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26);
   border-radius: 50%;
+  // border-radius: 15px;
   bottom: 20px;
   right: 20px;
   color: #fff;
@@ -55,21 +59,32 @@ const addCss = () => {
 const showHide = () => {
   $(window).on('scroll', function () {
     // window.setTimeout(function () {
-      if ($(document).scrollTop() >= 400) {
-        $('.outer').fadeIn();
-      }
-      else {
-        $('.outer').fadeOut();
-      }
-    // }, 100);
+    if ($(document).scrollTop() >= 400) {
+      $('.outer').fadeIn();
+    }
+    else {
+      $('.outer').fadeOut();
+    }
   });
 }
 
 
+const clickToTop = (speed) => {
+  $('.outer').on('click', function () {
+    const homeTop = $('body').position().top;
+    $('html').animate({ scrollTop: homeTop }, speed)
+  })
+}
+
+
+
 mkNode()
 
-addCss()
+// addCss('rgb(255, 82, 82)')
+addCss('#4d8f9fb1')
 
 $('.outer').hide()
 
 showHide()
+
+clickToTop(100);
