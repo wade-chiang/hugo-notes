@@ -22,38 +22,59 @@ const mkNode = () => {
   }
 }
 
-// addCss function is for adding stytle for back-to-top button
-const addCss = (color) => {
-  document.querySelector(".back-to-top").style.cssText = `
-  // background: rgb(255, 82, 82);
-  background: ${color};
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26);
-  border-radius: 50%;
-  // border-radius: 15px;
-  bottom: 20px;
-  right: 20px;
-  color: #fff;
-  cursor: pointer;
-  display: block;
-  height: 56px;
-  width: 56px;
-  position: fixed;
-  user-select: none;
-  z-index: 999;
 
-  opacity: 1;
-  outline: 0;
-  transition: bottom .2s, opacity .2s;
-`
+// setCss function is for adding stytle for back-to-top button
+const setCss = (color) => {
 
-  document.querySelector(".back-to-top > svg").style.cssText = `
-  display: block;
-  fill: currentColor;
-  height: 24px;
-  margin: 16px auto 0;
-  width: 24px;
-`
+  let bottomPos;
+  let rightPos;
+
+  if (window.innerWidth >= 1280) {
+    bottomPos = '5rem'
+    rightPos = '6rem'
+  }
+  else {
+    bottomPos = '30px'
+    rightPos = '30px'
+  };
+
+  const backToTopStyle = {
+    'display': 'block',
+    'position': 'fixed',
+    'background': color,
+    'color': '#fff',
+    'cursor': 'pointer',
+    'userSelect': 'none',
+    'borderRadius': '50%',
+    'boxShadow': '0 2px 5px 0 rgba(0, 0, 0, .26)',
+    'width': '56px',
+    'height': '56px',
+    'bottom': bottomPos,
+    'right': rightPos,
+    'zIndex': '999',
+    'opacity': '1',
+    'outline': '0',
+    'transition': 'bottom .2s, opacity .2s'
+  }
+
+  for (const i in backToTopStyle) {
+    document.querySelector('.back-to-top').style[i] = backToTopStyle[i]
+  }
+
+  const svgStyle = {
+    'display': 'block',
+    'fill': 'currentColor',
+    'height': '24px',
+    'margin': '16px auto 0',
+    'width': '24px'
+  }
+
+  for (const i in svgStyle) {
+    document.querySelector('.back-to-top > svg').style[i] = svgStyle[i]
+  }
+
 }
+
 
 // using jQuery to fadeIn/Out back-to-top button
 const showHide = () => {
@@ -80,8 +101,8 @@ const clickToTop = (speed) => {
 
 mkNode()
 
-// addCss('rgb(255, 82, 82)')
-addCss('#4d8f9fb1')
+// setCss('rgb(255, 82, 82)')
+setCss('#4d8f9fb1')
 
 $('.outer').hide()
 
