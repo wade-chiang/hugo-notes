@@ -2,6 +2,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 {{ partial "schema" . }}
 
+{{if $.IsHome}}
+<title> {{ .Title }} {{ $.Site.Params.slogan | default "" | safeHTML }} </title>
+{{ end }}
 {{ with .Title }} <title>{{ . }} - {{ $.Site.Title | default "" | safeHTML }}</title>
 {{ end }}
 
