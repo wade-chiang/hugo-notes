@@ -1,4 +1,5 @@
 ---
+author: wade
 title: 使用多組 SSH Key 讓不同 GitHub 帳號免密碼執行 git push
 date: 2022-09-12T12:57:23+08:00
 type: post
