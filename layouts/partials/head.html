@@ -4,8 +4,11 @@
 
 {{if $.IsHome}}
 <title> {{ .Title }} {{ $.Site.Params.slogan | default "" | safeHTML }} </title>
-{{ end }}
+<meta property="og:title" content="{{ .Title }} {{ $.Site.Params.slogan | default "" | safeHTML }}">
+{{ else }}
 {{ with .Title }} <title>{{ . }} - {{ $.Site.Title | default "" | safeHTML }}</title>
+<meta property="og:title" content="{{ . }} - {{ $.Site.Title | default "" | safeHTML }}">
+{{ end }}
 {{ end }}
 
 {{ if .Description }}<meta name="description" content="{{ .Description }}" />
