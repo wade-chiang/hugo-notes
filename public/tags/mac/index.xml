@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mac on Nothing but..</title>
+    <link>https://notes.wadeism.net/tags/mac/</link>
+    <description>Recent content in Mac on Nothing but..</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 24 Dec 2020 16:40:00 +0000</lastBuildDate><atom:link href="https://notes.wadeism.net/tags/mac/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>macOS Catalina 使用 autofs 自動掛載 SAMBA</title>
+      <link>https://notes.wadeism.net/post/macos-catalina-autofs-samba/</link>
+      <pubDate>Thu, 24 Dec 2020 16:40:00 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/macos-catalina-autofs-samba/</guid>
+      <description>我在 CentOS 8 安裝與設定 NFS Server 一文中提過 NFS 在 Unix 系</description>
+    </item>
+    
+    <item>
+      <title>macOS Catalina 使用 autofs 自動掛載 NFS</title>
+      <link>https://notes.wadeism.net/post/macos-catalina-autofs-nfs/</link>
+      <pubDate>Thu, 24 Dec 2020 16:10:32 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/macos-catalina-autofs-nfs/</guid>
+      <description>之前提到過 autofs 是用來自動掛載遠端資料夾的好</description>
+    </item>
+    
+    <item>
+      <title>macOS 將網頁暫存檔移到 RamDisk</title>
+      <link>https://notes.wadeism.net/post/macos-move-browser-cache-to-ramdisk/</link>
+      <pubDate>Wed, 23 Dec 2020 09:18:03 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/macos-move-browser-cache-to-ramdisk/</guid>
+      <description>RamDisk 已經是行之有年的技術，我也經常在 Linux 上使</description>
+    </item>
+    
+    <item>
+      <title>使用 Linux 或 Mac 下單買賣股票</title>
+      <link>https://notes.wadeism.net/post/stock-trading-on-linux-and-mac/</link>
+      <pubDate>Sat, 05 Dec 2020 15:04:52 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/stock-trading-on-linux-and-mac/</guid>
+      <description>本篇內容是我自己使用玉山證券在 Linux 與 Mac 上測</description>
+    </item>
+    
+    <item>
+      <title>macOS 開機自動執行 Script</title>
+      <link>https://notes.wadeism.net/post/macos-running-script-on-boot/</link>
+      <pubDate>Mon, 09 Nov 2020 08:22:22 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/macos-running-script-on-boot/</guid>
+      <description>在 Linux 裡我們很習慣用 rc.local 或是自製 systemd 的 unit 來讓開</description>
+    </item>
+    
+    <item>
+      <title>CentOS 8 建立 Time Machine Server 備份 Mac</title>
+      <link>https://notes.wadeism.net/post/centos8-create-time-machine/</link>
+      <pubDate>Mon, 14 Sep 2020 03:04:43 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/centos8-create-time-machine/</guid>
+      <description>Time Machine 是 Mac 上的備份功能，以往要買貴貴的 AirPort Time</description>
+    </item>
+    
+    <item>
+      <title>如何在 Mac 雙擊執行Shell Script</title>
+      <link>https://notes.wadeism.net/post/mac-double-click-excute-script/</link>
+      <pubDate>Thu, 10 Sep 2020 15:17:00 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/mac-double-click-excute-script/</guid>
+      <description>雖然 macOS 一樣有 bash 並且支援 shell script，不</description>
+    </item>
+    
+    <item>
+      <title>Linux 與 Mac 使用 sshfs 遠端掛載資料夾</title>
+      <link>https://notes.wadeism.net/post/sshfs-mount-remote-folder/</link>
+      <pubDate>Thu, 13 Sep 2018 12:03:50 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/sshfs-mount-remote-folder/</guid>
+      <description>sshfs 是利用 ssh 協定來掛載遠端資料夾的工具，如</description>
+    </item>
+    
+  </channel>
+</rss>

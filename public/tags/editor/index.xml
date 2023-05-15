@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>editor on Nothing but..</title>
+    <link>https://notes.wadeism.net/tags/editor/</link>
+    <description>Recent content in editor on Nothing but..</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 08 Jul 2018 11:00:02 +0000</lastBuildDate><atom:link href="https://notes.wadeism.net/tags/editor/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Atom 佈景主題與套件</title>
+      <link>https://notes.wadeism.net/post/atom-themes-plugins/</link>
+      <pubDate>Sun, 08 Jul 2018 11:00:02 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/atom-themes-plugins/</guid>
+      <description>分享一些我喜歡的 UI Theme、Synta</description>
+    </item>
+    
+    <item>
+      <title>Sublime Text 佈景主題</title>
+      <link>https://notes.wadeism.net/post/sublime-text-theme/</link>
+      <pubDate>Sun, 24 Jun 2018 04:01:20 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/sublime-text-theme/</guid>
+      <description>幾個比較喜歡的 Sublime 主題 Spacegray Freesia Theme https://scotch.io/bar-talk/the-best-sublime-text-3-themes-of-2014</description>
+    </item>
+    
+  </channel>
+</rss>

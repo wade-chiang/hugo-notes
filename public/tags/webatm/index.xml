@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>WebATM on Nothing but..</title>
+    <link>https://notes.wadeism.net/tags/webatm/</link>
+    <description>Recent content in WebATM on Nothing but..</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 03 Oct 2021 17:52:19 +0000</lastBuildDate><atom:link href="https://notes.wadeism.net/tags/webatm/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Manjaro 安裝晶片讀卡機與玉山銀行 Web ATM 套件</title>
+      <link>https://notes.wadeism.net/post/manjaro-esun-web-atm/</link>
+      <pubDate>Sun, 03 Oct 2021 17:52:19 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/manjaro-esun-web-atm/</guid>
+      <description>從 Ubuntu 轉換到 Manjaro 的過程中，前面已經搞定中文輸</description>
+    </item>
+    
+  </channel>
+</rss>

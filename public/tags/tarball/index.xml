@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tarball on Nothing but..</title>
+    <link>https://notes.wadeism.net/tags/tarball/</link>
+    <description>Recent content in Tarball on Nothing but..</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 20 Aug 2020 06:19:50 +0000</lastBuildDate><atom:link href="https://notes.wadeism.net/tags/tarball/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Tarball 原始碼程式安裝教學</title>
+      <link>https://notes.wadeism.net/post/install-by-tarball/</link>
+      <pubDate>Thu, 20 Aug 2020 06:19:50 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/install-by-tarball/</guid>
+      <description>現在的 Linux 我們已經很習慣使用 yum 、apt、a</description>
+    </item>
+    
+  </channel>
+</rss>

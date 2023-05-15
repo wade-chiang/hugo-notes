@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Nginx on Nothing but..</title>
+    <link>https://notes.wadeism.net/tags/nginx/</link>
+    <description>Recent content in Nginx on Nothing but..</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 31 Jul 2021 04:35:00 +0000</lastBuildDate><atom:link href="https://notes.wadeism.net/tags/nginx/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Docker 建立 Laravel 用的 LNMP 環境</title>
+      <link>https://notes.wadeism.net/post/create-laravel-lnmp-by-docker/</link>
+      <pubDate>Sat, 31 Jul 2021 04:35:00 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/create-laravel-lnmp-by-docker/</guid>
+      <description>雖然標題上是寫 Laravel 用的環境，不過這套環境也</description>
+    </item>
+    
+    <item>
+      <title>Debian 10 安裝 LNMP 與 Wordpress 的 Nginx 設定</title>
+      <link>https://notes.wadeism.net/post/debian10-install-lnmp-wordpress-nginx/</link>
+      <pubDate>Sat, 13 Mar 2021 13:35:02 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/debian10-install-lnmp-wordpress-nginx/</guid>
+      <description>自從 Red Hat 宣佈不再會有 CentOS 9，只會有 CentOS Str</description>
+    </item>
+    
+    <item>
+      <title>Nginx 反向代理多重子目錄</title>
+      <link>https://notes.wadeism.net/post/nginx-proxy-pass-multi-subdirectory/</link>
+      <pubDate>Mon, 14 Sep 2020 03:00:00 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/nginx-proxy-pass-multi-subdirectory/</guid>
+      <description>使用目的 架設一台 reverse proxy server 與一台 web serve</description>
+    </item>
+    
+    <item>
+      <title>讓反向代理的 Tomcat 取得用戶的真實 IP</title>
+      <link>https://notes.wadeism.net/post/tomcat-behind-nginx-get-real-ip/</link>
+      <pubDate>Sat, 12 Sep 2020 03:32:30 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/tomcat-behind-nginx-get-real-ip/</guid>
+      <description>在前一篇文章裡，我們用 Docker 架了一個內網限定</description>
+    </item>
+    
+    <item>
+      <title>Nginx 反向代理到 Tomcat</title>
+      <link>https://notes.wadeism.net/post/nginx-reverse-proxy-tomcat/</link>
+      <pubDate>Sat, 12 Sep 2020 03:32:00 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/nginx-reverse-proxy-tomcat/</guid>
+      <description>本篇以鐵人賽「用30天來介紹和使用 Docker 系列</description>
+    </item>
+    
+  </channel>
+</rss>

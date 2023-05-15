@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Web on Nothing but..</title>
+    <link>https://notes.wadeism.net/tags/web/</link>
+    <description>Recent content in Web on Nothing but..</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 14 Oct 2018 12:05:23 +0000</lastBuildDate><atom:link href="https://notes.wadeism.net/tags/web/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>讓 Apache 存取 MySQL 的 SELinux 設定</title>
+      <link>https://notes.wadeism.net/post/selinux-for-apache-mysql-access/</link>
+      <pubDate>Sun, 14 Oct 2018 12:05:23 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/selinux-for-apache-mysql-access/</guid>
+      <description>在自己的虛擬機裡練習 PHP and MariaDB 時，曾經碰過一</description>
+    </item>
+    
+    <item>
+      <title>SAMBA 設定教學與遠端存取 web 資料夾</title>
+      <link>https://notes.wadeism.net/post/learning-samba/</link>
+      <pubDate>Mon, 01 Oct 2018 18:20:31 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/learning-samba/</guid>
+      <description>SAMBA 是一個很好用的檔案伺服器，優點在於可以</description>
+    </item>
+    
+    <item>
+      <title>使用 GitHub 建立個人靜態網頁</title>
+      <link>https://notes.wadeism.net/post/github-create-personal-page/</link>
+      <pubDate>Mon, 01 Oct 2018 14:09:39 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/github-create-personal-page/</guid>
+      <description>記得以前在課堂上，老師介紹過兩種免費的方</description>
+    </item>
+    
+  </channel>
+</rss>

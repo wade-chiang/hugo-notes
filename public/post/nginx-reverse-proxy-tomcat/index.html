@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="application/ld+json">
+    {
+        "@context" : "http://schema.org",
+        "@type" : "BlogPosting",
+        "mainEntityOfPage": {
+             "@type": "WebPage",
+             "@id": "https:\/\/notes.wadeism.net\/"
+        },
+        "articleSection" : "post",
+        "name" : "Nginx 反向代理到 Tomcat",
+        "headline" : "Nginx 反向代理到 Tomcat",
+        "description" : "本篇以鐵人賽「用30天來介紹和使用 Docker 系列",
+        "inLanguage" : "zh-Hant-TW",
+        "author" : "wade",
+        "creator" : "wade",
+        "publisher": "wade",
+        "accountablePerson" : "wade",
+        "copyrightHolder" : "wade",
+        "copyrightYear" : "2020",
+        "datePublished": "2020-09-12 03:32:00 \u002b0000 \u002b0000",
+        "dateModified" : "2020-09-12 03:32:00 \u002b0000 \u002b0000",
+        "url" : "https:\/\/notes.wadeism.net\/post\/nginx-reverse-proxy-tomcat\/",
+        "wordCount" : "1020",
+        "image" : "https:\/\/notes.wadeism.net\/https:\/\/image.wadeism.net\/nginxtomcat00.png",
+        "keywords" : [ "CentOS","CentOS 8","Nginx","Proxy","Tomcat","Blog" ]   
+    }
+    </script>
+
+
+
+ <title>Nginx 反向代理到 Tomcat - Nothing but..</title>
+<meta property="og:title" content="Nginx 反向代理到 Tomcat - Nothing but..">
+
+
+
+<meta name="description" content="My notes for everyone" />
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="all,follow">
+<meta name="googlebot" content="index,follow,snippet,archive">
+<link rel="stylesheet" id="ct-tracks-google-fonts-css" href="https://fonts.googleapis.com/css?family=Raleway%3A400%2C700&amp;subset=latin%2Clatin-ext&amp;ver=4.7.2" type="text/css" media="all">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+<link href="https://notes.wadeism.net/css/style.css?v=1684171536" rel="stylesheet" id="theme-stylesheet" type='text/css' media='all'>
+
+<link href="https://notes.wadeism.net/css/custom.css?v=1684171536" rel="stylesheet" type='text/css' media='all'>
+<link rel="shortcut icon" href="https://notes.wadeism.net/img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="https://notes.wadeism.net/img/favicon.ico" type="image/x-icon">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-120924943-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-120924943-1');
+</script>
+
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-120924943-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-120924943-1');
+</script>
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://notes.wadeism.net/css/prism.css" >
+
+
+<style>
+   
+   
+   
+  @import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Roboto+Mono&display=swap');
+</style>
+
+
+<link href="https://notes.wadeism.net/css/wade_custom.css?v=1684171536" rel="stylesheet" type='text/css' media='all'>
+</head>
+
+
+<body class="post-template-default single single-post single-format-standard ct-body singular singular-post not-front standard">
+
+  <div id="overflow-container" class="overflow-container">
+    <a class="skip-content" href="#main">Skip to content</a>
+    <header id="site-header" class="site-header" role="banner">
+      <div class='top-navigation'>
+        <div class='container'>
+
+  <div id="menu-secondary" class="menu-container menu-secondary" role="navigation">
+    <button id="toggle-secondary-navigation" class="toggle-secondary-navigation"><i class="fas fa-plus"></i></button>
+
+    <div class="menu">
+
+      <ul id="menu-secondary-items" class="menu-secondary-items">
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/bass">bass</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/developer">developer</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/linux">linux</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/mac">mac</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/office">office</a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+
+  </div>
+
+
+  <ul class="social-media-icons">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+    
+    <li>
+      <a href="https://github.com/wade-chiang" data-animate-hover="pulse" class="github" target="_blank">
+        <i class="fab fa-github" title="github"></i>
+        <span class="screen-reader-text">github</span>
+      </a>
+    </li>
+    
+
+
+    
+
+    
+    <li>
+      <a href="https://notes.wadeism.net/index.xml" data-animate-hover="pulse" class="rss" target="_blank">
+        <i class="fas fa-rss" title="rss"></i>
+        <span class="screen-reader-text">rss</span>
+      </a>
+    </li>
+    
+
+
+  </ul></div>
+
+      </div>
+
+      <div class="container">
+        <div id="title-info" class="title-info">
+  <div id='site-title' class='site-title'>
+    
+    <a href="/"> Nothing but.. </a>
+    </div>
+  </div>
+  <button id="toggle-navigation" class="toggle-navigation">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <div id="menu-primary-tracks" class="menu-primary-tracks"></div>
+  <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+    
+    <p class="site-description">Something here</p>
+    
+
+    <div class="menu">
+      <ul id="menu-primary-items" class="menu-primary-items">
+        
+        
+        <li class='menu-item menu-item-type-custom menu-item-object-custom '>
+          <a href="https://notes.wadeism.net/">Home</a>
+          
+        </li>
+        
+        <li class='menu-item menu-item-type-post_type menu-item-object-page '>
+          <a href="https://notes.wadeism.net/about/">About</a>
+          
+        </li>
+        
+        <li class='menu-item menu-item-type-post_type menu-item-object-page '>
+          <a href="https://notes.wadeism.net/contact/"></a>
+          
+        </li>
+        
+      </ul>
+    </div>
+
+  </div>
+
+      </div>
+    </header>
+
+    <div id="main" class="main" role="main">
+
+      
+  
+  
+    
+  
+  
+  <div id="loop-container" class="loop-container">
+    
+    <div class="post type-post status-publish format-standard has-post-thumbnail hentry category-design tag-design tag-standard-2 tag-tagalicious tag-travel entry full-without-featured odd excerpt-1">
+
+      <div class='featured-image lazy lazy-bg-image'  data-background="https://image.wadeism.net/nginxtomcat00.png">
+      </div>
+      
+        <div class="entry-meta">
+          <span class="date">12 September 2020</span>	<span> / </span>
+
+          <span class="author">
+            <a href="https://notes.wadeism.net/" title="Posts by wade" rel="author">wade</a>
+          </span>
+
+
+          
+          <span class="category">
+            <span> / </span>
+
+            <a href="/categories/linux">Linux</a>
+          </span>
+          
+
+
+        </div>
+        <div class='entry-header'>
+          <h1 class='entry-title'> Nginx 反向代理到 Tomcat</h1>
+        </div>
+        <div class="entry-container">
+          <div class="entry-content">
+            <article>
+              <p>本篇以鐵人賽「<a href="https://ithelp.ithome.com.tw/users/20103456/ironman/1320" target="_blank">用30天來介紹和使用 Docker 系列</a>」的 <a href="https://ithelp.ithome.com.tw/articles/10191016" target="_blank">Day5: 實作撰寫第一個 Dockerfile</a> 為基礎，記錄我用 nginx 反向代理到 Tomcat 的筆記。</p>
+<p>有用過 Docker 的人大概都知道在執行的時候只要指定 port 的 mapping 就可以讓容器與實際 host 的 port 做綁定，這是一般對外 service 類的 container 都會做的設定。</p>
+<p>但如果省略掉 port mapping 的步驟，容器中的 Tomcat 就等於是跑在一個內部的環境裡，外部只能透過其它途徑來連線到 Tomcat，某方面來說安全性也會比較高，這邊我就使用最常見的 Nginx 反向代理來連入內部的 Tomcat。</p>
+<p>系統環境：CentOS 8.2<br>
+自設域名：http://docker（測試子目錄用）<br>
+　　　　　http://tomcat.docker（測試子網域用，皆以編輯 /etc/hosts 來自訂）</p>
+<h2 id="檢測-tomcat-環境">檢測 Tomcat 環境</h2>
+<p>先依照<a href="https://ithelp.ithome.com.tw/articles/10191016" target="_blank">文章</a>的範例做到第三步驟執行 mytomcat，會發現 Tomcat 執行了，但無法透過本機的 ip 連線，因此必須先查詢容器本身的 ip</p>
+<p><br>
+查詢 container ID</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker ps -a
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
+</span></span><span style="display:flex;"><span>7bdb162641d4        mytomcat            <span style="color:#e6db74">&#34;/apache-tomcat-9.0.…&#34;</span>   <span style="color:#ae81ff">6</span> minutes ago       Up <span style="color:#ae81ff">6</span> minutes                            musing_gagarin
+</span></span></code></pre></div><p><br>
+進入 container 的 shell 裡查詢 IP</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker exec -it musing_gagarin /bin/bash
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat /etc/hosts
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>127.0.0.1       localhost
+</span></span><span style="display:flex;"><span>::1     localhost ip6-localhost ip6-loopback
+</span></span><span style="display:flex;"><span>fe00::0 ip6-localnet
+</span></span><span style="display:flex;"><span>ff00::0 ip6-mcastprefix
+</span></span><span style="display:flex;"><span>ff02::1 ip6-allnodes
+</span></span><span style="display:flex;"><span>ff02::2 ip6-allrouters:
+</span></span><span style="display:flex;"><span>172.17.0.2      7bdb162641d4
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 172.17.0.2 就是 tomcat container 的 ip</span>
+</span></span></code></pre></div><p>接著在 host 上連 <span class="hl-blue">172.17.0.2:8080</span> 就可以看到 tomcat 頁面</p>
+<h2 id="安裝-nginx">安裝 Nginx</h2>
+<p><span class="hl-blue">172.17.0.2</span> 是只能在本機上連的內部 ip，外部機器如果也想看到 Tomcat 可以用 Nginx 的反向代理來連線</p>
+<p><br>
+首先安裝 Nginx 並啟動</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo dnf install nginx
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl enable nginx <span style="color:#f92672">&amp;&amp;</span> sudo systemctl start nginx
+</span></span></code></pre></div><p><br>
+開啟防火牆</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo firewall-cmd --add-service<span style="color:#f92672">=</span>http --permanent <span style="color:#f92672">&amp;&amp;</span> sudo firewall-cmd --reload
+</span></span></code></pre></div><p><br>
+調整 SELinux（如果後面反向代理連線出現 nginx 502 錯誤時使用）</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo setsebool -P httpd_can_network_connect on
+</span></span></code></pre></div><h2 id="nginx-反向代理設定">Nginx 反向代理設定</h2>
+<p>將 nginx 設定檔存到 <span class="hl-blue">/etc/nginx/conf.d/myTomcat.conf</span> 後再重啟 nginx 即可，針對不同的域名型態設定內容也會有所不同</p>
+<h3 id="使用子網域-httptomcatdocker">使用子網域 <a href="http://tomcat.docker" target="_blank">http://tomcat.docker</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-nginx" data-lang="nginx"><span style="display:flex;"><span><span style="color:#66d9ef">server</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">listen</span>      <span style="color:#ae81ff">80</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">server_name</span> <span style="color:#e6db74">tomcat.docker</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">location</span> <span style="color:#e6db74">/</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_pass</span> <span style="color:#e6db74">http://172.17.0.2:8080/</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">X-Real-IP</span> $remote_addr;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">X-Forwarded-For</span> $remote_addr;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">X-Forwarded-For</span> $proxy_add_x_forwarded_for;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">Forwarded</span> $proxy_add_x_forwarded_for;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">proxy_set_header</span> <span style="color:#e6db74">Host</span> $host;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li><span class="hl-blue">proxy_pass</span> 會把 request 轉到 <span class="hl-blue">172.17.0.2:8080/</span>，結尾的 <span class="hl-red">/</span> 不要漏掉</li>
+<li>幾個 <span class="hl-blue">proxy_set_header</span> 與反向代理沒有直接的關係，還沒有特殊需求時可以不用加，但這些設定會影響後端拿到的  header 變數。</li>
+</ul>
+<p><img src="https://image.wadeism.net/nginxt01.png" alt=""></p>
+<h3 id="使用子目錄-httpdockertomcat">使用子目錄 http://docker/tomcat</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>server <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    listen          80;
+</span></span><span style="display:flex;"><span>    server_name     docker;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    location /tomcat/ <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        proxy_pass http://172.17.0.2:8080/;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        proxy_set_header X-Real-IP $remote_addr;
+</span></span><span style="display:flex;"><span>        proxy_set_header X-Forwarded-For $remote_addr;
+</span></span><span style="display:flex;"><span>        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+</span></span><span style="display:flex;"><span>        proxy_set_header Forwarded $proxy_add_x_forwarded_for;
+</span></span><span style="display:flex;"><span>        proxy_set_header Host $host;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    location / <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>$http_referer ~ <span style="color:#e6db74">&#34;^https?://[^/]+/tomcat/&#34;</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            rewrite ^/<span style="color:#f92672">(</span>.*<span style="color:#f92672">)</span> http://$http_host/tomcat/$1 redirect;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><ul>
+<li><span class="hl-blue">location /tomcat/</span> 這邊要記得在 tomcat 的結尾加上 <span class="hl-red">/</span> ，不能寫成 <span class="hl-blue">/tomcat</span></li>
+<li><span class="hl-blue">location /</span> 這段處理子目錄後面的路徑連結，如果沒有加的話，雖然首頁正常，但首頁上的連結點進去還是會失敗</li>
+</ul>
+<p><img src="https://image.wadeism.net/nginxt02.png" alt=""></p>
+<p><img src="https://image.wadeism.net/nginxt03.png" alt=""></p>
+<p><br>
+接著試試看用 http://docker/TomCat 來連</p>
+<p><img src="https://image.wadeism.net/nginxt04.png" alt=""></p>
+<p>由於上面的設定是屬於 case sensitive 的，因此大小寫無法混用</p>
+<h3 id="使用子目錄-httpdockertomcat-1">使用子目錄 http://docker/TomCat</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>server <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    listen          80;
+</span></span><span style="display:flex;"><span>    server_name     docker;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    location ~* /tomcat/<span style="color:#f92672">(</span>.*<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        proxy_pass http://172.17.0.2:8080/$1$is_args$args;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        proxy_set_header X-Real-IP $remote_addr;
+</span></span><span style="display:flex;"><span>        proxy_set_header X-Forwarded-For $remote_addr;
+</span></span><span style="display:flex;"><span>        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+</span></span><span style="display:flex;"><span>        proxy_set_header Forwarded $proxy_add_x_forwarded_for;
+</span></span><span style="display:flex;"><span>        proxy_set_header Host $host;
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    location / <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>$http_referer ~* <span style="color:#e6db74">&#34;^https?://[^/]+/tomcat/&#34;</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>            rewrite ^/<span style="color:#f92672">(</span>.*<span style="color:#f92672">)</span> http://$http_host/tomcat/$1 redirect;
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>與前例差在使用了 <span class="hl-red">~*</span> 來做出 case insensitive（無視大小寫）的功能，讓使用者打錯大小寫也可以連到</p>
+<p><img src="https://image.wadeism.net/nginxt05.png" alt=""></p>
+<p>參考資料：</p>
+<hr>
+<p><a href="https://forum.nginx.org/read.php?11,265620" target="_blank">nginx proxy to subdirectory</a></p>
+<p><a href="https://raymii.org/s/tutorials/NGINX_proxy_folder_to_different_root.html" target="_blank">NGINX: Proxy folders to different root</a></p>
+<p><a href="https://medium.com/@maxtsai/form-io-nginx-reversed-proxy-under-subfolder-in-order-to-host-multiple-node-js-27f97432d2d" target="_blank">FORM.IO — nginx reversed proxy under ‘subfolder’ in order to host multiple node.js apps</a></p>
+<p><a href="https://stackoverflow.com/questions/51223293/nginx-reverse-proxy-subdirectory-rewrites-for-sourcegraph" target="_blank">Nginx reverse proxy subdirectory rewrites for sourcegraph</a></p>
+<p><a href="https://stackoverflow.com/questions/46625593/nginx-case-insensitive-proxy-pass" target="_blank">Nginx case insensitive proxy_pass</a></p>
+
+            </article>
+          </div>
+          
+      <div class='entry-meta-bottom'>
+        
+
+  <div class="entry-categories"><p><span>Categories</span>
+    
+    <a href="/categories/linux" title="View all posts in Linux">Linux</a>
+  </p>
+</div>
+
+
+
+<div class="entry-tags"><p><span>Tags</span>
+  
+  <a href="/tags/centos" title="View all posts tagged CentOS">CentOS</a>
+  
+  <a href="/tags/centos-8" title="View all posts tagged CentOS 8">CentOS 8</a>
+  
+  <a href="/tags/nginx" title="View all posts tagged Nginx">Nginx</a>
+  
+  <a href="/tags/proxy" title="View all posts tagged Proxy">Proxy</a>
+  
+  <a href="/tags/tomcat" title="View all posts tagged Tomcat">Tomcat</a>
+  
+
+</p></div>	</div>
+
+	
+<div class="author-meta">
+
+  <div class="author">
+    	
+      <img alt='wade' src="https://www.gravatar.com/avatar/6fee0275681dd0b43da1d6acb66c336f?s=100&d=identicon" class='avatar avatar-72 photo' height='72' width='72'>
+    
+    <span>
+      Written by:<a href="https://notes.wadeism.net/" title="Posts by wade" rel="author">wade</a> </span>
+    </div>
+    <div class="bio">
+      
+      
+      <p>本站站長</p>
+      
+      
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a class="github" target="_blank"
+href="https://github.com/wade-chiang">
+<i class="fab fa-github"
+title="github icon"></i>
+</a>
+
+
+
+
+
+
+
+</div>
+</div>
+
+</div>
+</div>
+
+<section id="comments" class="comments">
+  <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+    var d = document, s = d.createElement('script');
+    s.src = 'https://notes-wadeism.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+</section>
+</div>
+
+ 
+
+
+
+    </div>
+
+    <footer id="site-footer" class="site-footer" role="contentinfo">
+	<h1>
+    
+    <a href=""> Nothing but.. </a>
+    
+	</h1>
+
+			
+			<p class="site-description">Something here</p>
+			
+
+		<div id="menu-footer" class="menu-container menu-footer" role="navigation">
+		<div class="menu">
+
+      <ul id="menu-footer-items" class="menu-footer-items">
+        
+</ul>
+
+</div>	</div>
+
+<ul class="social-media-icons">
+
+        
+
+        
+
+
+        
+
+        
+
+        
+
+        
+
+        
+
+
+        
+        <li>
+        <a href="https://github.com/wade-chiang"  class="github" target="_blank">
+            <i class="fab fa-github" title="github"></i>
+            <span class="screen-reader-text">github</span>
+        </a>
+        </li>
+        
+
+
+        
+
+        
+        <li>
+        <a href="https://notes.wadeism.net/index.xml" data-animate-hover="pulse" class="rss" target="_blank">
+            <i class="fas fa-rss" title="rss"></i>
+            <span class="screen-reader-text">rss</span>
+        </a>
+        </li>
+        
+
+				</ul>	<div class="design-credit">
+		
+		<p>© 2022 Wade</p>
+		
+		<p>Nederburg Hugo Theme by <a href="https://appernetic.io" target="_blank">Appernetic</a>.</p>
+		
+		<p>A port of Tracks by Compete Themes.</p>
+		
+	</div>
+</footer>
+
+  </div>
+  <script src="https://notes.wadeism.net/js/jquery.min.js"></script>
+<script src="https://notes.wadeism.net/js/jquerymigrate.js"></script>
+<script src="https://notes.wadeism.net/js/production.min.js?v=1684171536"></script>
+
+
+
+<script src="https://notes.wadeism.net/js/prism.js"></script>
+
+
+<script src="https://notes.wadeism.net/js/medium-zoom.js"></script>
+<script src="https://notes.wadeism.net/js/wade_custom.js"></script>
+
+
+
+
+
+<script type="text/javascript">var _jf = _jf || [];_jf.push(['p','63921']);_jf.push(['initAction',true]);_jf.push(['_setFont','xingothic-tc-w6','css','.xingothic-tc-w6']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-meta-bottom a']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-content h3']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-content h4']);_jf.push(['_setFont','xingothic-tc-w6','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w6','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w6','weight',600]);_jf.push(['_setFont','xingothic-tc-w5','css','.xingothic-tc-w5']);_jf.push(['_setFont','xingothic-tc-w5','css','div.entry-content p']);_jf.push(['_setFont','xingothic-tc-w5','css','div.excerpt-content p']);_jf.push(['_setFont','xingothic-tc-w5','css','div.post article']);_jf.push(['_setFont','xingothic-tc-w5','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w5','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w5','weight',500]);_jf.push(['_setFont','xingothic-tc-w7','css','.xingothic-tc-w7']);_jf.push(['_setFont','xingothic-tc-w7','css','h1.entry-title']);_jf.push(['_setFont','xingothic-tc-w7','css','h2.excerpt-title']);_jf.push(['_setFont','xingothic-tc-w7','css','div.entry-content h2']);_jf.push(['_setFont','xingothic-tc-w7','css','strong']);_jf.push(['_setFont','xingothic-tc-w7','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w7','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w7','weight',700]);(function(A,p,c,m,l,q,r,h,B,D){var b=A._jf;if(b.constructor!==Object){var t=!0,u=function(a){var f=!0,e;for(e in b)b[e][0]==a&&(f&&(f=f&&!1!==b[e][1].call(b)),b[e]=null,delete b[e])},v=/\S+/g,w=/[\t\r\n\f]/g,C=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,n="".trim,x=n&&!n.call("\ufeff\u00a0")?function(a){return null==a?"":n.call(a)}:function(a){return null==a?"":(a+"").replace(C,"")},k=function(a){var f,b,g;if("string"===typeof a&&a&&(a=(a||"").match(v)||[],f=h[c]?(" "+h[c]+" ").replace(w," "):" ")){for(g=0;b=a[g++];)0>f.indexOf(" "+b+" ")&&(f+=b+" ");h[c]=x(f)}},d=function(a){var b,e,g;if(0===arguments.length||"string"===typeof a&&a){var d=(a||"").match(v)||[];if(b=h[c]?(" "+h[c]+" ").replace(w," "):""){for(g=0;e=d[g++];)for(;0<=b.indexOf(" "+e+" ");)b=b.replace(" "+e+" "," ");h[c]=a?x(b):""}}},y;b.addScript=y=function(b,f,e,g,d,c){d=d||function(){};c=c||function(){};var a=p.createElement("script"),h=p.getElementsByTagName("script")[0],k,m=!1,l=function(){a.src="";a.parentNode.removeChild(a);a=a.onerror=a.onload=a.onreadystatechange=null};g&&(k=setTimeout(function(){l();c()},g));a.type=f||"text/javascript";a.async=e;a.onload=a.onreadystatechange=function(b,c){m||a.readyState&&!/loaded|complete/.test(a.readyState)||(m=!0,g&&clearTimeout(k),l(),c||d())};a.onerror=function(a,b,d){g&&clearTimeout(k);l();c();return!0};a.src=b;h.parentNode.insertBefore(a,h)};for(var z in b)"initAction"==b[z][0]&&(t=b[z][1]);b.push(["_eventPreload",function(){1==t&&k(m);y(B,null,!1,3E3,null,function(){u("_eventInactived")})}]);b.push(["_eventReload",function(){d(r);d(q);k(l)}]);b.push(["_eventActived",function(){d(m);d(l);k(q)}]);b.push(["_eventInactived",function(){d(m);d(l);k(r)}]);u("_eventPreload")}})(this,this.document,"className","jf-loading","jf-reloading","jf-active","jf-inactive",this.document.getElementsByTagName("html")[0],"//ds.justfont.com/js/stable/v/6.0/id/171309946041");</script>
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9504338511537027" crossorigin="anonymous"></script>
+
+
+<script src="https://notes.wadeism.net/js/back-to-top.js"></script>
+
+  
+  
+
+</body>
+</html>

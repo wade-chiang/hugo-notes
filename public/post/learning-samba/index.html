@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="application/ld+json">
+    {
+        "@context" : "http://schema.org",
+        "@type" : "BlogPosting",
+        "mainEntityOfPage": {
+             "@type": "WebPage",
+             "@id": "https:\/\/notes.wadeism.net\/"
+        },
+        "articleSection" : "post",
+        "name" : "SAMBA 設定教學與遠端存取 web 資料夾",
+        "headline" : "SAMBA 設定教學與遠端存取 web 資料夾",
+        "description" : "SAMBA 是一個很好用的檔案伺服器，優點在於可以",
+        "inLanguage" : "zh-Hant-TW",
+        "author" : "wade",
+        "creator" : "wade",
+        "publisher": "wade",
+        "accountablePerson" : "wade",
+        "copyrightHolder" : "wade",
+        "copyrightYear" : "2018",
+        "datePublished": "2018-10-01 18:20:31 \u002b0000 \u002b0000",
+        "dateModified" : "2018-10-01 18:20:31 \u002b0000 \u002b0000",
+        "url" : "https:\/\/notes.wadeism.net\/post\/learning-samba\/",
+        "wordCount" : "1984",
+        "image" : "https:\/\/notes.wadeism.net\/%!s(\u003cnil\u003e)",
+        "keywords" : [ "CentOS","Server","Ubuntu","Web","Blog" ]   
+    }
+    </script>
+
+
+
+ <title>SAMBA 設定教學與遠端存取 web 資料夾 - Nothing but..</title>
+<meta property="og:title" content="SAMBA 設定教學與遠端存取 web 資料夾 - Nothing but..">
+
+
+
+<meta name="description" content="My notes for everyone" />
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="all,follow">
+<meta name="googlebot" content="index,follow,snippet,archive">
+<link rel="stylesheet" id="ct-tracks-google-fonts-css" href="https://fonts.googleapis.com/css?family=Raleway%3A400%2C700&amp;subset=latin%2Clatin-ext&amp;ver=4.7.2" type="text/css" media="all">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+<link href="https://notes.wadeism.net/css/style.css?v=1684171536" rel="stylesheet" id="theme-stylesheet" type='text/css' media='all'>
+
+<link href="https://notes.wadeism.net/css/custom.css?v=1684171536" rel="stylesheet" type='text/css' media='all'>
+<link rel="shortcut icon" href="https://notes.wadeism.net/img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="https://notes.wadeism.net/img/favicon.ico" type="image/x-icon">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-120924943-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-120924943-1');
+</script>
+
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-120924943-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-120924943-1');
+</script>
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://notes.wadeism.net/css/prism.css" >
+
+
+<style>
+   
+   
+   
+  @import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Roboto+Mono&display=swap');
+</style>
+
+
+<link href="https://notes.wadeism.net/css/wade_custom.css?v=1684171536" rel="stylesheet" type='text/css' media='all'>
+</head>
+
+
+<body class="post-template-default single single-post single-format-standard ct-body singular singular-post not-front standard">
+
+  <div id="overflow-container" class="overflow-container">
+    <a class="skip-content" href="#main">Skip to content</a>
+    <header id="site-header" class="site-header" role="banner">
+      <div class='top-navigation'>
+        <div class='container'>
+
+  <div id="menu-secondary" class="menu-container menu-secondary" role="navigation">
+    <button id="toggle-secondary-navigation" class="toggle-secondary-navigation"><i class="fas fa-plus"></i></button>
+
+    <div class="menu">
+
+      <ul id="menu-secondary-items" class="menu-secondary-items">
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/bass">bass</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/developer">developer</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/linux">linux</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/mac">mac</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/office">office</a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+
+  </div>
+
+
+  <ul class="social-media-icons">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+    
+    <li>
+      <a href="https://github.com/wade-chiang" data-animate-hover="pulse" class="github" target="_blank">
+        <i class="fab fa-github" title="github"></i>
+        <span class="screen-reader-text">github</span>
+      </a>
+    </li>
+    
+
+
+    
+
+    
+    <li>
+      <a href="https://notes.wadeism.net/index.xml" data-animate-hover="pulse" class="rss" target="_blank">
+        <i class="fas fa-rss" title="rss"></i>
+        <span class="screen-reader-text">rss</span>
+      </a>
+    </li>
+    
+
+
+  </ul></div>
+
+      </div>
+
+      <div class="container">
+        <div id="title-info" class="title-info">
+  <div id='site-title' class='site-title'>
+    
+    <a href="/"> Nothing but.. </a>
+    </div>
+  </div>
+  <button id="toggle-navigation" class="toggle-navigation">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <div id="menu-primary-tracks" class="menu-primary-tracks"></div>
+  <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+    
+    <p class="site-description">Something here</p>
+    
+
+    <div class="menu">
+      <ul id="menu-primary-items" class="menu-primary-items">
+        
+        
+        <li class='menu-item menu-item-type-custom menu-item-object-custom '>
+          <a href="https://notes.wadeism.net/">Home</a>
+          
+        </li>
+        
+        <li class='menu-item menu-item-type-post_type menu-item-object-page '>
+          <a href="https://notes.wadeism.net/about/">About</a>
+          
+        </li>
+        
+        <li class='menu-item menu-item-type-post_type menu-item-object-page '>
+          <a href="https://notes.wadeism.net/contact/"></a>
+          
+        </li>
+        
+      </ul>
+    </div>
+
+  </div>
+
+      </div>
+    </header>
+
+    <div id="main" class="main" role="main">
+
+      
+  
+  
+    
+  
+  
+  <div id="loop-container" class="loop-container">
+    
+
+      <div class="post type-post status-publish format-standard hentry category-standard category-travel entry full-without-featured odd excerpt-1">
+
+        
+        <div class="entry-meta">
+          <span class="date">01 October 2018</span>	<span> / </span>
+
+          <span class="author">
+            <a href="https://notes.wadeism.net/" title="Posts by wade" rel="author">wade</a>
+          </span>
+
+
+          
+          <span class="category">
+            <span> / </span>
+
+            <a href="/categories/linux">Linux</a>
+          </span>
+          
+
+
+        </div>
+        <div class='entry-header'>
+          <h1 class='entry-title'> SAMBA 設定教學與遠端存取 web 資料夾</h1>
+        </div>
+        <div class="entry-container">
+          <div class="entry-content">
+            <article>
+              <p>SAMBA 是一個很好用的檔案伺服器，優點在於可以讓 Windows 與 Linux 互通有無，在 Windows 上透過我們熟悉的「 網路上的芳鄰 」就可以直接連到遠端的 SAMBA Server 上存取檔案，Linux 亦然。詳細的介紹可以參考<a href="https://linux.vbird.org/linux_server/centos6/0370samba.php" target="_blank">鳥哥的網站</a></p>
+<p>以下就來介紹它的安裝與使用方法</p>
+<p>文章中如果看到 <span class="hl-red">[IP_Address]</span> ，請替換成自己需要的 IP</p>
+<h2 id="安裝-samba">安裝 SAMBA</h2>
+<p>以 CentOS 為例，安裝所需要的套件</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo yum install samba samba-client samba-common
+</span></span></code></pre></div><p><br>
+安裝完之後，先將原始的 samba 設定檔作備份以確保安全</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cp /etc/samba/smb.conf /etc/samba/smb.conf.bak
+</span></span></code></pre></div><p><br>
+在這邊使用 vim 來編輯設定檔</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo vim /etc/samba/smb.conf
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span><span style="color:#75715e"># See smb.conf.example for a more detailed config file or</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># read the smb.conf manpage.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Run &#39;testparm&#39; to verify the config is correct after</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># you modified it.</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[<span style="color:#a6e22e">global</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">workgroup</span> = <span style="color:#a6e22e">SAMBA</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">security</span> = <span style="color:#a6e22e">user</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">passdb</span> <span style="color:#a6e22e">backend</span> = <span style="color:#a6e22e">tdbsam</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printing</span> = <span style="color:#a6e22e">cups</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printcap</span> <span style="color:#a6e22e">name</span> = <span style="color:#a6e22e">cups</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">load</span> <span style="color:#a6e22e">printers</span> = <span style="color:#a6e22e">yes</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">cups</span> <span style="color:#a6e22e">options</span> = <span style="color:#a6e22e">raw</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[<span style="color:#a6e22e">homes</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">comment</span> = <span style="color:#a6e22e">Home</span> <span style="color:#a6e22e">Directories</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">valid</span> <span style="color:#a6e22e">users</span> = <span style="color:#960050;background-color:#1e0010">%</span><span style="color:#a6e22e">S</span>, <span style="color:#960050;background-color:#1e0010">%</span><span style="color:#a6e22e">D</span><span style="color:#960050;background-color:#1e0010">%</span><span style="color:#a6e22e">w</span><span style="color:#960050;background-color:#1e0010">%</span><span style="color:#a6e22e">S</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">browseable</span> = <span style="color:#a6e22e">No</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">read</span> <span style="color:#a6e22e">only</span> = <span style="color:#a6e22e">No</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">inherit</span> <span style="color:#a6e22e">acls</span> = <span style="color:#a6e22e">Yes</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[<span style="color:#a6e22e">printers</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">comment</span> = <span style="color:#a6e22e">All</span> <span style="color:#a6e22e">Printers</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">path</span> = <span style="color:#960050;background-color:#1e0010">/</span><span style="color:#a6e22e">var</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#a6e22e">tmp</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printable</span> = <span style="color:#a6e22e">Yes</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">create</span> <span style="color:#a6e22e">mask</span> = <span style="color:#ae81ff">0600</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">browseable</span> = <span style="color:#a6e22e">No</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[<span style="color:#a6e22e">print</span><span style="color:#960050;background-color:#1e0010">$</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">comment</span> = <span style="color:#a6e22e">Printer</span> <span style="color:#a6e22e">Drivers</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">path</span> = <span style="color:#960050;background-color:#1e0010">/</span><span style="color:#a6e22e">var</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#a6e22e">lib</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#a6e22e">samba</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#a6e22e">drivers</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">write</span> <span style="color:#a6e22e">list</span> = <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">printadmin</span> <span style="color:#a6e22e">root</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">force</span> <span style="color:#a6e22e">group</span> = <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">printadmin</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">create</span> <span style="color:#a6e22e">mask</span> = <span style="color:#ae81ff">0664</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">directory</span> <span style="color:#a6e22e">mask</span> = <span style="color:#ae81ff">0775</span>
+</span></span></code></pre></div><p><span class="hl-blue">[ global ]</span> 標籤裡是一些基本的設定，先照預設的就好。下面的每一個標籤代表著一個 SAMBA share 的設定，我們先仿照其中一個標籤來新增設定，基本上格式都要一樣，有關 SAMBA share 的意思在後面的指令中可以看得更明白。</p>
+<p><span class="hl-red">本次範例中，我們要讓 Client 端用 SAMBA 存取 Host 的 Web Server 根目錄</span>：<br>
+<span class="hl-blue">/var/www/html</span></p>
+<p>新增下面的內容到 /etc/samba/smb.conf 的最底下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-toml" data-lang="toml"><span style="display:flex;"><span>[<span style="color:#a6e22e">Web</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">comment</span> = <span style="color:#a6e22e">My</span> <span style="color:#a6e22e">WebSite</span> <span style="color:#a6e22e">Directory</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">browseable</span> = <span style="color:#a6e22e">Yes</span>      
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">read</span> <span style="color:#a6e22e">only</span> = <span style="color:#a6e22e">No</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">writable</span> = <span style="color:#a6e22e">yes</span>       
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">path</span> = <span style="color:#960050;background-color:#1e0010">/</span><span style="color:#a6e22e">var</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#a6e22e">www</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#a6e22e">html</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">write</span> <span style="color:#a6e22e">list</span> = <span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">users</span>
+</span></span></code></pre></div><ul>
+<li><span class="hl-green mono">[Web]</span>：SAMBA share 的 tag 名稱</li>
+<li><span class="hl-green mono">comment</span>：有關這個 SAMBA share 的敘述</li>
+<li><span class="hl-green mono">browseable</span>：該 tag 是否可以在列表中出現，後面會有範例</li>
+<li><span class="hl-green mono">read only</span>：該資料夾是否為「唯讀」狀態，意即無法寫入與修改裡面的資料</li>
+<li><span class="hl-green mono">writable</span>：該資料夾是否可寫入，與上面的選項功能相同，但意義相反</li>
+<li><span class="hl-green mono">path</span>：要分享的資料夾</li>
+<li><span class="hl-green mono">write list</span>：可存取這個 tag 的使用者，@users 表示SAMBA 帳號內的人員都可以，另外也可以指定單一對象</li>
+</ul>
+<h2 id="建立帳號與密碼">建立帳號與密碼</h2>
+<p>SAMBA 有自己的帳號密碼系統，但可以使用 SAMBA 的帳號必須是 Linux server 本身已經有的帳號，不然無法在 SAMBA 的系統裡建立，例如：想建立一個 samba user 為 wade，那麼 Linux 裡就得先有 wade 的帳號。</p>
+<p>建立 SAMBA 的使用者 wade</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo pdbedit -a -u wade
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>new password:
+</span></span><span style="display:flex;"><span>retype new password:
+</span></span></code></pre></div><p><br>
+在輸入指令與設定密碼後，出現下面訊息代表已成功建立帳號</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Unix username:        wade
+</span></span><span style="display:flex;"><span>NT username:          
+</span></span><span style="display:flex;"><span>Account Flags:        <span style="color:#f92672">[</span>U          <span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>User SID:             S-1-5-21-2728752839
+</span></span><span style="display:flex;"><span>Primary Group SID:    S-1-5-21-2728752839
+</span></span><span style="display:flex;"><span>Full Name:            Wade
+</span></span><span style="display:flex;"><span>Home Directory:       <span style="color:#ae81ff">\\</span>localhost<span style="color:#ae81ff">\w</span>ade
+</span></span><span style="display:flex;"><span>HomeDir Drive:        
+</span></span><span style="display:flex;"><span>Logon Script:         
+</span></span><span style="display:flex;"><span>Profile Path:         <span style="color:#ae81ff">\\</span>localhost<span style="color:#ae81ff">\w</span>ade<span style="color:#ae81ff">\p</span>rofile
+</span></span><span style="display:flex;"><span>Domain:               LOCALHOST
+</span></span><span style="display:flex;"><span>Account desc:         
+</span></span><span style="display:flex;"><span>Workstations:         
+</span></span><span style="display:flex;"><span>Munged dial:          
+</span></span><span style="display:flex;"><span>Logon time:           <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>Logoff time:          三, <span style="color:#ae81ff">06</span>  2月 <span style="color:#ae81ff">2036</span> 23:06:39 CST
+</span></span><span style="display:flex;"><span>Kickoff time:         三, <span style="color:#ae81ff">06</span>  2月 <span style="color:#ae81ff">2036</span> 23:06:39 CST
+</span></span><span style="display:flex;"><span>Password last set:    二, <span style="color:#ae81ff">02</span> 10月 <span style="color:#ae81ff">2018</span> 00:13:13 CST
+</span></span><span style="display:flex;"><span>Password can change:  二, <span style="color:#ae81ff">02</span> 10月 <span style="color:#ae81ff">2018</span> 00:13:13 CST
+</span></span><span style="display:flex;"><span>Password must change: never
+</span></span><span style="display:flex;"><span>Last bad password   : <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>Bad password count  : <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>Logon hours         : FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+</span></span></code></pre></div><h2 id="啟動-samba-與設定防火牆">啟動 SAMBA 與設定防火牆</h2>
+<p>讓 SAMBA 開機時自動啟動</p>
+<pre tabindex="0"><code class="language-basj" data-lang="basj">sudo systemctl enable smb &amp;&amp; sudo systemctl enable nmb
+</code></pre><p><br>
+啟動 SAMBA Server</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl start smb <span style="color:#f92672">&amp;&amp;</span> sudo systemctl start nmb
+</span></span></code></pre></div><h2 id="設定防火牆允許連入-samba">設定防火牆允許連入 SAMBA</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo firewall-cmd --add-service<span style="color:#f92672">=</span>samba --permanent <span style="color:#f92672">&amp;&amp;</span> sudo firewall-cmd --reload
+</span></span></code></pre></div><h2 id="client-端的檢視與使用">Client 端的檢視與使用</h2>
+<p>使用 smbclient 指令來檢視遠端 SAMBA Server 的分享內容</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo smbclient -U wade -L $IP_Address
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#e6db74">&#34;Enter wade&#39;s password&#34;</span>: 
+</span></span></code></pre></div><ul>
+<li><span class="hl-green mono">-U</span>：使用者的名稱，記得要用剛剛以 pdbedit 建立的帳號</li>
+<li><span class="hl-green mono">-L</span>：list，將遠端的 share 資料列表出來</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Domain<span style="color:#f92672">=[</span>SAMBA<span style="color:#f92672">]</span> OS<span style="color:#f92672">=[</span>Windows 6.1<span style="color:#f92672">]</span> Server<span style="color:#f92672">=[</span>Samba 4.7.1<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> Sharename       Type      Comment
+</span></span><span style="display:flex;"><span> ---------       ----      -------
+</span></span><span style="display:flex;"><span> print$          Disk      Printer Drivers
+</span></span><span style="display:flex;"><span> Web             Disk      My WebSite Directory
+</span></span><span style="display:flex;"><span> IPC$            IPC       IPC Service <span style="color:#f92672">(</span>Samba 4.7.1<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span> wade            Disk      Home Directories
+</span></span><span style="display:flex;"><span>Domain<span style="color:#f92672">=[</span>SAMBA<span style="color:#f92672">]</span> OS<span style="color:#f92672">=[</span>Windows 6.1<span style="color:#f92672">]</span> Server<span style="color:#f92672">=[</span>Samba 4.7.1<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> Server               Comment
+</span></span><span style="display:flex;"><span> ---------            -------
+</span></span><span style="display:flex;"><span> LOCALHOST            Samba 4.7.1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> Workgroup            Master
+</span></span><span style="display:flex;"><span> ---------            -------
+</span></span><span style="display:flex;"><span> SAMBA                LOCALHOST
+</span></span></code></pre></div><p>smbclient 雖然也可以拿來存取 SAMBA 的分享內容，但用掛載的方式會是比較好用的方法，下面說明掛載為遠端資料夾的方法</p>
+<p>安裝必要套件</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt install cifs-utils
+</span></span></code></pre></div><p><br>
+掛載遠端的 Web 到本機的 /tmp 目錄底下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo mount -t cifs -o username<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;wade&#34;</span> //<span style="color:#f92672">[</span>IP_Address<span style="color:#f92672">]</span>/Web /tmp
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ sudo mount -t cifs -o username<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;wade&#34;</span> //<span style="color:#f92672">[</span>IP_Address<span style="color:#f92672">]</span>/Web /tmp
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>sudo<span style="color:#f92672">]</span> password <span style="color:#66d9ef">for</span> wade:
+</span></span><span style="display:flex;"><span>Password <span style="color:#66d9ef">for</span> wade@//<span style="color:#f92672">[</span>IP_Address<span style="color:#f92672">]</span>/Web: ***
+</span></span></code></pre></div><p><br>
+檢查是否有掛載成功</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ls -la /tmp
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ls: 正在讀取 <span style="color:#e6db74">&#39;/tmp&#39;</span> 目錄: 拒絕不符權限的操作
+</span></span><span style="display:flex;"><span>總計 <span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><p>當我們用 ls 來檢查 /tmp 目錄時，發現權限不足，這代表著已經掛載成功了，但 Server 上一定有設定的問題使我們 Client 端無法正確的存取 /var/www/html 中的內容，因為 /var/www 並不是一個普通的資料夾，它是與 Web service 有關的系統資料夾，所以這時候我們先來設定 SELinux 的部分</p>
+<h2 id="samba-server-的-selinux-設定">SAMBA Server 的 SELinux 設定</h2>
+<p>先檢視 /var/www 的 SELinux context</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ls -dZ /var/www
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>drwxr-xr-x. root root system_u:object_r:httpd_sys_content_t:s0 /var/www
+</span></span></code></pre></div><p><br>
+接下來我們有兩種方法可以讓 SAMBA 與 Apache 存取相同的資料夾，第一種最簡單的方法就是讓 SAMBA 擁有權限讀寫任何的資料夾：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo setsebool -P samba_export_all_rw <span style="color:#ae81ff">1</span>
+</span></span></code></pre></div><p><br>
+設定好之後，我們回到 Client 端再檢視一次 /tmp 就可以看到裡面的資料了。</p>
+<p>這個方法相當單純且容易，不會有任何奇怪的 SELinux 問題發生，但如果你不希望 SAMBA 有這麼高的權限，而只希望它能存取 /var/www 資料夾的話，使用下面的方法可以只針對 /var/www 資料夾的權限來做設定</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>chcon -t public_content_rw_t /var/www
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>setsebool -P allow_smbd_anon_write <span style="color:#ae81ff">1</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>setsebool -P allow_httpd_anon_write <span style="color:#ae81ff">1</span>
+</span></span></code></pre></div><p>這個指令可讓 SAMBA 與 Apache 對任何帶 <span class="hl-blue">public_content_rw_t</span> 屬性的資料夾擁有存取的權限，但注意 chcon 這個指令只修改 /var/www 這個資料夾，之後在這裡面新建的檔案或資料夾也會是 <span class="hl-blue">public_content_rw_t</span> 的屬性，但如果是本來就在 /var/www 裡面的資料夾並不會被改到，因此如果我們想要修改 /var/www 與它底下所有東西的權限，要使用參數 -R</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo chcon -R -t public_content_rw_t /var/www
+</span></span></code></pre></div><p>指令輸入後，再次回到 Client 端的資料夾，會發現掛載到 /tmp 的 SAMBA share [ Web ] ，裡面的東西都可以看到了</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ls /tmp
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>Hello.html
+</span></span></code></pre></div><p>不過當我們想編輯裡面的檔案時，還是會發現檔案無法修改、無法寫入，這時請不要灰心，仔細想想 /var/www/html 的 owner 是 root，我們的使用者帳號本來就無法寫入這個資料夾底下的東西！因此還需要設定基本的檔案權限</p>
+<h2 id="使用-acl-設定權限">使用 ACL 設定權限</h2>
+<p>首先，我們先讓使用者對 /var/www/html 這個資料夾擁有 rwx 的權限</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo setfacl -m u:wade:rwx /var/www/html
+</span></span></code></pre></div><p><br>
+這時候會發現 Client 端已經可以在 /tmp 中建立新檔案了，但要加上 sudo 才可以，接著我們如果想要修改 /var/www/html/Hello.html 這個檔案，同樣的要對它添加權限</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo setfacl -m u:wade:rwx /var/www/html/Hello.html
+</span></span></code></pre></div><p><br>
+權限改好後，回到 Client 端再來試一次</p>
+<p>將 「 Hello~ 」這個字串寫到 /tmp/Hello.html 檔案的最後</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;Hello~&#34;</span> | sudo tee --append /tmp/Hello.html
+</span></span></code></pre></div><p><br>
+查看 Hello.html 的檔案內容</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat /tmp/Hello.html
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>Hello~
+</span></span></code></pre></div><p>檔案寫入確定有成功了，我們使用 SAMBA 來掛載 Web 資料夾的目標也完成啦！</p>
+<hr>
+<p>參考資料：<a href="https://serverfault.com/questions/131105/how-do-i-get-selinux-to-allow-apache-and-samba-on-the-same-folder" target="_blank">How do I get SELinux to allow Apache and Samba on the same folder?</a></p>
+
+            </article>
+          </div>
+          
+      <div class='entry-meta-bottom'>
+        
+
+  <div class="entry-categories"><p><span>Categories</span>
+    
+    <a href="/categories/linux" title="View all posts in Linux">Linux</a>
+  </p>
+</div>
+
+
+
+<div class="entry-tags"><p><span>Tags</span>
+  
+  <a href="/tags/centos" title="View all posts tagged CentOS">CentOS</a>
+  
+  <a href="/tags/server" title="View all posts tagged Server">Server</a>
+  
+  <a href="/tags/ubuntu" title="View all posts tagged Ubuntu">Ubuntu</a>
+  
+  <a href="/tags/web" title="View all posts tagged Web">Web</a>
+  
+
+</p></div>	</div>
+
+	
+<div class="author-meta">
+
+  <div class="author">
+    	
+      <img alt='wade' src="https://www.gravatar.com/avatar/6fee0275681dd0b43da1d6acb66c336f?s=100&d=identicon" class='avatar avatar-72 photo' height='72' width='72'>
+    
+    <span>
+      Written by:<a href="https://notes.wadeism.net/" title="Posts by wade" rel="author">wade</a> </span>
+    </div>
+    <div class="bio">
+      
+      
+      <p>本站站長</p>
+      
+      
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a class="github" target="_blank"
+href="https://github.com/wade-chiang">
+<i class="fab fa-github"
+title="github icon"></i>
+</a>
+
+
+
+
+
+
+
+</div>
+</div>
+
+</div>
+</div>
+
+<section id="comments" class="comments">
+  <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+    var d = document, s = d.createElement('script');
+    s.src = 'https://notes-wadeism.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+</section>
+</div>
+
+ 
+
+
+
+    </div>
+
+    <footer id="site-footer" class="site-footer" role="contentinfo">
+	<h1>
+    
+    <a href=""> Nothing but.. </a>
+    
+	</h1>
+
+			
+			<p class="site-description">Something here</p>
+			
+
+		<div id="menu-footer" class="menu-container menu-footer" role="navigation">
+		<div class="menu">
+
+      <ul id="menu-footer-items" class="menu-footer-items">
+        
+</ul>
+
+</div>	</div>
+
+<ul class="social-media-icons">
+
+        
+
+        
+
+
+        
+
+        
+
+        
+
+        
+
+        
+
+
+        
+        <li>
+        <a href="https://github.com/wade-chiang"  class="github" target="_blank">
+            <i class="fab fa-github" title="github"></i>
+            <span class="screen-reader-text">github</span>
+        </a>
+        </li>
+        
+
+
+        
+
+        
+        <li>
+        <a href="https://notes.wadeism.net/index.xml" data-animate-hover="pulse" class="rss" target="_blank">
+            <i class="fas fa-rss" title="rss"></i>
+            <span class="screen-reader-text">rss</span>
+        </a>
+        </li>
+        
+
+				</ul>	<div class="design-credit">
+		
+		<p>© 2022 Wade</p>
+		
+		<p>Nederburg Hugo Theme by <a href="https://appernetic.io" target="_blank">Appernetic</a>.</p>
+		
+		<p>A port of Tracks by Compete Themes.</p>
+		
+	</div>
+</footer>
+
+  </div>
+  <script src="https://notes.wadeism.net/js/jquery.min.js"></script>
+<script src="https://notes.wadeism.net/js/jquerymigrate.js"></script>
+<script src="https://notes.wadeism.net/js/production.min.js?v=1684171536"></script>
+
+
+
+<script src="https://notes.wadeism.net/js/prism.js"></script>
+
+
+<script src="https://notes.wadeism.net/js/medium-zoom.js"></script>
+<script src="https://notes.wadeism.net/js/wade_custom.js"></script>
+
+
+
+
+
+<script type="text/javascript">var _jf = _jf || [];_jf.push(['p','63921']);_jf.push(['initAction',true]);_jf.push(['_setFont','xingothic-tc-w6','css','.xingothic-tc-w6']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-meta-bottom a']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-content h3']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-content h4']);_jf.push(['_setFont','xingothic-tc-w6','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w6','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w6','weight',600]);_jf.push(['_setFont','xingothic-tc-w5','css','.xingothic-tc-w5']);_jf.push(['_setFont','xingothic-tc-w5','css','div.entry-content p']);_jf.push(['_setFont','xingothic-tc-w5','css','div.excerpt-content p']);_jf.push(['_setFont','xingothic-tc-w5','css','div.post article']);_jf.push(['_setFont','xingothic-tc-w5','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w5','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w5','weight',500]);_jf.push(['_setFont','xingothic-tc-w7','css','.xingothic-tc-w7']);_jf.push(['_setFont','xingothic-tc-w7','css','h1.entry-title']);_jf.push(['_setFont','xingothic-tc-w7','css','h2.excerpt-title']);_jf.push(['_setFont','xingothic-tc-w7','css','div.entry-content h2']);_jf.push(['_setFont','xingothic-tc-w7','css','strong']);_jf.push(['_setFont','xingothic-tc-w7','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w7','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w7','weight',700]);(function(A,p,c,m,l,q,r,h,B,D){var b=A._jf;if(b.constructor!==Object){var t=!0,u=function(a){var f=!0,e;for(e in b)b[e][0]==a&&(f&&(f=f&&!1!==b[e][1].call(b)),b[e]=null,delete b[e])},v=/\S+/g,w=/[\t\r\n\f]/g,C=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,n="".trim,x=n&&!n.call("\ufeff\u00a0")?function(a){return null==a?"":n.call(a)}:function(a){return null==a?"":(a+"").replace(C,"")},k=function(a){var f,b,g;if("string"===typeof a&&a&&(a=(a||"").match(v)||[],f=h[c]?(" "+h[c]+" ").replace(w," "):" ")){for(g=0;b=a[g++];)0>f.indexOf(" "+b+" ")&&(f+=b+" ");h[c]=x(f)}},d=function(a){var b,e,g;if(0===arguments.length||"string"===typeof a&&a){var d=(a||"").match(v)||[];if(b=h[c]?(" "+h[c]+" ").replace(w," "):""){for(g=0;e=d[g++];)for(;0<=b.indexOf(" "+e+" ");)b=b.replace(" "+e+" "," ");h[c]=a?x(b):""}}},y;b.addScript=y=function(b,f,e,g,d,c){d=d||function(){};c=c||function(){};var a=p.createElement("script"),h=p.getElementsByTagName("script")[0],k,m=!1,l=function(){a.src="";a.parentNode.removeChild(a);a=a.onerror=a.onload=a.onreadystatechange=null};g&&(k=setTimeout(function(){l();c()},g));a.type=f||"text/javascript";a.async=e;a.onload=a.onreadystatechange=function(b,c){m||a.readyState&&!/loaded|complete/.test(a.readyState)||(m=!0,g&&clearTimeout(k),l(),c||d())};a.onerror=function(a,b,d){g&&clearTimeout(k);l();c();return!0};a.src=b;h.parentNode.insertBefore(a,h)};for(var z in b)"initAction"==b[z][0]&&(t=b[z][1]);b.push(["_eventPreload",function(){1==t&&k(m);y(B,null,!1,3E3,null,function(){u("_eventInactived")})}]);b.push(["_eventReload",function(){d(r);d(q);k(l)}]);b.push(["_eventActived",function(){d(m);d(l);k(q)}]);b.push(["_eventInactived",function(){d(m);d(l);k(r)}]);u("_eventPreload")}})(this,this.document,"className","jf-loading","jf-reloading","jf-active","jf-inactive",this.document.getElementsByTagName("html")[0],"//ds.justfont.com/js/stable/v/6.0/id/171309946041");</script>
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9504338511537027" crossorigin="anonymous"></script>
+
+
+<script src="https://notes.wadeism.net/js/back-to-top.js"></script>
+
+  
+  
+
+</body>
+</html>

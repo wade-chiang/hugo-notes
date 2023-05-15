@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="application/ld+json">
+    {
+        "@context" : "http://schema.org",
+        "@type" : "BlogPosting",
+        "mainEntityOfPage": {
+             "@type": "WebPage",
+             "@id": "https:\/\/notes.wadeism.net\/"
+        },
+        "articleSection" : "post",
+        "name" : "RH134 課堂筆記",
+        "headline" : "RH134 課堂筆記",
+        "description" : "Chapter 1 IPA Server like light LDAP, can tryout in home how to generate kickstart file system-config-kickstart (GUI) \/root\/anaconda-ks.cfg 預",
+        "inLanguage" : "zh-Hant-TW",
+        "author" : "wade",
+        "creator" : "wade",
+        "publisher": "wade",
+        "accountablePerson" : "wade",
+        "copyrightHolder" : "wade",
+        "copyrightYear" : "2020",
+        "datePublished": "2020-08-05 04:07:41 \u002b0000 \u002b0000",
+        "dateModified" : "2020-08-05 04:07:41 \u002b0000 \u002b0000",
+        "url" : "https:\/\/notes.wadeism.net\/post\/rh134-course-notes\/",
+        "wordCount" : "1938",
+        "image" : "https:\/\/notes.wadeism.net\/%!s(\u003cnil\u003e)",
+        "keywords" : [ "CentOS","RH134","RHCSA","Blog" ]   
+    }
+    </script>
+
+
+
+ <title>RH134 課堂筆記 - Nothing but..</title>
+<meta property="og:title" content="RH134 課堂筆記 - Nothing but..">
+
+
+
+<meta name="description" content="My notes for everyone" />
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="all,follow">
+<meta name="googlebot" content="index,follow,snippet,archive">
+<link rel="stylesheet" id="ct-tracks-google-fonts-css" href="https://fonts.googleapis.com/css?family=Raleway%3A400%2C700&amp;subset=latin%2Clatin-ext&amp;ver=4.7.2" type="text/css" media="all">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+<link href="https://notes.wadeism.net/css/style.css?v=1684171536" rel="stylesheet" id="theme-stylesheet" type='text/css' media='all'>
+
+<link href="https://notes.wadeism.net/css/custom.css?v=1684171536" rel="stylesheet" type='text/css' media='all'>
+<link rel="shortcut icon" href="https://notes.wadeism.net/img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="https://notes.wadeism.net/img/favicon.ico" type="image/x-icon">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-120924943-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-120924943-1');
+</script>
+
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-120924943-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-120924943-1');
+</script>
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://notes.wadeism.net/css/prism.css" >
+
+
+<style>
+   
+   
+   
+  @import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Roboto+Mono&display=swap');
+</style>
+
+
+<link href="https://notes.wadeism.net/css/wade_custom.css?v=1684171536" rel="stylesheet" type='text/css' media='all'>
+</head>
+
+
+<body class="post-template-default single single-post single-format-standard ct-body singular singular-post not-front standard">
+
+  <div id="overflow-container" class="overflow-container">
+    <a class="skip-content" href="#main">Skip to content</a>
+    <header id="site-header" class="site-header" role="banner">
+      <div class='top-navigation'>
+        <div class='container'>
+
+  <div id="menu-secondary" class="menu-container menu-secondary" role="navigation">
+    <button id="toggle-secondary-navigation" class="toggle-secondary-navigation"><i class="fas fa-plus"></i></button>
+
+    <div class="menu">
+
+      <ul id="menu-secondary-items" class="menu-secondary-items">
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/bass">bass</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/developer">developer</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/linux">linux</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/mac">mac</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/office">office</a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+
+  </div>
+
+
+  <ul class="social-media-icons">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+    
+    <li>
+      <a href="https://github.com/wade-chiang" data-animate-hover="pulse" class="github" target="_blank">
+        <i class="fab fa-github" title="github"></i>
+        <span class="screen-reader-text">github</span>
+      </a>
+    </li>
+    
+
+
+    
+
+    
+    <li>
+      <a href="https://notes.wadeism.net/index.xml" data-animate-hover="pulse" class="rss" target="_blank">
+        <i class="fas fa-rss" title="rss"></i>
+        <span class="screen-reader-text">rss</span>
+      </a>
+    </li>
+    
+
+
+  </ul></div>
+
+      </div>
+
+      <div class="container">
+        <div id="title-info" class="title-info">
+  <div id='site-title' class='site-title'>
+    
+    <a href="/"> Nothing but.. </a>
+    </div>
+  </div>
+  <button id="toggle-navigation" class="toggle-navigation">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <div id="menu-primary-tracks" class="menu-primary-tracks"></div>
+  <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+    
+    <p class="site-description">Something here</p>
+    
+
+    <div class="menu">
+      <ul id="menu-primary-items" class="menu-primary-items">
+        
+        
+        <li class='menu-item menu-item-type-custom menu-item-object-custom '>
+          <a href="https://notes.wadeism.net/">Home</a>
+          
+        </li>
+        
+        <li class='menu-item menu-item-type-post_type menu-item-object-page '>
+          <a href="https://notes.wadeism.net/about/">About</a>
+          
+        </li>
+        
+        <li class='menu-item menu-item-type-post_type menu-item-object-page '>
+          <a href="https://notes.wadeism.net/contact/"></a>
+          
+        </li>
+        
+      </ul>
+    </div>
+
+  </div>
+
+      </div>
+    </header>
+
+    <div id="main" class="main" role="main">
+
+      
+  
+  
+    
+  
+  
+  <div id="loop-container" class="loop-container">
+    
+
+      <div class="post type-post status-publish format-standard hentry category-standard category-travel entry full-without-featured odd excerpt-1">
+
+        
+        <div class="entry-meta">
+          <span class="date">05 August 2020</span>	<span> / </span>
+
+          <span class="author">
+            <a href="https://notes.wadeism.net/" title="Posts by wade" rel="author">wade</a>
+          </span>
+
+
+          
+          <span class="category">
+            <span> / </span>
+
+            <a href="/categories/linux">Linux</a>
+          </span>
+          
+
+
+        </div>
+        <div class='entry-header'>
+          <h1 class='entry-title'> RH134 課堂筆記</h1>
+        </div>
+        <div class="entry-container">
+          <div class="entry-content">
+            <article>
+              <h2 id="chapter-1">Chapter 1</h2>
+<p>IPA Server like light LDAP, can tryout in home</p>
+<p>how to generate kickstart file</p>
+<ul>
+<li>
+<p>system-config-kickstart (GUI)</p>
+</li>
+<li>
+<p>/root/anaconda-ks.cfg</p>
+</li>
+<li>
+<p>預設 kickstart 的屬性是 600，如果用 cat 的產生新的話會變成 644，所以要用 cat 產生，如果用 cp 的話，會是 600，還要再改成 o + r</p>
+</li>
+<li>
+<p>config 跟 network 指令那些的，安裝完會進到實際的系統設定中，但像 installtion config，設定安裝時要用的 repo 那些的東西，最後系統安裝完後不會實際寫入，（例如不會真的新增 repo）</p>
+</li>
+</ul>
+<h2 id="chapter-2">Chapter 2</h2>
+<ul>
+<li>一般的 ^ &amp; 是抓行開頭與行結尾，&lt; 跟 &gt; 是抓字的開頭跟結尾，一個以行為基準，一個以單字為基準，後者比較常用！</li>
+<li>反斜線只作用在後面的字元，但 multipilers 則作用在前面的一個字元</li>
+</ul>
+<hr>
+<h2 id="chapter-4">Chapter 4</h2>
+<p>at -q 指定佇列的優先等級，後面接 a-z</p>
+<p>at （一次性的排程工作）</p>
+<ul>
+<li>atd.service</li>
+<li>/var/spool/at</li>
+<li>若有 output 會 mail 至 root 的信箱</li>
+<li>at、atq、atrm</li>
+</ul>
+<p>cron（週期性的排程工作）→ crontab</p>
+<ul>
+<li>crond.service</li>
+<li>/var/spool/cron</li>
+<li>若有 output 會 mail 至工作擁有者的信箱</li>
+<li>crontab -e、crontab -l、crontab -r</li>
+</ul>
+<p>指令部分，% 後面的文字會被當成前面的 std-in</p>
+<p>run-part 執行 anaconda，之後會觸發之後的 daily, monthly…等執行程序（會看時間截記）<br>
+cat /etc/anacrontab<br>
+anacron 的指令也要研究</p>
+<p>每小時會執行的排程工作<br>
+/etc/cron.d/0hourly<br>
+→ run-parts /etc/cron.hourly （shell script）<br>
+其中有一個檔案 0anacron  會執行 anacon -s 的指令，設定檔在 /etc/anacrontab → 會檢查 /var/spool/anacorn/* 的時間戳記</p>
+<p>決定要不要執行<br>
+run-parts /etc/cron.daily<br>
+run-parts /etc/cron.weekly<br>
+run-parts /etc/cron.monthly</p>
+<p>暫存檔的管理<br>
+systemd-tmpfile-setup.service → systemd-tmpfile &ndash;create &ndash;remove<br>
+systemd-tmpfile-clean.service  → systemd-tmpfile &ndash;clean → /etc/tmpfiles.d/<em>.conf<br>
+systemd-tmpfile-clean.timer          /run/tmpfiles.d/</em>.conf                                  /usr/lib/tmpfiles.d/*.conf</p>
+<hr>
+<h2 id="chapter-5">Chapter 5</h2>
+<p>設定 user capabiliby 後，其實 user 也可以降低 nice 值了</p>
+<p>ps axo pid,comm,nice,cls &ndash;sort=-nice</p>
+<p>cls 欄位，裡的 ts 代表 run 在 normal priroity 另外有個狀態叫 FF，means fast in fast out，優先權比較高，無法改其 nice 值？</p>
+<hr>
+<h2 id="chapter-6">Chapter 6</h2>
+<p>newgrp command</p>
+<p>有了 ACL 設定後，群組權限就變成了 ACL mask 設定，不再是原本的 group 權限了<br>
+getfacl<br>
+setfacl</p>
+<ul>
+<li>mask 代表該檔案的最大權限，mask 只影響 name user 跟 name group，不影響實際的擁有者</li>
+<li>mask 代表可能的最大權限，如果本來name user 設的權限就小於該權限，那就不會影響</li>
+<li>mask 設定不會影響 file owner 跟 others 的權限，但擁有群組（group owner）、name user、name group 都會被 mask 影響</li>
+<li>default acl：該目錄新建的檔案和子目錄所使用的權限規則，該屬性只能設在目錄上，檔案不行</li>
+<li>acl mask 最後再定，因為權限還是會以先設定好的為主，mask 會自己判斷該給的權限</li>
+<li>user &gt; name user &gt; group &gt; name group</li>
+<li>setfacl 加 -n 表示不要改 mask</li>
+<li>加 -R 的 p108 那邊考試會用到！！！ -b 是把 acl blank 掉，就不再有 acl 屬性</li>
+<li>mask 要在其它 acl 的屬性都清掉才能刪，刪掉後該檔案就不再擁有 acl 屬性</li>
+<li>x 權限如果不用大寫，會套用在檔案上，所以盡量用大寫 X，default acl 的話用小 x 就可以，因為針對未來新增的，不是設定原本的檔案</li>
+</ul>
+<hr>
+<h2 id="chapter-7">Chapter 7</h2>
+<h3 id="selinux">SELinux</h3>
+<ul>
+<li>outside → Firewall → Service conf → Permission → SELinux</li>
+<li>ps C 可看 command</li>
+<li>SELinux 也會管到 port，也許 openvpn 不能隨便改 port 跟這個有關？</li>
+<li>用 mv 或 cp -a 的話，檔案會保留原本的 selinux context</li>
+<li>restorecon 比較建議使用，相較於chcon，restorecon 不用指定context type，會直接以預設規定來修改</li>
+<li>chcon 改過後，如果重開機有做 relabel 的話, 自訂的規則會被洗回預設！所以建議用 fcontext 修改資料夾本身的規則</li>
+<li>p134 必考</li>
+<li>semanage fcontext -a -t $context</li>
+<li>semanage fcontext -a -l $folder</li>
+<li>yum install selinux-policy-devel</li>
+<li>mandb</li>
+<li>man -k</li>
+<li>瀏覽網頁只需要 x 的權限，不用 r</li>
+</ul>
+<p>troubleshooting （P141 超實用！）</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sealert -l $UUID
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 可以看該id的錯誤訊息，在 log/message 裡看得到！可以用 grep sealert</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>semanage fcontext -a -t $context <span style="color:#e6db74">&#39;$folder(/.*)?&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ex semanage fcontext -a -t httpd_sys_content_t <span style="color:#e6db74">&#39;/var/www/html/my_index_folder&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 修改該資料夾的預設 context，後面的意思是資料夾的 / 底下的所有檔案</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>restorecon -Rv $folder
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># reset 資料夾的 selinux context，參數R為資料夾底下的所有檔案也要 reset，參數 v 為囉嗦模式</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ls -d -Z $context 正確的資料夾 $想改的資料夾
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 可以用來看該怎麼設定 context</span>
+</span></span></code></pre></div><hr>
+<h2 id="chapter-8">Chapter 8</h2>
+<ul>
+<li>LDAP，需安裝 sshd、krb5-workstation、autoconfig-gtk</li>
+<li>本章重點在 how to connect，還不用去 build</li>
+<li>單純驗證只要 LDAP</li>
+<li>ldap 提供 user information, kerberos 負責驗證，來驗證做到 single sigh on</li>
+<li>ssh -X，加大 X 可以把遠端 x window 的視窗在本機打開</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ssh -X root@desktop35 system-config-authentication &amp;
+</span></span></code></pre></div><p><a href="http://www.freeIPA.org" target="_blank">www.freeIPA.org</a></p>
+<p>p160要再多練習，但每次練習前要 reset desktop</p>
+<hr>
+<h2 id="chapter-9">Chapter 9</h2>
+<p>cat /proc/partitions<br>
+裡面有記載 partitions 的訊息，來了解 kernel 是否知道有該 partition</p>
+<p>partprobe /dev/vdb</p>
+<p>fstab 的最後一個欄位fsck, 是有順序的，需要的話，照順序往下延伸<br>
+例如：<br>
+/dev/sda1  /  ext4  defaults  1  1<br>
+/dev/sda2  /mnt1  ext4  defaults  1  2<br>
+/dev/sda2  /mnt2  ext4  defaults  1  3</p>
+<p>swapon<br>
+swapon -a (掛載)<br>
+swapoff<br>
+swap -s （看狀態）<br>
+free</p>
+<hr>
+<h2 id="chapter-10">Chapter 10</h2>
+<p>LVM (Logical Volume Management)</p>
+<p>pvcreate：pvs<br>
+：pvdisplay</p>
+<p>vgcreate：vgs<br>
+：vgdisplay</p>
+<p>lvcreate：lvs<br>
+：lvdisplay</p>
+<p>LVM 就像一個虛擬化的 partition</p>
+<p>/boot 一定要放在實體的 partition 裡，不能建在 lvm 之類的上面</p>
+<p>預設每一個 LE 可以對應到一個 pv，但也可以對應到兩個以上用 mirror 對應</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># PV</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create</span>
+</span></span><span style="display:flex;"><span>pvcreate
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Verify</span>
+</span></span><span style="display:flex;"><span>pvdisplay
+</span></span><span style="display:flex;"><span>pvs
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Reduce</span>
+</span></span><span style="display:flex;"><span>pvmove
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Remove</span>
+</span></span><span style="display:flex;"><span>pvremove
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># VG</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create</span>
+</span></span><span style="display:flex;"><span>vgcreate
+</span></span><span style="display:flex;"><span>vgname
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Verify</span>
+</span></span><span style="display:flex;"><span>vgdisplay
+</span></span><span style="display:flex;"><span>vgs
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Extend</span>
+</span></span><span style="display:flex;"><span>vgextend
+</span></span><span style="display:flex;"><span>vgname
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Reduce</span>
+</span></span><span style="display:flex;"><span>vgreduce
+</span></span><span style="display:flex;"><span>vgname
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Remove</span>
+</span></span><span style="display:flex;"><span>vgremove
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># LV</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create</span>
+</span></span><span style="display:flex;"><span>lvcreate -n
+</span></span><span style="display:flex;"><span>lvname -L
+</span></span><span style="display:flex;"><span>lvsize vgname
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Verify</span>
+</span></span><span style="display:flex;"><span>lvdisplay
+</span></span><span style="display:flex;"><span>lvs
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Extend</span>
+</span></span><span style="display:flex;"><span>lvextend -l
+</span></span><span style="display:flex;"><span>lvsize
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>+lvsize /dev/vgname/lvname
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>xfs.grufs
+</span></span><span style="display:flex;"><span>resize2fs
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>lvextend -r <span style="color:#75715e"># 可以不用再打 xfs.grufs</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Reduce</span>
+</span></span><span style="display:flex;"><span>lvreduce
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Remove</span>
+</span></span><span style="display:flex;"><span>lvremove /dev/vgname/lvname
+</span></span></code></pre></div><hr>
+<h2 id="chapter-11">Chapter 11</h2>
+<h3 id="nfs-direct-mount">NFS Direct mount</h3>
+<ul>
+<li>Master file：<br>
+/etc/autofs.master/<br>
+/etc/auto.master.d/*.autofs</li>
+<li>Mapping file content：fullPath  Option  Source</li>
+<li>Base Directory：/-</li>
+<li>Mapping Files：/FilePath</li>
+<li>通常使用時機：使用者存取已存在的目錄時，自動掛載</li>
+</ul>
+<h3 id="nfs-indirect-mount">NFS Indirect mount</h3>
+<ul>
+<li>Master file：<br>
+/etc/autofs.master/<br>
+/etc/auto.master.d/*.autofs</li>
+<li>Mapping file content：Subdirectory  Option  Source -rw,..</li>
+<li>Base Directory：/path</li>
+<li>Mapping Files：/FilePath</li>
+<li>通常使用時機：搭配集中驗證掛載使用者家目錄</li>
+</ul>
+
+            </article>
+          </div>
+          
+      <div class='entry-meta-bottom'>
+        
+
+  <div class="entry-categories"><p><span>Categories</span>
+    
+    <a href="/categories/linux" title="View all posts in Linux">Linux</a>
+  </p>
+</div>
+
+
+
+<div class="entry-tags"><p><span>Tags</span>
+  
+  <a href="/tags/centos" title="View all posts tagged CentOS">CentOS</a>
+  
+  <a href="/tags/rh134" title="View all posts tagged RH134">RH134</a>
+  
+  <a href="/tags/rhcsa" title="View all posts tagged RHCSA">RHCSA</a>
+  
+
+</p></div>	</div>
+
+	
+<div class="author-meta">
+
+  <div class="author">
+    	
+      <img alt='wade' src="https://www.gravatar.com/avatar/6fee0275681dd0b43da1d6acb66c336f?s=100&d=identicon" class='avatar avatar-72 photo' height='72' width='72'>
+    
+    <span>
+      Written by:<a href="https://notes.wadeism.net/" title="Posts by wade" rel="author">wade</a> </span>
+    </div>
+    <div class="bio">
+      
+      
+      <p>本站站長</p>
+      
+      
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a class="github" target="_blank"
+href="https://github.com/wade-chiang">
+<i class="fab fa-github"
+title="github icon"></i>
+</a>
+
+
+
+
+
+
+
+</div>
+</div>
+
+</div>
+</div>
+
+<section id="comments" class="comments">
+  <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+    var d = document, s = d.createElement('script');
+    s.src = 'https://notes-wadeism.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+</section>
+</div>
+
+ 
+
+
+
+    </div>
+
+    <footer id="site-footer" class="site-footer" role="contentinfo">
+	<h1>
+    
+    <a href=""> Nothing but.. </a>
+    
+	</h1>
+
+			
+			<p class="site-description">Something here</p>
+			
+
+		<div id="menu-footer" class="menu-container menu-footer" role="navigation">
+		<div class="menu">
+
+      <ul id="menu-footer-items" class="menu-footer-items">
+        
+</ul>
+
+</div>	</div>
+
+<ul class="social-media-icons">
+
+        
+
+        
+
+
+        
+
+        
+
+        
+
+        
+
+        
+
+
+        
+        <li>
+        <a href="https://github.com/wade-chiang"  class="github" target="_blank">
+            <i class="fab fa-github" title="github"></i>
+            <span class="screen-reader-text">github</span>
+        </a>
+        </li>
+        
+
+
+        
+
+        
+        <li>
+        <a href="https://notes.wadeism.net/index.xml" data-animate-hover="pulse" class="rss" target="_blank">
+            <i class="fas fa-rss" title="rss"></i>
+            <span class="screen-reader-text">rss</span>
+        </a>
+        </li>
+        
+
+				</ul>	<div class="design-credit">
+		
+		<p>© 2022 Wade</p>
+		
+		<p>Nederburg Hugo Theme by <a href="https://appernetic.io" target="_blank">Appernetic</a>.</p>
+		
+		<p>A port of Tracks by Compete Themes.</p>
+		
+	</div>
+</footer>
+
+  </div>
+  <script src="https://notes.wadeism.net/js/jquery.min.js"></script>
+<script src="https://notes.wadeism.net/js/jquerymigrate.js"></script>
+<script src="https://notes.wadeism.net/js/production.min.js?v=1684171536"></script>
+
+
+
+<script src="https://notes.wadeism.net/js/prism.js"></script>
+
+
+<script src="https://notes.wadeism.net/js/medium-zoom.js"></script>
+<script src="https://notes.wadeism.net/js/wade_custom.js"></script>
+
+
+
+
+
+<script type="text/javascript">var _jf = _jf || [];_jf.push(['p','63921']);_jf.push(['initAction',true]);_jf.push(['_setFont','xingothic-tc-w6','css','.xingothic-tc-w6']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-meta-bottom a']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-content h3']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-content h4']);_jf.push(['_setFont','xingothic-tc-w6','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w6','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w6','weight',600]);_jf.push(['_setFont','xingothic-tc-w5','css','.xingothic-tc-w5']);_jf.push(['_setFont','xingothic-tc-w5','css','div.entry-content p']);_jf.push(['_setFont','xingothic-tc-w5','css','div.excerpt-content p']);_jf.push(['_setFont','xingothic-tc-w5','css','div.post article']);_jf.push(['_setFont','xingothic-tc-w5','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w5','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w5','weight',500]);_jf.push(['_setFont','xingothic-tc-w7','css','.xingothic-tc-w7']);_jf.push(['_setFont','xingothic-tc-w7','css','h1.entry-title']);_jf.push(['_setFont','xingothic-tc-w7','css','h2.excerpt-title']);_jf.push(['_setFont','xingothic-tc-w7','css','div.entry-content h2']);_jf.push(['_setFont','xingothic-tc-w7','css','strong']);_jf.push(['_setFont','xingothic-tc-w7','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w7','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w7','weight',700]);(function(A,p,c,m,l,q,r,h,B,D){var b=A._jf;if(b.constructor!==Object){var t=!0,u=function(a){var f=!0,e;for(e in b)b[e][0]==a&&(f&&(f=f&&!1!==b[e][1].call(b)),b[e]=null,delete b[e])},v=/\S+/g,w=/[\t\r\n\f]/g,C=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,n="".trim,x=n&&!n.call("\ufeff\u00a0")?function(a){return null==a?"":n.call(a)}:function(a){return null==a?"":(a+"").replace(C,"")},k=function(a){var f,b,g;if("string"===typeof a&&a&&(a=(a||"").match(v)||[],f=h[c]?(" "+h[c]+" ").replace(w," "):" ")){for(g=0;b=a[g++];)0>f.indexOf(" "+b+" ")&&(f+=b+" ");h[c]=x(f)}},d=function(a){var b,e,g;if(0===arguments.length||"string"===typeof a&&a){var d=(a||"").match(v)||[];if(b=h[c]?(" "+h[c]+" ").replace(w," "):""){for(g=0;e=d[g++];)for(;0<=b.indexOf(" "+e+" ");)b=b.replace(" "+e+" "," ");h[c]=a?x(b):""}}},y;b.addScript=y=function(b,f,e,g,d,c){d=d||function(){};c=c||function(){};var a=p.createElement("script"),h=p.getElementsByTagName("script")[0],k,m=!1,l=function(){a.src="";a.parentNode.removeChild(a);a=a.onerror=a.onload=a.onreadystatechange=null};g&&(k=setTimeout(function(){l();c()},g));a.type=f||"text/javascript";a.async=e;a.onload=a.onreadystatechange=function(b,c){m||a.readyState&&!/loaded|complete/.test(a.readyState)||(m=!0,g&&clearTimeout(k),l(),c||d())};a.onerror=function(a,b,d){g&&clearTimeout(k);l();c();return!0};a.src=b;h.parentNode.insertBefore(a,h)};for(var z in b)"initAction"==b[z][0]&&(t=b[z][1]);b.push(["_eventPreload",function(){1==t&&k(m);y(B,null,!1,3E3,null,function(){u("_eventInactived")})}]);b.push(["_eventReload",function(){d(r);d(q);k(l)}]);b.push(["_eventActived",function(){d(m);d(l);k(q)}]);b.push(["_eventInactived",function(){d(m);d(l);k(r)}]);u("_eventPreload")}})(this,this.document,"className","jf-loading","jf-reloading","jf-active","jf-inactive",this.document.getElementsByTagName("html")[0],"//ds.justfont.com/js/stable/v/6.0/id/171309946041");</script>
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9504338511537027" crossorigin="anonymous"></script>
+
+
+<script src="https://notes.wadeism.net/js/back-to-top.js"></script>
+
+  
+  
+
+</body>
+</html>

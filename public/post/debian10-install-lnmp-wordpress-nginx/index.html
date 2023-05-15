@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="application/ld+json">
+    {
+        "@context" : "http://schema.org",
+        "@type" : "BlogPosting",
+        "mainEntityOfPage": {
+             "@type": "WebPage",
+             "@id": "https:\/\/notes.wadeism.net\/"
+        },
+        "articleSection" : "post",
+        "name" : "Debian 10 安裝 LNMP 與 Wordpress 的 Nginx 設定",
+        "headline" : "Debian 10 安裝 LNMP 與 Wordpress 的 Nginx 設定",
+        "description" : "自從 Red Hat 宣佈不再會有 CentOS 9，只會有 CentOS Str",
+        "inLanguage" : "zh-Hant-TW",
+        "author" : "wade",
+        "creator" : "wade",
+        "publisher": "wade",
+        "accountablePerson" : "wade",
+        "copyrightHolder" : "wade",
+        "copyrightYear" : "2021",
+        "datePublished": "2021-03-13 13:35:02 \u002b0000 \u002b0000",
+        "dateModified" : "2021-03-13 13:35:02 \u002b0000 \u002b0000",
+        "url" : "https:\/\/notes.wadeism.net\/post\/debian10-install-lnmp-wordpress-nginx\/",
+        "wordCount" : "1611",
+        "image" : "https:\/\/notes.wadeism.net\/https:\/\/image.wadeism.net\/debian10_logo.png",
+        "keywords" : [ "Debian","Nginx","Wordpress","Blog" ]   
+    }
+    </script>
+
+
+
+ <title>Debian 10 安裝 LNMP 與 Wordpress 的 Nginx 設定 - Nothing but..</title>
+<meta property="og:title" content="Debian 10 安裝 LNMP 與 Wordpress 的 Nginx 設定 - Nothing but..">
+
+
+
+<meta name="description" content="My notes for everyone" />
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="all,follow">
+<meta name="googlebot" content="index,follow,snippet,archive">
+<link rel="stylesheet" id="ct-tracks-google-fonts-css" href="https://fonts.googleapis.com/css?family=Raleway%3A400%2C700&amp;subset=latin%2Clatin-ext&amp;ver=4.7.2" type="text/css" media="all">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+<link href="https://notes.wadeism.net/css/style.css?v=1684171536" rel="stylesheet" id="theme-stylesheet" type='text/css' media='all'>
+
+<link href="https://notes.wadeism.net/css/custom.css?v=1684171536" rel="stylesheet" type='text/css' media='all'>
+<link rel="shortcut icon" href="https://notes.wadeism.net/img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="https://notes.wadeism.net/img/favicon.ico" type="image/x-icon">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-120924943-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-120924943-1');
+</script>
+
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-120924943-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-120924943-1');
+</script>
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://notes.wadeism.net/css/prism.css" >
+
+
+<style>
+   
+   
+   
+  @import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Roboto+Mono&display=swap');
+</style>
+
+
+<link href="https://notes.wadeism.net/css/wade_custom.css?v=1684171536" rel="stylesheet" type='text/css' media='all'>
+</head>
+
+
+<body class="post-template-default single single-post single-format-standard ct-body singular singular-post not-front standard">
+
+  <div id="overflow-container" class="overflow-container">
+    <a class="skip-content" href="#main">Skip to content</a>
+    <header id="site-header" class="site-header" role="banner">
+      <div class='top-navigation'>
+        <div class='container'>
+
+  <div id="menu-secondary" class="menu-container menu-secondary" role="navigation">
+    <button id="toggle-secondary-navigation" class="toggle-secondary-navigation"><i class="fas fa-plus"></i></button>
+
+    <div class="menu">
+
+      <ul id="menu-secondary-items" class="menu-secondary-items">
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/bass">bass</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/developer">developer</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/linux">linux</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/mac">mac</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/office">office</a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+
+  </div>
+
+
+  <ul class="social-media-icons">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+    
+    <li>
+      <a href="https://github.com/wade-chiang" data-animate-hover="pulse" class="github" target="_blank">
+        <i class="fab fa-github" title="github"></i>
+        <span class="screen-reader-text">github</span>
+      </a>
+    </li>
+    
+
+
+    
+
+    
+    <li>
+      <a href="https://notes.wadeism.net/index.xml" data-animate-hover="pulse" class="rss" target="_blank">
+        <i class="fas fa-rss" title="rss"></i>
+        <span class="screen-reader-text">rss</span>
+      </a>
+    </li>
+    
+
+
+  </ul></div>
+
+      </div>
+
+      <div class="container">
+        <div id="title-info" class="title-info">
+  <div id='site-title' class='site-title'>
+    
+    <a href="/"> Nothing but.. </a>
+    </div>
+  </div>
+  <button id="toggle-navigation" class="toggle-navigation">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <div id="menu-primary-tracks" class="menu-primary-tracks"></div>
+  <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+    
+    <p class="site-description">Something here</p>
+    
+
+    <div class="menu">
+      <ul id="menu-primary-items" class="menu-primary-items">
+        
+        
+        <li class='menu-item menu-item-type-custom menu-item-object-custom '>
+          <a href="https://notes.wadeism.net/">Home</a>
+          
+        </li>
+        
+        <li class='menu-item menu-item-type-post_type menu-item-object-page '>
+          <a href="https://notes.wadeism.net/about/">About</a>
+          
+        </li>
+        
+        <li class='menu-item menu-item-type-post_type menu-item-object-page '>
+          <a href="https://notes.wadeism.net/contact/"></a>
+          
+        </li>
+        
+      </ul>
+    </div>
+
+  </div>
+
+      </div>
+    </header>
+
+    <div id="main" class="main" role="main">
+
+      
+  
+  
+    
+  
+  
+  <div id="loop-container" class="loop-container">
+    
+    <div class="post type-post status-publish format-standard has-post-thumbnail hentry category-design tag-design tag-standard-2 tag-tagalicious tag-travel entry full-without-featured odd excerpt-1">
+
+      <div class='featured-image lazy lazy-bg-image'  data-background="https://image.wadeism.net/debian10_logo.png">
+      </div>
+      
+        <div class="entry-meta">
+          <span class="date">13 March 2021</span>	<span> / </span>
+
+          <span class="author">
+            <a href="https://notes.wadeism.net/" title="Posts by wade" rel="author">wade</a>
+          </span>
+
+
+          
+          <span class="category">
+            <span> / </span>
+
+            <a href="/categories/linux">Linux</a>
+          </span>
+          
+
+
+        </div>
+        <div class='entry-header'>
+          <h1 class='entry-title'> Debian 10 安裝 LNMP 與 Wordpress 的 Nginx 設定</h1>
+        </div>
+        <div class="entry-container">
+          <div class="entry-content">
+            <article>
+              <p>自從 Red Hat 宣佈不再會有 CentOS 9，只會有 CentOS Stream，並作為 RHEL 的先期測試，我就對 CentOS 有點失去信心了，雖然還是有不少組織決定 fork 出來做一套如同 CentOS 一樣 free 的 系統，不過之後會怎樣也不知道，不如就先來試試 Debian，因此我開始計劃將目前手邊 CentOS 8 通通換掉，頂多留個 7（CentOS 8 EOL直接被拉到 2021 年…，虧我之前那麼早就改用 8）</p>
+<p>本篇主要記錄 Debian 10 安裝 Nginx、MySQL、PHP 及 WordPress 的過程（記得 sudo vim 之類的常用軟體先裝一裝）</p>
+<h2 id="安裝-nginx">安裝 Nginx</h2>
+<p>Debian 10 的套件庫裡已有包含 nginx 了，不過我這次想要裝新版的，因此就使用官方的安裝流程，功能上大同小異，<span class="hl-red">但安裝套件庫的版本或官方的版本在 conf 上會有些設定上的不同！</span></p>
+<p>雖然我還是會列出安裝的方式，因為大概不會有什麼變動，但可以的話還是建議大家先看一下<a href="https://nginx.org/en/linux_packages.html#Debian" target="_blank">官網的流程</a>。</p>
+<p><br>
+安裝必要的相依套件</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt install curl gnupg2 ca-certificates lsb-release
+</span></span></code></pre></div><p><br>
+新增 nginx mainline 版套件庫</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;deb http://nginx.org/packages/mainline/debian `lsb_release -cs` nginx&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>| sudo tee /etc/apt/sources.list.d/nginx.list
+</span></span></code></pre></div><p>nginx 官方建議安裝 mainline 版本，但如果會擔心最新版可能與一些舊有第三方 module 會有相容性的問題，也可以安裝較穩定的 stable 版本，</p>
+<p><br>
+新增 nginx stable 版套件庫</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;deb http://nginx.org/packages/debian `lsb_release -cs` nginx&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>| sudo tee /etc/apt/sources.list.d/nginx.list
+</span></span></code></pre></div><p><br>
+將官方套件庫的安裝優先權改為高於預設套件庫</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;Package: *\nPin: origin nginx.org\nPin: release o=nginx\nPin-Priority: 900\n&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>| sudo tee /etc/apt/preferences.d/99nginx
+</span></span></code></pre></div><p><br>
+下載 gpg key</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -o /tmp/nginx_signing.key https://nginx.org/keys/nginx_signing.key
+</span></span></code></pre></div><p><br>
+驗證下載的 key</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>gpg --dry-run --quiet --import --import-options import-show /tmp/nginx_signing.key
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>pub   rsa2048 2011-08-19 <span style="color:#f92672">[</span>SC<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>expires: 2024-06-14<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62
+</span></span><span style="display:flex;"><span>uid                      nginx signing key &lt;signing-key@nginx.com&gt;
+</span></span></code></pre></div><p><br>
+將 key 放到正式的資料夾中</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sudo mv /tmp/nginx_signing.key /etc/apt/trusted.gpg.d/nginx_signing.asc
+</span></span></code></pre></div><p><br>
+安裝 nginx</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt update <span style="color:#f92672">&amp;&amp;</span> sudo apt install nginx
+</span></span></code></pre></div><h2 id="安裝-mysql">安裝 MySQL</h2>
+<p>Debian 10 的套件庫裡預設已有 MariaDB 10.3 的版本，是<a href="https://mariadb.com/kb/en/mariadb-vs-mysql-compatibility/" target="_blank">相容 MySQL 5.7 的最後一版</a>，10.4 之後的版本就會是 MySQL 8 了，因此直接安裝即可</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt install mariadb-server
+</span></span></code></pre></div><p><br>
+執行初始化，設定 SQL Server 的 root 密碼與其它設定</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo /usr/bin/mysql_secure_installation
+</span></span></code></pre></div><h2 id="安裝-php-7">安裝 PHP 7</h2>
+<p>Debian 10 的套件庫裡預設為 PHP 7.3 的版本，如果想要用更新一點的版本（本例為 PHP 7.4），簡單一點的方法是使用第三方的套件庫（當然想自己編譯也是可以）</p>
+<p><br>
+安裝相依套件</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt install lsb-release apt-transport-https ca-certificates
+</span></span></code></pre></div><p><br>
+下載 gpg key</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+</span></span></code></pre></div><p><br>
+新增第三方套件庫</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;deb https://packages.sury.org/php/ </span><span style="color:#66d9ef">$(</span>lsb_release -sc<span style="color:#66d9ef">)</span><span style="color:#e6db74"> main&#34;</span> | sudo tee /etc/apt/sources.list.d/php.list
+</span></span></code></pre></div><p><br>
+安裝 php 7.4 with php-fpm</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt update <span style="color:#f92672">&amp;&amp;</span> sudo apt install php7.4-fpm
+</span></span></code></pre></div><p>因為我們使用 nginx，所以直接安裝 php7.4-fpm 就會把基本的套件都裝好</p>
+<p><br>
+安裝額外的 php module</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt-get install php7.4-<span style="color:#f92672">{</span>curl,mbstring,mysql,imagick,xml,zip,gd<span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>上面這些是建議安裝的 module，詳細的內容可以參考 <a href="https://make.wordpress.org/hosting/handbook/handbook/server-environment/" target="_blank">WordPress 的官網</a></p>
+<p><br>
+到這邊 LNMP 就算是安裝完成了，不過 nginx 與 php 之間的設定還沒有弄好，下面就會一邊介紹一下 WordPress 與 Nginx 還有 PHP 的一些設定</p>
+<h2 id="權限設定">權限設定</h2>
+<p>Debian 與 CentOS 比較不一樣的地方是預設了一個名為 <span class="hl-blue">www-data</span> 的 user 與 group，php-fpm 預設的執行者就是 www-data，因此建議將 nginx 放網頁的資料夾 owner 做為更改，以 nginx 預設的資料夾為例：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo chown -R www-data:www-data /usr/share/nginx/html
+</span></span></code></pre></div><p><br>
+另外也要將 nginx 這個 user 加入 www-data 這個群組裡，這樣 nginx 才可以對網頁檔案做存取</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo usermoad -aG www-data nginx
+</span></span></code></pre></div><p><br>
+最後重啟 nginx 讓設定生效</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl restart nginx
+</span></span></code></pre></div><h2 id="為-php-建立-nginx-的-conf-檔">為 PHP 建立 nginx 的 conf 檔</h2>
+<p>LNMP 裝完後，<span class="hl-red">如果不做設定，php 網頁是不會經過 php 引擎的，所以打開 php 網頁只會變成下載網頁，而看不到實際的內容</span>，這是因為 nginx 與 php 之間的關係類似反向代理，因此我們要先寫一個設定檔，告訴 nginx 要把 php 檔送到 php-fpm 去做解析</p>
+<p><br>
+建立 snippets 資料夾</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo mkdir /etc/nginx/conf.d/snippets
+</span></span></code></pre></div><p>這個資料夾用來放一些常重覆用到的 nginx 設定檔，例如 php 的解析，<span class="hl-green">如果是使用 Debian 內建的 repo 裝 nginx 的話，這個資料夾會在 /etc/nginx 裡，但如果是使用官方的 repo 最新版安裝，就不會有這個資料夾，需要自己建立</span>，我放在 /etc/nginx/conf.d 裡只是為了備份方便。</p>
+<p><br>
+建立解析 php 的 conf</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo vim /etc/nginx/conf.d/snippets/php.conf
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-nginx" data-lang="nginx"><span style="display:flex;"><span><span style="color:#75715e"># 內容如下：
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fastcgi_intercept_errors</span> <span style="color:#66d9ef">on</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fastcgi_index</span>  <span style="color:#e6db74">index.php</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">include</span>        fastcgi_params;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fastcgi_param</span>  <span style="color:#e6db74">SCRIPT_FILENAME</span>  $document_root$fastcgi_script_name;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fastcgi_param</span>  <span style="color:#e6db74">PATH_INFO</span> $fastcgi_path_info;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fastcgi_pass</span>   <span style="color:#e6db74">unix:/run/php/php7.4-fpm.sock</span>;
+</span></span></code></pre></div><p>這段內容就是將 php 檔送到 <span class="hl-blue">unix:/run/php/php7.4-fpm.sock</span> 去解析，之後 nginx 設定裡如果有 php 的部分，都要引入這一塊內容，因此寫成 snippets 會比較方便，注意<span class="hl-red">如果不是裝 7.4 版的 php、php-fpm，要把最後一行的 sock 版本改掉。</span></p>
+<h2 id="wordpress-的-nginx-conf-檔">WordPress 的 nginx conf 檔</h2>
+<p>將下面的設定檔依自己的需求，放到 <span class="hl-blue">/etc/nginx/conf.d/</span> 裡面即可</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-nginx" data-lang="nginx"><span style="display:flex;"><span><span style="color:#66d9ef">server{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">listen</span>          <span style="color:#ae81ff">443</span> <span style="color:#e6db74">ssl</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">server_name</span>     <span style="color:#e6db74">網站的域名</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">root</span>            <span style="color:#e6db74">/usr/share/nginx/html</span>; <span style="color:#75715e"># 網站的根目錄位置
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">index</span>           <span style="color:#e6db74">index.php</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">server_tokens</span>   <span style="color:#66d9ef">off</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 如果網站是放在反向代理的後面，想拿到 client 真實的 ip 必需設下面這兩行
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">set_real_ip_from</span> <span style="color:#e6db74">x.x.x.x</span>;           
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">real_ip_header</span>  <span style="color:#e6db74">X-Forwarded-For</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">access_log</span>      <span style="color:#e6db74">/var/log/nginx/web-access.log</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">error_log</span>       <span style="color:#e6db74">/var/log/nginx/web-error.log</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">location</span> <span style="color:#e6db74">/</span>{
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">try_files</span> $uri $uri/ <span style="color:#e6db74">/index.php</span>$is_args$args;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">location</span> ~ <span style="color:#e6db74">\.php$</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">root</span>    <span style="color:#e6db74">/usr/share/nginx/html</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">include</span> <span style="color:#e6db74">/etc/nginx/conf.d/snippets/php.conf</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">}</span>
+</span></span></code></pre></div><p><span class="hl-blue">location ~ .php${}</span> 這段裡面 include 了剛才寫好的 php.conf，全部的意思就是將 root 底下所有檔名為 php 結尾的檔案都要使用 php.conf 裡的設定，也就是送往 php-fpm 做解析，雖然 php.conf 裡的內容我們也可以直接貼到這段裡面，不過如果之後想針對其它後綴的網址做特別的處理，直接 include 一個檔案會比每次都重貼一大段來的簡潔。</p>
+<hr>
+<p>參考資料：</p>
+<p><a href="https://computingforgeeks.com/how-to-install-latest-php-on-debian/" target="_blank">How To Install PHP 7.4 on Debian 10 / Debian 9</a></p>
+<p><a href="https://hostup.org/blog/how-to-install-nginx-and-php-7-4-on-debian-10/" target="_blank">How to Install Nginx and PHP 7.4 on Debian 10</a></p>
+<p><a href="https://make.wordpress.org/hosting/handbook/handbook/server-environment/" target="_blank">WordPress Hosting Handbook / Server Environment</a></p>
+<p><a href="https://mariadb.com/kb/en/mariadb-vs-mysql-compatibility/" target="_blank">MariaDB versus MySQL: Compatibility</a></p>
+
+            </article>
+          </div>
+          
+      <div class='entry-meta-bottom'>
+        
+
+  <div class="entry-categories"><p><span>Categories</span>
+    
+    <a href="/categories/linux" title="View all posts in Linux">Linux</a>
+  </p>
+</div>
+
+
+
+<div class="entry-tags"><p><span>Tags</span>
+  
+  <a href="/tags/debian" title="View all posts tagged Debian">Debian</a>
+  
+  <a href="/tags/nginx" title="View all posts tagged Nginx">Nginx</a>
+  
+  <a href="/tags/wordpress" title="View all posts tagged Wordpress">Wordpress</a>
+  
+
+</p></div>	</div>
+
+	
+<div class="author-meta">
+
+  <div class="author">
+    	
+      <img alt='wade' src="https://www.gravatar.com/avatar/6fee0275681dd0b43da1d6acb66c336f?s=100&d=identicon" class='avatar avatar-72 photo' height='72' width='72'>
+    
+    <span>
+      Written by:<a href="https://notes.wadeism.net/" title="Posts by wade" rel="author">wade</a> </span>
+    </div>
+    <div class="bio">
+      
+      
+      <p>本站站長</p>
+      
+      
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a class="github" target="_blank"
+href="https://github.com/wade-chiang">
+<i class="fab fa-github"
+title="github icon"></i>
+</a>
+
+
+
+
+
+
+
+</div>
+</div>
+
+</div>
+</div>
+
+<section id="comments" class="comments">
+  <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+    var d = document, s = d.createElement('script');
+    s.src = 'https://notes-wadeism.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+</section>
+</div>
+
+ 
+
+
+
+    </div>
+
+    <footer id="site-footer" class="site-footer" role="contentinfo">
+	<h1>
+    
+    <a href=""> Nothing but.. </a>
+    
+	</h1>
+
+			
+			<p class="site-description">Something here</p>
+			
+
+		<div id="menu-footer" class="menu-container menu-footer" role="navigation">
+		<div class="menu">
+
+      <ul id="menu-footer-items" class="menu-footer-items">
+        
+</ul>
+
+</div>	</div>
+
+<ul class="social-media-icons">
+
+        
+
+        
+
+
+        
+
+        
+
+        
+
+        
+
+        
+
+
+        
+        <li>
+        <a href="https://github.com/wade-chiang"  class="github" target="_blank">
+            <i class="fab fa-github" title="github"></i>
+            <span class="screen-reader-text">github</span>
+        </a>
+        </li>
+        
+
+
+        
+
+        
+        <li>
+        <a href="https://notes.wadeism.net/index.xml" data-animate-hover="pulse" class="rss" target="_blank">
+            <i class="fas fa-rss" title="rss"></i>
+            <span class="screen-reader-text">rss</span>
+        </a>
+        </li>
+        
+
+				</ul>	<div class="design-credit">
+		
+		<p>© 2022 Wade</p>
+		
+		<p>Nederburg Hugo Theme by <a href="https://appernetic.io" target="_blank">Appernetic</a>.</p>
+		
+		<p>A port of Tracks by Compete Themes.</p>
+		
+	</div>
+</footer>
+
+  </div>
+  <script src="https://notes.wadeism.net/js/jquery.min.js"></script>
+<script src="https://notes.wadeism.net/js/jquerymigrate.js"></script>
+<script src="https://notes.wadeism.net/js/production.min.js?v=1684171536"></script>
+
+
+
+<script src="https://notes.wadeism.net/js/prism.js"></script>
+
+
+<script src="https://notes.wadeism.net/js/medium-zoom.js"></script>
+<script src="https://notes.wadeism.net/js/wade_custom.js"></script>
+
+
+
+
+
+<script type="text/javascript">var _jf = _jf || [];_jf.push(['p','63921']);_jf.push(['initAction',true]);_jf.push(['_setFont','xingothic-tc-w6','css','.xingothic-tc-w6']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-meta-bottom a']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-content h3']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-content h4']);_jf.push(['_setFont','xingothic-tc-w6','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w6','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w6','weight',600]);_jf.push(['_setFont','xingothic-tc-w5','css','.xingothic-tc-w5']);_jf.push(['_setFont','xingothic-tc-w5','css','div.entry-content p']);_jf.push(['_setFont','xingothic-tc-w5','css','div.excerpt-content p']);_jf.push(['_setFont','xingothic-tc-w5','css','div.post article']);_jf.push(['_setFont','xingothic-tc-w5','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w5','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w5','weight',500]);_jf.push(['_setFont','xingothic-tc-w7','css','.xingothic-tc-w7']);_jf.push(['_setFont','xingothic-tc-w7','css','h1.entry-title']);_jf.push(['_setFont','xingothic-tc-w7','css','h2.excerpt-title']);_jf.push(['_setFont','xingothic-tc-w7','css','div.entry-content h2']);_jf.push(['_setFont','xingothic-tc-w7','css','strong']);_jf.push(['_setFont','xingothic-tc-w7','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w7','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w7','weight',700]);(function(A,p,c,m,l,q,r,h,B,D){var b=A._jf;if(b.constructor!==Object){var t=!0,u=function(a){var f=!0,e;for(e in b)b[e][0]==a&&(f&&(f=f&&!1!==b[e][1].call(b)),b[e]=null,delete b[e])},v=/\S+/g,w=/[\t\r\n\f]/g,C=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,n="".trim,x=n&&!n.call("\ufeff\u00a0")?function(a){return null==a?"":n.call(a)}:function(a){return null==a?"":(a+"").replace(C,"")},k=function(a){var f,b,g;if("string"===typeof a&&a&&(a=(a||"").match(v)||[],f=h[c]?(" "+h[c]+" ").replace(w," "):" ")){for(g=0;b=a[g++];)0>f.indexOf(" "+b+" ")&&(f+=b+" ");h[c]=x(f)}},d=function(a){var b,e,g;if(0===arguments.length||"string"===typeof a&&a){var d=(a||"").match(v)||[];if(b=h[c]?(" "+h[c]+" ").replace(w," "):""){for(g=0;e=d[g++];)for(;0<=b.indexOf(" "+e+" ");)b=b.replace(" "+e+" "," ");h[c]=a?x(b):""}}},y;b.addScript=y=function(b,f,e,g,d,c){d=d||function(){};c=c||function(){};var a=p.createElement("script"),h=p.getElementsByTagName("script")[0],k,m=!1,l=function(){a.src="";a.parentNode.removeChild(a);a=a.onerror=a.onload=a.onreadystatechange=null};g&&(k=setTimeout(function(){l();c()},g));a.type=f||"text/javascript";a.async=e;a.onload=a.onreadystatechange=function(b,c){m||a.readyState&&!/loaded|complete/.test(a.readyState)||(m=!0,g&&clearTimeout(k),l(),c||d())};a.onerror=function(a,b,d){g&&clearTimeout(k);l();c();return!0};a.src=b;h.parentNode.insertBefore(a,h)};for(var z in b)"initAction"==b[z][0]&&(t=b[z][1]);b.push(["_eventPreload",function(){1==t&&k(m);y(B,null,!1,3E3,null,function(){u("_eventInactived")})}]);b.push(["_eventReload",function(){d(r);d(q);k(l)}]);b.push(["_eventActived",function(){d(m);d(l);k(q)}]);b.push(["_eventInactived",function(){d(m);d(l);k(r)}]);u("_eventPreload")}})(this,this.document,"className","jf-loading","jf-reloading","jf-active","jf-inactive",this.document.getElementsByTagName("html")[0],"//ds.justfont.com/js/stable/v/6.0/id/171309946041");</script>
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9504338511537027" crossorigin="anonymous"></script>
+
+
+<script src="https://notes.wadeism.net/js/back-to-top.js"></script>
+
+  
+  
+
+</body>
+</html>

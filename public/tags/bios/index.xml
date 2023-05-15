@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>BIOS on Nothing but..</title>
+    <link>https://notes.wadeism.net/tags/bios/</link>
+    <description>Recent content in BIOS on Nothing but..</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 05 Sep 2020 02:24:17 +0000</lastBuildDate><atom:link href="https://notes.wadeism.net/tags/bios/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>UEFI 與 GPT 的 Linux 安裝心得</title>
+      <link>https://notes.wadeism.net/post/install-linux-in-uefi-gpt/</link>
+      <pubDate>Sat, 05 Sep 2020 02:24:17 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/install-linux-in-uefi-gpt/</guid>
+      <description>以往我都是用 Easy2Boot 來製作多重開機的系統安裝隨</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>macOS on Nothing but..</title>
+    <link>https://notes.wadeism.net/tags/macos/</link>
+    <description>Recent content in macOS on Nothing but..</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 24 Dec 2020 16:40:00 +0000</lastBuildDate><atom:link href="https://notes.wadeism.net/tags/macos/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>macOS Catalina 使用 autofs 自動掛載 SAMBA</title>
+      <link>https://notes.wadeism.net/post/macos-catalina-autofs-samba/</link>
+      <pubDate>Thu, 24 Dec 2020 16:40:00 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/macos-catalina-autofs-samba/</guid>
+      <description>我在 CentOS 8 安裝與設定 NFS Server 一文中提過 NFS 在 Unix 系</description>
+    </item>
+    
+    <item>
+      <title>macOS Catalina 使用 autofs 自動掛載 NFS</title>
+      <link>https://notes.wadeism.net/post/macos-catalina-autofs-nfs/</link>
+      <pubDate>Thu, 24 Dec 2020 16:10:32 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/macos-catalina-autofs-nfs/</guid>
+      <description>之前提到過 autofs 是用來自動掛載遠端資料夾的好</description>
+    </item>
+    
+    <item>
+      <title>macOS 將網頁暫存檔移到 RamDisk</title>
+      <link>https://notes.wadeism.net/post/macos-move-browser-cache-to-ramdisk/</link>
+      <pubDate>Wed, 23 Dec 2020 09:18:03 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/macos-move-browser-cache-to-ramdisk/</guid>
+      <description>RamDisk 已經是行之有年的技術，我也經常在 Linux 上使</description>
+    </item>
+    
+    <item>
+      <title>macOS 開機自動執行 Script</title>
+      <link>https://notes.wadeism.net/post/macos-running-script-on-boot/</link>
+      <pubDate>Mon, 09 Nov 2020 08:22:22 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/macos-running-script-on-boot/</guid>
+      <description>在 Linux 裡我們很習慣用 rc.local 或是自製 systemd 的 unit 來讓開</description>
+    </item>
+    
+    <item>
+      <title>如何在 Mac 雙擊執行Shell Script</title>
+      <link>https://notes.wadeism.net/post/mac-double-click-excute-script/</link>
+      <pubDate>Thu, 10 Sep 2020 15:17:00 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/mac-double-click-excute-script/</guid>
+      <description>雖然 macOS 一樣有 bash 並且支援 shell script，不</description>
+    </item>
+    
+    <item>
+      <title>Mac 使用 autofs 自動掛載 NFS</title>
+      <link>https://notes.wadeism.net/post/mac-autofs-nfs/</link>
+      <pubDate>Mon, 17 Aug 2020 02:46:17 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/mac-autofs-nfs/</guid>
+      <description>macOS 也可以使用 autofs 來掛載，而且預設已有安裝了</description>
+    </item>
+    
+    <item>
+      <title>Mac 掛載 NFS 與 Operation not permitted 問題</title>
+      <link>https://notes.wadeism.net/post/mac-nfs-mount-operation-not-permitted/</link>
+      <pubDate>Fri, 14 Aug 2020 15:30:42 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/mac-nfs-mount-operation-not-permitted/</guid>
+      <description>前面提到大多數的 Unix 系統都有支援 NFS，M</description>
+    </item>
+    
+  </channel>
+</rss>

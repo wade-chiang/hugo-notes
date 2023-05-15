@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="application/ld+json">
+    {
+        "@context" : "http://schema.org",
+        "@type" : "BlogPosting",
+        "mainEntityOfPage": {
+             "@type": "WebPage",
+             "@id": "https:\/\/notes.wadeism.net\/"
+        },
+        "articleSection" : "post",
+        "name" : "KVM External Snapshot 快照教學",
+        "headline" : "KVM External Snapshot 快照教學",
+        "description" : "external snapshot 的機制與 internal 有很大的不同。intern",
+        "inLanguage" : "zh-Hant-TW",
+        "author" : "wade",
+        "creator" : "wade",
+        "publisher": "wade",
+        "accountablePerson" : "wade",
+        "copyrightHolder" : "wade",
+        "copyrightYear" : "2020",
+        "datePublished": "2020-07-11 10:53:59 \u002b0000 \u002b0000",
+        "dateModified" : "2020-07-11 10:53:59 \u002b0000 \u002b0000",
+        "url" : "https:\/\/notes.wadeism.net\/post\/kvm-external-snapshot\/",
+        "wordCount" : "2524",
+        "image" : "https:\/\/notes.wadeism.net\/https:\/\/image.wadeism.net\/kvm00.png",
+        "keywords" : [ "headless","KVM","Virtualization","Blog" ]   
+    }
+    </script>
+
+
+
+ <title>KVM External Snapshot 快照教學 - Nothing but..</title>
+<meta property="og:title" content="KVM External Snapshot 快照教學 - Nothing but..">
+
+
+
+<meta name="description" content="My notes for everyone" />
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="all,follow">
+<meta name="googlebot" content="index,follow,snippet,archive">
+<link rel="stylesheet" id="ct-tracks-google-fonts-css" href="https://fonts.googleapis.com/css?family=Raleway%3A400%2C700&amp;subset=latin%2Clatin-ext&amp;ver=4.7.2" type="text/css" media="all">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+<link href="https://notes.wadeism.net/css/style.css?v=1684171536" rel="stylesheet" id="theme-stylesheet" type='text/css' media='all'>
+
+<link href="https://notes.wadeism.net/css/custom.css?v=1684171536" rel="stylesheet" type='text/css' media='all'>
+<link rel="shortcut icon" href="https://notes.wadeism.net/img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="https://notes.wadeism.net/img/favicon.ico" type="image/x-icon">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-120924943-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-120924943-1');
+</script>
+
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-120924943-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-120924943-1');
+</script>
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://notes.wadeism.net/css/prism.css" >
+
+
+<style>
+   
+   
+   
+  @import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Roboto+Mono&display=swap');
+</style>
+
+
+<link href="https://notes.wadeism.net/css/wade_custom.css?v=1684171536" rel="stylesheet" type='text/css' media='all'>
+</head>
+
+
+<body class="post-template-default single single-post single-format-standard ct-body singular singular-post not-front standard">
+
+  <div id="overflow-container" class="overflow-container">
+    <a class="skip-content" href="#main">Skip to content</a>
+    <header id="site-header" class="site-header" role="banner">
+      <div class='top-navigation'>
+        <div class='container'>
+
+  <div id="menu-secondary" class="menu-container menu-secondary" role="navigation">
+    <button id="toggle-secondary-navigation" class="toggle-secondary-navigation"><i class="fas fa-plus"></i></button>
+
+    <div class="menu">
+
+      <ul id="menu-secondary-items" class="menu-secondary-items">
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/bass">bass</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/developer">developer</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/linux">linux</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/mac">mac</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/office">office</a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+
+  </div>
+
+
+  <ul class="social-media-icons">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+    
+    <li>
+      <a href="https://github.com/wade-chiang" data-animate-hover="pulse" class="github" target="_blank">
+        <i class="fab fa-github" title="github"></i>
+        <span class="screen-reader-text">github</span>
+      </a>
+    </li>
+    
+
+
+    
+
+    
+    <li>
+      <a href="https://notes.wadeism.net/index.xml" data-animate-hover="pulse" class="rss" target="_blank">
+        <i class="fas fa-rss" title="rss"></i>
+        <span class="screen-reader-text">rss</span>
+      </a>
+    </li>
+    
+
+
+  </ul></div>
+
+      </div>
+
+      <div class="container">
+        <div id="title-info" class="title-info">
+  <div id='site-title' class='site-title'>
+    
+    <a href="/"> Nothing but.. </a>
+    </div>
+  </div>
+  <button id="toggle-navigation" class="toggle-navigation">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <div id="menu-primary-tracks" class="menu-primary-tracks"></div>
+  <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+    
+    <p class="site-description">Something here</p>
+    
+
+    <div class="menu">
+      <ul id="menu-primary-items" class="menu-primary-items">
+        
+        
+        <li class='menu-item menu-item-type-custom menu-item-object-custom '>
+          <a href="https://notes.wadeism.net/">Home</a>
+          
+        </li>
+        
+        <li class='menu-item menu-item-type-post_type menu-item-object-page '>
+          <a href="https://notes.wadeism.net/about/">About</a>
+          
+        </li>
+        
+        <li class='menu-item menu-item-type-post_type menu-item-object-page '>
+          <a href="https://notes.wadeism.net/contact/"></a>
+          
+        </li>
+        
+      </ul>
+    </div>
+
+  </div>
+
+      </div>
+    </header>
+
+    <div id="main" class="main" role="main">
+
+      
+  
+  
+    
+  
+  
+  <div id="loop-container" class="loop-container">
+    
+    <div class="post type-post status-publish format-standard has-post-thumbnail hentry category-design tag-design tag-standard-2 tag-tagalicious tag-travel entry full-without-featured odd excerpt-1">
+
+      <div class='featured-image lazy lazy-bg-image'  data-background="https://image.wadeism.net/kvm00.png">
+      </div>
+      
+        <div class="entry-meta">
+          <span class="date">11 July 2020</span>	<span> / </span>
+
+          <span class="author">
+            <a href="https://notes.wadeism.net/" title="Posts by wade" rel="author">wade</a>
+          </span>
+
+
+          
+          <span class="category">
+            <span> / </span>
+
+            <a href="/categories/linux">Linux</a>
+          </span>
+          
+
+
+        </div>
+        <div class='entry-header'>
+          <h1 class='entry-title'> KVM External Snapshot 快照教學</h1>
+        </div>
+        <div class="entry-container">
+          <div class="entry-content">
+            <article>
+              <p>external snapshot 的機制與 internal 有很大的不同。internal snapshot 每一次快照的資料都是存在原始 image 裡（用  qemu-img  檢查 image 時可以看到），而 external snapshot 是在建立快照時，將原本掛載的硬碟 image 變成一個 read only 的 backing file，然後另外建一個 overlay 檔案替換原本虛擬機的掛載硬碟，所有的變動都會在寫在 overlay 裡而不會去影響到原始的 image。</p>
+<p>舉例來說，原始 image 就像一張白紙，external snapshot 會做出一張大小相同的透明紙並且疊在原本的白紙上，我可以恣意的加很多張透明紙，或是在透明紙上亂畫都不會影響到原本的白紙，等到我想還原了，把透明片拿掉就是了，但如果畫完的作品很滿意，我也可以把透明片與白紙永久的黏在一起。</p>
+<p>external snapshot 的好處在於快速、不易出錯，支援的 image 格式不限於 qcow2（raw、qcow、vmdk 皆可），但 <span class="hl-red">external snapshot 最大的缺點在於 libvirt 對它的支援還不是很完整，雖然可以使用 virsh 來建立 snapshot，但無法用指令還原</span>。要還原 external snapshot 目前唯一的方法只有去手動改虛擬機的掛載磁碟，將 disk 從 overlay 改回原本的 image。</p>
+<h2 id="建立--external-snapshot">建立  external snapshot</h2>
+<p>檢視虛擬機儲存設備的掛載狀況</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh domblklist <span style="color:#f92672">[</span>VM_Name<span style="color:#f92672">]</span> --details
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Type       Device     Target     Source
+</span></span><span style="display:flex;"><span>------------------------------------------------
+</span></span><span style="display:flex;"><span>file       disk       vda        /kvm/test.qcow2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># guest 目前使用 /kvm/test.qcow2 這個 image </span>
+</span></span></code></pre></div><p><br>
+建立  external snapshot</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh snapshot-create-as <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--domain <span style="color:#f92672">[</span>VM_Name<span style="color:#f92672">]</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--name <span style="color:#f92672">[</span>Snapshot_Name<span style="color:#f92672">]</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--description <span style="color:#e6db74">&#34;first snapshot&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--disk-only <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--quiesce <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--atomic
+</span></span></code></pre></div><ul>
+<li><span class="hl-green mono">&ndash;disk-only</span>：單純對 disk image 做 snapshot</li>
+<li><span class="hl-green mono">&ndash;quiesce</span>：如果沒有加 quiesce 選項，在做 snapshot 過程中一些記憶體正要寫入磁碟的資料將不會被保存下來，且建 snapshot 過程中的一些變動也可能會毀損，因此該選項一定要加上！</li>
+</ul>
+<p><br>
+檢視虛擬機儲存設備的掛載狀況</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh domblklist <span style="color:#f92672">[</span>VM_Name<span style="color:#f92672">]</span> --details
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Type       Device     Target     Source
+</span></span><span style="display:flex;"><span>------------------------------------------------
+</span></span><span style="display:flex;"><span>file       disk       vda        /kvm/test.take-1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># guest 現在使用的 disk 已經自動改成剛才建立的 snapshot 了</span>
+</span></span></code></pre></div><p><br>
+建立  external snapshot 並指定 snapshot 的路徑</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>virsh snapshot-create-as <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--domain <span style="color:#f92672">[</span>VM_Name<span style="color:#f92672">]</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--name <span style="color:#f92672">[</span>Snapshot_Name<span style="color:#f92672">]</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--description <span style="color:#e6db74">&#34;first snapshot&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--diskspec vda,snapshot<span style="color:#f92672">=</span>external,file<span style="color:#f92672">=</span>/kvm/test/test.take-2 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--disk-only <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--quiesce <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--atomic
+</span></span></code></pre></div><ul>
+<li><span class="hl-green mono">&ndash;diskspec</span>：指定 snapshot 的目錄磁碟（vda）、類型（external）、存放路徑與檔名（/kvm/test/test.take-2）</li>
+</ul>
+<p><br>
+檢視虛擬機的 image 掛載狀況</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh domblklist <span style="color:#f92672">[</span>VM_Name<span style="color:#f92672">]</span> --details
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Type       Device     Target     Source
+</span></span><span style="display:flex;"><span>------------------------------------------------
+</span></span><span style="display:flex;"><span>file       disk       vda        /kvm/test/test.take-2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># disk 又從 /kvm/test.take-1 變成 /kvm/test/test.take-2</span>
+</span></span></code></pre></div><p><br>
+檢視 snapshot 的相依性</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo qemu-img info --backing-chain /kvm/test/test.take-2 | grep backing
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>backing file: /kvm/test.take-1
+</span></span><span style="display:flex;"><span>backing file format: qcow2
+</span></span><span style="display:flex;"><span>backing file: /kvm/test.qcow2
+</span></span><span style="display:flex;"><span>backing file format: qcow2
+</span></span></code></pre></div><p>第二個 snapshot：test.take-2 的 backing file 是 /kvm/test.take-1<br>
+第一個 snapshot：test.take-1 的 backing file 是 /kvm/test.qcow2</p>
+<h2 id="還原-external-snapshot">還原 external snapshot</h2>
+<p>前面提過還原 external snapshot 是它難搞的地方，因為沒有指令可用，所以只能將硬碟卸載，然後把原本的 backing file 掛回去。</p>
+<p><br>
+檢查 image 狀態（如果 image 使用中，須關機再檢查）</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo qemu-img check /kvm/test/test.take-2
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>No errors were found on the image.
+</span></span><span style="display:flex;"><span>500/131072 <span style="color:#f92672">=</span> 0.38% allocated, 10.80% fragmented, 0.00% compressed clusters
+</span></span><span style="display:flex;"><span>Image end offset: <span style="color:#ae81ff">33685504</span>
+</span></span></code></pre></div><p><br>
+檢視虛擬機儲存設備的掛載狀況</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh domblklist <span style="color:#f92672">[</span>VM_Name<span style="color:#f92672">]</span> --details
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Type       Device     Target     Source
+</span></span><span style="display:flex;"><span>------------------------------------------------
+</span></span><span style="display:flex;"><span>file       disk       vda        /kvm/test/test.take-2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 目前使用的是 take-2 版本的 snapshot</span>
+</span></span></code></pre></div><p><br>
+移除虛擬機的硬碟</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virt-xml <span style="color:#f92672">[</span>VM_Name<span style="color:#f92672">]</span> --remove-device --disk target<span style="color:#f92672">=</span>vda
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Domain <span style="color:#e6db74">&#39;test&#39;</span> defined successfully.
+</span></span><span style="display:flex;"><span>WARNING  XML did not change after domain define. You may have changed a value that libvirt is setting by default.
+</span></span></code></pre></div><p><br>
+將想要還原的 image（take-1）掛載到虛擬機上</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virt-xml <span style="color:#f92672">[</span>VM_Name<span style="color:#f92672">]</span> --add-device --disk /kvm/test.take-1,format<span style="color:#f92672">=</span>qcow2,bus<span style="color:#f92672">=</span>virtio
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Domain <span style="color:#e6db74">&#39;test&#39;</span> defined successfully.
+</span></span><span style="display:flex;"><span>WARNING  XML did not change after domain define. You may have changed a value that libvirt is setting by default.
+</span></span></code></pre></div><p><br>
+檢視虛擬機儲存設備的掛載狀況</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh domblklist <span style="color:#f92672">[</span>VM_Name<span style="color:#f92672">]</span> --details
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Target     Source
+</span></span><span style="display:flex;"><span>------------------------------------------------
+</span></span><span style="display:flex;"><span>vda        /kvm/test.take-1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 掛載硬碟改回  take-1 了</span>
+</span></span></code></pre></div><p>還原回來後開機就可以看到系統回到 take-1 版本的 snapshot了</p>
+<h2 id="刪除-external-shapshot">刪除 external shapshot</h2>
+<p>以上面的例子來看，虛擬機的版本已從 take-2 還原到 take-1，這時如果我試著用指令刪掉 take-2</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>virsh snapshot-delete --domain <span style="color:#f92672">[</span>VM_Name<span style="color:#f92672">]</span> take-2
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>error: Failed to delete snapshot take-2
+</span></span><span style="display:flex;"><span>error: unsupported configuration: deletion of <span style="color:#ae81ff">1</span> external disk snapshots not supported yet
+</span></span></code></pre></div><p>這是因為 external snapshot 無法用內建的指令來操作，只能手動刪除，算是非常麻煩的一個地方，下面就來說明一下手動刪除的方法</p>
+<p><br>
+檢查虛擬機的 snapshot 列表</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>virsh snapshot-list <span style="color:#f92672">[</span>VM_Name<span style="color:#f92672">]</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Name                 Creation Time             State
+</span></span><span style="display:flex;"><span>------------------------------------------------------------
+</span></span><span style="display:flex;"><span>take-1               2020-07-05 19:39:54 +0800 disk-snapshot
+</span></span><span style="display:flex;"><span>take-2               2020-07-05 19:41:59 +0800 disk-snapshot
+</span></span></code></pre></div><p><br>
+刪除虛擬機 metadata 裡的 take-2 snapshot 資抖</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh snapshot-delete --domain <span style="color:#f92672">[</span>VM_Name<span style="color:#f92672">]</span> --snapshotname take-2 --metadata
+</span></span></code></pre></div><p><br>
+再次檢查 guest 的 snapshot 列表</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>virsh snapshot-list <span style="color:#f92672">[</span>VM_Name<span style="color:#f92672">]</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Name                 Creation Time             State
+</span></span><span style="display:flex;"><span>------------------------------------------------------------
+</span></span><span style="display:flex;"><span>take-1               2020-07-05 19:39:54 +0800 disk-snapshot
+</span></span></code></pre></div><p>已把虛擬機 metadata 中的 take-2 刪除</p>
+<p><br>
+刪除 take-2 snapshot 的 image</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo rm /kvm/test/test.take2
+</span></span></code></pre></div><p>剛才只是刪除了 metadata，整個 snapshot 的 image 還是在原地，所以另外手動將 image 刪掉</p>
+<h2 id="合併-external-snapshot">合併 external snapshot</h2>
+<p>一般我們建 snapshot 多是為了測試方便，如果確定測試沒問題的話，可以將 external snapshot 與原始 backing file 合併。</p>
+<p>從書上看到<span class="hl-red">建議是盡量不要保留 snapshot ，用不到或測試 ok 的 snapshot 要嘛刪掉要嘛就是合併回去，snapshot 的意義應該是用來保存一個時間下的狀態，讓我們方便快速測試與還原，但不要將 snapshot 當作是一種備份的手段</span>（這跟 Cloud 上 snapshot 的意義不太一樣）</p>
+<p>合併 snapshot 與 backing file 也有兩種不同的模式：<span class="hl-blue">blockcommit</span> 與 <span class="hl-blue">blockpull</span></p>
+<h3 id="使用-blockcommit-將-snapshop-合併回-backing-file">使用 blockcommit 將 snapshop 合併回 backing file</h3>
+<p>前面提到，snapshot 不宜長期保留，因為過多的 snapshot 可能會影響到系統的資源與效能，畢竟 external snapshot 是一層接一層的都有相依關係，如果中間有一個 overlay 出錯了，後面所有的東西都會不能用，所以建議測試到一個段落，就把所有的 snapshot 合併回 backing file，然後將 snapshot 刪除，以確保系統的乾淨與安全。</p>
+<p>檢視虛擬機的 image 掛載狀況</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh domblklist <span style="color:#f92672">[</span>VM_Name<span style="color:#f92672">]</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Target     Source
+</span></span><span style="display:flex;"><span>------------------------------------------------
+</span></span><span style="display:flex;"><span>vda        /kvm/test.take-2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># guest 目前使用 take-2 的 snapshot</span>
+</span></span></code></pre></div><p><br>
+檢查 snapshot 的相依性</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo qemu-img info --backing-chain /kvm/test.take-2  | grep backing
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>backing file: /kvm/test.take-1
+</span></span><span style="display:flex;"><span>backing file format: qcow2
+</span></span><span style="display:flex;"><span>backing file: /kvm/test.qcow2
+</span></span><span style="display:flex;"><span>backing file format: qcow2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># take-2 相依於 test.take-1、take-1 相依於 test.qcow2</span>
+</span></span></code></pre></div><p><br>
+將所有的 snapshot 合併回最初始的 backing file</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>virsh blockcommit <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--domain <span style="color:#f92672">[</span>VM_Name<span style="color:#f92672">]</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--path vda <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--verbose --pivot --active
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Block commit: <span style="color:#f92672">[</span><span style="color:#ae81ff">100</span> %<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>Successfully pivoted
+</span></span></code></pre></div><p>如果合併失敗出現「error: Requested operation is not valid: domain is not running」，可能是因為這個步驟 guest 需要開啟才能執行</p>
+<p><br>
+檢視虛擬機的 image 掛載狀況</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh domblklist <span style="color:#f92672">[</span>VM_Name<span style="color:#f92672">]</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Target     Source
+</span></span><span style="display:flex;"><span>------------------------------------------------
+</span></span><span style="display:flex;"><span>vda        /kvm/test.qcow2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># guest 用回了最早的 test.qcow2 了</span>
+</span></span></code></pre></div><p><br>
+列出虛擬機的 snapshot</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh snapshot-list <span style="color:#f92672">[</span>VM_Name<span style="color:#f92672">]</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Name                 Creation Time             State
+</span></span><span style="display:flex;"><span>------------------------------------------------------------
+</span></span><span style="display:flex;"><span>take-1               2020-07-05 19:41:54 +0800 disk-snapshot
+</span></span><span style="display:flex;"><span>take-2               2020-07-06 00:10:33 +0800 shutoff
+</span></span></code></pre></div><p>既然 snapshot 都已經合併回最原始的 image 裡，那麼這兩個 snapshot 也就可以功成身退了</p>
+<p><br>
+一次刪除虛擬機所有的 snapshot</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>virsh snapshot-delete <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--domain <span style="color:#f92672">[</span>VM_Name<span style="color:#f92672">]</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--snapshotname <span style="color:#f92672">[</span>The_First_Snapshot<span style="color:#f92672">]</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--children --metadata
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Domain snapshot take-1 deleted
+</span></span></code></pre></div><p>加上 &ndash;children 會把底下所有的 son snapshot 一起刪除，也別忘了刪掉 snapshot 的 image</p>
+<p><br>
+列出虛擬機的 snapshot</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh snapshot-list test
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Name                 Creation Time             State
+</span></span><span style="display:flex;"><span>------------------------------------------------------------
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 所有的 snapshot 都刪光了</span>
+</span></span></code></pre></div><h3 id="使用-blockpull-將-backing-file-合併至-snapshot">使用 blockpull 將 backing file 合併至 snapshot</h3>
+<p>剛才的 blockcommit 是把所有的 snapshot 併回 backing file，blockpull 則是反過來將 backing file 的內容通通寫入當前的 snapshot 中，最後 snapshot 就會變成一個完整獨立的 image ，不再需要 backing file 的相依，其實最後的結果與 blockcommit 非常類似，但意義上不太一樣，且執行速度也會比較慢</p>
+<p><br>
+檢視虛擬機的 image 掛載狀況</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh domblklist <span style="color:#f92672">[</span>VM_Name<span style="color:#f92672">]</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Target     Source
+</span></span><span style="display:flex;"><span>------------------------------------------------
+</span></span><span style="display:flex;"><span>vda        /kvm/test.take-1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># guest 目前使用 take-1 的 snapshot</span>
+</span></span></code></pre></div><p><br>
+檢查 snapshot 的相依性</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo qemu-img info --backing-chain /kvm/test.take-1  | grep backing
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>backing file: /kvm/test.qcow2
+</span></span><span style="display:flex;"><span>backing file format: qcow2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># take-1 相依於 test.qcow2</span>
+</span></span></code></pre></div><p><br>
+將 backing file 合併到 snapshot 中，這邊以第一個 snapshot「take-1」為例</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh blockpull <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--domain <span style="color:#f92672">[</span>VM_Name<span style="color:#f92672">]</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--path /kvm/test.take-1 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--wait --verbose
+</span></span></code></pre></div><p><br>
+檢查 take-1 的 image</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo qemu-img info --backing-chain /kvm/test.take-1
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>image: /kvm/test.take-1
+</span></span><span style="display:flex;"><span>file format: qcow2
+</span></span><span style="display:flex;"><span>virtual size: 8.0G <span style="color:#f92672">(</span><span style="color:#ae81ff">8589934592</span> bytes<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>disk size: 1.5G
+</span></span><span style="display:flex;"><span>cluster_size: <span style="color:#ae81ff">65536</span>
+</span></span><span style="display:flex;"><span>Format specific information:
+</span></span><span style="display:flex;"><span>compat: 1.1
+</span></span><span style="display:flex;"><span>lazy refcounts: false
+</span></span><span style="display:flex;"><span>refcount bits: <span style="color:#ae81ff">16</span>
+</span></span><span style="display:flex;"><span>corrupt: false
+</span></span></code></pre></div><p>可以看到 take-1 的 image size 變大，且沒有相依的 backing file，已整合成一個完整獨立的 image</p>
+<h3 id="kvm-虛擬機系列文章">KVM 虛擬機系列文章：</h3>
+<p><a href="https://notes.wadeism.net/post/kvm-create-vm-clone-by-overlay/" target="_blank">KVM 使用 overlay 製作虛擬機 Clone</a></p>
+<p><a href="https://notes.wadeism.net/post/kvm-internal-snapshot/" target="_blank">KVM Internal Snapshot 快照教學</a></p>
+<p><a href="https://notes.wadeism.net/post/kvm-create-vm-in-terminal/" target="_blank">KVM 純文字環境下的虛擬機安裝教學</a></p>
+<p><a href="https://notes.wadeism.net/post/kvm-network-setup/" target="_blank">KVM 網路設定教學</a></p>
+<p><a href="https://notes.wadeism.net/post/kvm-create-volume-by-qemu-img/" target="_blank">KVM 使用 qemu-img 建立與調整虛擬硬碟</a></p>
+
+            </article>
+          </div>
+          
+      <div class='entry-meta-bottom'>
+        
+
+  <div class="entry-categories"><p><span>Categories</span>
+    
+    <a href="/categories/linux" title="View all posts in Linux">Linux</a>
+  </p>
+</div>
+
+
+
+<div class="entry-tags"><p><span>Tags</span>
+  
+  <a href="/tags/headless" title="View all posts tagged headless">headless</a>
+  
+  <a href="/tags/kvm" title="View all posts tagged KVM">KVM</a>
+  
+  <a href="/tags/virtualization" title="View all posts tagged Virtualization">Virtualization</a>
+  
+
+</p></div>	</div>
+
+	
+<div class="author-meta">
+
+  <div class="author">
+    	
+      <img alt='wade' src="https://www.gravatar.com/avatar/6fee0275681dd0b43da1d6acb66c336f?s=100&d=identicon" class='avatar avatar-72 photo' height='72' width='72'>
+    
+    <span>
+      Written by:<a href="https://notes.wadeism.net/" title="Posts by wade" rel="author">wade</a> </span>
+    </div>
+    <div class="bio">
+      
+      
+      <p>本站站長</p>
+      
+      
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a class="github" target="_blank"
+href="https://github.com/wade-chiang">
+<i class="fab fa-github"
+title="github icon"></i>
+</a>
+
+
+
+
+
+
+
+</div>
+</div>
+
+</div>
+</div>
+
+<section id="comments" class="comments">
+  <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+    var d = document, s = d.createElement('script');
+    s.src = 'https://notes-wadeism.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+</section>
+</div>
+
+ 
+
+
+
+    </div>
+
+    <footer id="site-footer" class="site-footer" role="contentinfo">
+	<h1>
+    
+    <a href=""> Nothing but.. </a>
+    
+	</h1>
+
+			
+			<p class="site-description">Something here</p>
+			
+
+		<div id="menu-footer" class="menu-container menu-footer" role="navigation">
+		<div class="menu">
+
+      <ul id="menu-footer-items" class="menu-footer-items">
+        
+</ul>
+
+</div>	</div>
+
+<ul class="social-media-icons">
+
+        
+
+        
+
+
+        
+
+        
+
+        
+
+        
+
+        
+
+
+        
+        <li>
+        <a href="https://github.com/wade-chiang"  class="github" target="_blank">
+            <i class="fab fa-github" title="github"></i>
+            <span class="screen-reader-text">github</span>
+        </a>
+        </li>
+        
+
+
+        
+
+        
+        <li>
+        <a href="https://notes.wadeism.net/index.xml" data-animate-hover="pulse" class="rss" target="_blank">
+            <i class="fas fa-rss" title="rss"></i>
+            <span class="screen-reader-text">rss</span>
+        </a>
+        </li>
+        
+
+				</ul>	<div class="design-credit">
+		
+		<p>© 2022 Wade</p>
+		
+		<p>Nederburg Hugo Theme by <a href="https://appernetic.io" target="_blank">Appernetic</a>.</p>
+		
+		<p>A port of Tracks by Compete Themes.</p>
+		
+	</div>
+</footer>
+
+  </div>
+  <script src="https://notes.wadeism.net/js/jquery.min.js"></script>
+<script src="https://notes.wadeism.net/js/jquerymigrate.js"></script>
+<script src="https://notes.wadeism.net/js/production.min.js?v=1684171536"></script>
+
+
+
+<script src="https://notes.wadeism.net/js/prism.js"></script>
+
+
+<script src="https://notes.wadeism.net/js/medium-zoom.js"></script>
+<script src="https://notes.wadeism.net/js/wade_custom.js"></script>
+
+
+
+
+
+<script type="text/javascript">var _jf = _jf || [];_jf.push(['p','63921']);_jf.push(['initAction',true]);_jf.push(['_setFont','xingothic-tc-w6','css','.xingothic-tc-w6']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-meta-bottom a']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-content h3']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-content h4']);_jf.push(['_setFont','xingothic-tc-w6','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w6','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w6','weight',600]);_jf.push(['_setFont','xingothic-tc-w5','css','.xingothic-tc-w5']);_jf.push(['_setFont','xingothic-tc-w5','css','div.entry-content p']);_jf.push(['_setFont','xingothic-tc-w5','css','div.excerpt-content p']);_jf.push(['_setFont','xingothic-tc-w5','css','div.post article']);_jf.push(['_setFont','xingothic-tc-w5','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w5','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w5','weight',500]);_jf.push(['_setFont','xingothic-tc-w7','css','.xingothic-tc-w7']);_jf.push(['_setFont','xingothic-tc-w7','css','h1.entry-title']);_jf.push(['_setFont','xingothic-tc-w7','css','h2.excerpt-title']);_jf.push(['_setFont','xingothic-tc-w7','css','div.entry-content h2']);_jf.push(['_setFont','xingothic-tc-w7','css','strong']);_jf.push(['_setFont','xingothic-tc-w7','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w7','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w7','weight',700]);(function(A,p,c,m,l,q,r,h,B,D){var b=A._jf;if(b.constructor!==Object){var t=!0,u=function(a){var f=!0,e;for(e in b)b[e][0]==a&&(f&&(f=f&&!1!==b[e][1].call(b)),b[e]=null,delete b[e])},v=/\S+/g,w=/[\t\r\n\f]/g,C=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,n="".trim,x=n&&!n.call("\ufeff\u00a0")?function(a){return null==a?"":n.call(a)}:function(a){return null==a?"":(a+"").replace(C,"")},k=function(a){var f,b,g;if("string"===typeof a&&a&&(a=(a||"").match(v)||[],f=h[c]?(" "+h[c]+" ").replace(w," "):" ")){for(g=0;b=a[g++];)0>f.indexOf(" "+b+" ")&&(f+=b+" ");h[c]=x(f)}},d=function(a){var b,e,g;if(0===arguments.length||"string"===typeof a&&a){var d=(a||"").match(v)||[];if(b=h[c]?(" "+h[c]+" ").replace(w," "):""){for(g=0;e=d[g++];)for(;0<=b.indexOf(" "+e+" ");)b=b.replace(" "+e+" "," ");h[c]=a?x(b):""}}},y;b.addScript=y=function(b,f,e,g,d,c){d=d||function(){};c=c||function(){};var a=p.createElement("script"),h=p.getElementsByTagName("script")[0],k,m=!1,l=function(){a.src="";a.parentNode.removeChild(a);a=a.onerror=a.onload=a.onreadystatechange=null};g&&(k=setTimeout(function(){l();c()},g));a.type=f||"text/javascript";a.async=e;a.onload=a.onreadystatechange=function(b,c){m||a.readyState&&!/loaded|complete/.test(a.readyState)||(m=!0,g&&clearTimeout(k),l(),c||d())};a.onerror=function(a,b,d){g&&clearTimeout(k);l();c();return!0};a.src=b;h.parentNode.insertBefore(a,h)};for(var z in b)"initAction"==b[z][0]&&(t=b[z][1]);b.push(["_eventPreload",function(){1==t&&k(m);y(B,null,!1,3E3,null,function(){u("_eventInactived")})}]);b.push(["_eventReload",function(){d(r);d(q);k(l)}]);b.push(["_eventActived",function(){d(m);d(l);k(q)}]);b.push(["_eventInactived",function(){d(m);d(l);k(r)}]);u("_eventPreload")}})(this,this.document,"className","jf-loading","jf-reloading","jf-active","jf-inactive",this.document.getElementsByTagName("html")[0],"//ds.justfont.com/js/stable/v/6.0/id/171309946041");</script>
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9504338511537027" crossorigin="anonymous"></script>
+
+
+<script src="https://notes.wadeism.net/js/back-to-top.js"></script>
+
+  
+  
+
+</body>
+</html>

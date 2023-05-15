@@ -1,0 +1,255 @@
+/* HighLight Green */
+.hl-green {
+  color: #008080;
+  background-color: #daf2f1;
+}
+
+/* HighLight Blue */
+.hl-blue {
+  color: #004A99;
+  background-color: #d9e4f2;
+}
+
+/* HighLight Red */
+.hl-red {
+  color: #B7013A;
+  background-color: #F6E4E4;
+}
+
+/* Code Block Rounded edge */
+.highlight pre {
+  border-radius: 8px;
+}
+
+.code-toolbar pre {
+  border-radius: 8px;
+}
+
+/* Code Block disable first line padding  */
+code {
+  padding: 0;
+}
+
+/* Set Hx margin top */
+/* h1, h2, h3, h4, h5, h6 {
+  margin-top: 1em;
+} */
+
+/* content block hover latency */
+div.post:nth-child(n) {
+  transition-duration: 0.2s;
+}
+
+/* add gap for "read more" */
+.excerpt-content {
+  margin-top: 2em;
+}
+
+.more-link-wrapper {
+  margin-top: 2em;
+}
+
+/* aligh image */
+img[src$='#center']
+{
+    display: block;
+    margin: 0.7rem auto; 
+    /* you can replace the vertical '0.7rem'
+       by whatever floats your boat,
+       but keep the horizontal 'auto' for this to work */
+    /* whatever else styles you fancy here */
+}
+
+img[src$='#floatleft']
+{
+    float:left;
+    margin: 0.7rem;      /* this margin is totally up to you */
+    /* whatever else styles you fancy here */
+}
+
+img[src$='#floatright']
+{
+    float:right;
+    margin: 0.7rem;      /* this margin is totally up to you */
+    /* whatever else styles you fancy here */
+}
+
+
+/* main background image */
+#overflow-container {
+  background-image: url("https://image.wadeism.net/wp_bg002.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+}
+
+/* inside background image */
+#loop-container {
+  background-image: url('https://image.wadeism.net/wp_bg002.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+}
+
+/* remove gap between inside background and bottom-nav  */
+#main {
+ padding-bottom: 0;
+}
+
+/* disable force uppercase on entry's title  */
+h1.entry-title {
+  text-transform: none;
+}
+
+h2.excerpt-title {
+  text-transform: none;
+}
+
+@media (min-width: 900px){
+	/* 內文的段落font size */
+	article>p {
+		font-size: 1.375em;
+	}
+
+	/* li裡的p font-size，但li最好保持單純，因此暫無使用  */
+	/* li>p {
+		font-size: 1.375em;
+	} */
+
+	/* li 的 font-size，原本上面的設定會有點問題，有 p 沒 p會大小不同，因此先改設在 li */
+	li {
+	    font-size: 1.375em;
+	}
+
+	/* ul {
+        font-size: 1.37em;
+		margin-top: 3em; ul與上排
+	} */
+
+	/* ol {
+    font-size: 1.375em;
+	} */
+
+	/* 文章大標題font size */
+	h1.entry-title {
+		font-size: 3.5em;
+	}
+
+	article>h2 {
+		font-size: 2.25em;
+		margin-top: 2em;
+	}
+
+	h3 {
+		font-size: 1.8em;
+	}
+
+	h4 {
+		/*font-size: 1.35em;*/
+		font-size: 1.5em;
+	}
+
+	/* 讓h5與p的格式一樣  */
+	h5 {
+		font-size: 1.375em;
+		line-height: 1.5em;
+	}
+
+	/* 文章內標題(hx)與上面的間距 */
+	article>h3,article>h4,article>h5,article>h6 {
+		margin-top: 3em;
+	}
+
+	/* 網站頁尾標題(link) */
+	.site-footer h1{
+		font-size: 1.5em;
+	}
+
+	/* 首頁內文節錄與上下的間距 */
+	.excerpt-content{
+		margin-top: 1.5em;
+	}
+
+	li {
+		margin-top: 1em;
+	}
+
+	.excerpt-content>article {
+	    font-size: 1.3em;
+	}
+
+    blockquote{
+        font-size: 1.5em;
+    }
+}
+
+
+@media (max-width: 900px){
+	.site-footer h1{
+		font-size: 1em;
+	}
+
+	h1.entry-title {
+		font-size: 1.5em;
+	}
+
+	h2 {
+		font-size: 1.3em;
+	}
+
+	h3 {
+		font-size: 1.25em;
+	}
+
+	h4 {
+		font-size: 1.2em;
+	}
+
+	h5 {
+		font-size: 1em;
+		line-height: 1.5em;
+	}
+
+	li {
+		margin-top: 3em;
+	}
+
+	/* 文章內標題(hx)與上排的間距 */
+	/*article>h3,article>h4,article>h5,article>h6 {*/
+	article>h2,article>h3,article>h4,article>h5,article>h6 {
+		margin-top: 3em;
+	}
+
+	/* 首頁內文節錄與上下的間距 */
+	/* .excerpt-content{
+		margin-top:1.5em;
+	} */
+
+    blockquote{
+        font-size: 1.3em;
+    }
+}
+
+
+/* Font Setting */
+
+.mono {
+  font-family: 'Roboto Mono';
+  font-weight: '400';
+}
+
+/* Code Block Font */
+/* font-weight 700 is just for xingothic-tc,
+   because FireCode weight in CSS style is 400
+   so the actual english font weight in Fire Code is 400, not 700 */
+code[class*="language-"], pre[class*="language-"] {
+	font-family:'Fira Code','xingothic-tc';
+	font-weight: 700;
+}
+
+.more-link {
+  font-family: 'Raleway';
+  font-size: 0.625em;
+}
