@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Manjaro on Nothing but..</title>
+    <link>https://notes.wadeism.net/tags/manjaro/</link>
+    <description>Recent content in Manjaro on Nothing but..</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 03 Oct 2021 17:52:19 +0000</lastBuildDate><atom:link href="https://notes.wadeism.net/tags/manjaro/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Manjaro 安裝晶片讀卡機與玉山銀行 Web ATM 套件</title>
+      <link>https://notes.wadeism.net/post/manjaro-esun-web-atm/</link>
+      <pubDate>Sun, 03 Oct 2021 17:52:19 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/manjaro-esun-web-atm/</guid>
+      <description>從 Ubuntu 轉換到 Manjaro 的過程中，前面已經搞定中文輸</description>
+    </item>
+    
+    <item>
+      <title>Manjaro 安裝 Brother MFC-L2740DW 雷射複合機</title>
+      <link>https://notes.wadeism.net/post/manjaro-install-brother-mfc-l2740dw/</link>
+      <pubDate>Sun, 03 Oct 2021 09:48:00 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/manjaro-install-brother-mfc-l2740dw/</guid>
+      <description>我家有台 Brother 的 MFC-L2740DW 雷射複合機。是台不算太新，</description>
+    </item>
+    
+    <item>
+      <title>Manjaro Gnome 安裝 Hime 輸入法與嘸蝦米</title>
+      <link>https://notes.wadeism.net/post/manjaro-gnome-install-hime-boshiamy/</link>
+      <pubDate>Fri, 01 Oct 2021 18:36:17 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/manjaro-gnome-install-hime-boshiamy/</guid>
+      <description>Hime + 嘸蝦米一直是我在 Linux 用起來最順手的中文</description>
+    </item>
+    
+  </channel>
+</rss>

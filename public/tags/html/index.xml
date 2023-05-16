@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>HTML on Nothing but..</title>
+    <link>https://notes.wadeism.net/tags/html/</link>
+    <description>Recent content in HTML on Nothing but..</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 29 Jul 2020 15:57:52 +0000</lastBuildDate><atom:link href="https://notes.wadeism.net/tags/html/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>BootStrap 3 改變 navbar 選項的字型顏色</title>
+      <link>https://notes.wadeism.net/post/bootstrap3-change-navbar-font-color/</link>
+      <pubDate>Wed, 29 Jul 2020 15:57:52 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/bootstrap3-change-navbar-font-color/</guid>
+      <description>.navbar .nav &amp;gt; li &amp;gt; a { float: none; line-height: 19px; padding: 9px 10px 11px; text-decoration: none; text-shadow: 0 -1px</description>
+    </item>
+    
+    <item>
+      <title>BootStrap 3 Navbar 置中方法</title>
+      <link>https://notes.wadeism.net/post/bootstrap3-navbar-aligh-center/</link>
+      <pubDate>Wed, 29 Jul 2020 15:46:49 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/bootstrap3-navbar-aligh-center/</guid>
+      <description>先於 CSS 中加入以下 class .navbar .nav.pull-center { float: none; margin: 0 auto; display:inline-block; *display:inline; /*</description>
+    </item>
+    
+    <item>
+      <title>網頁前端 課堂筆記</title>
+      <link>https://notes.wadeism.net/post/note-for-web-frontend/</link>
+      <pubDate>Sun, 24 Jun 2018 03:35:03 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/note-for-web-frontend/</guid>
+      <description>div 會佔據一整行，要注意整行的元件 表格 &amp;lt;table&amp;gt; ．</description>
+    </item>
+    
+  </channel>
+</rss>

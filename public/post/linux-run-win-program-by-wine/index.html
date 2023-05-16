@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="application/ld+json">
+    {
+        "@context" : "http://schema.org",
+        "@type" : "BlogPosting",
+        "mainEntityOfPage": {
+             "@type": "WebPage",
+             "@id": "https:\/\/notes.wadeism.net\/"
+        },
+        "articleSection" : "post",
+        "name" : "Linux 使用 Wine 執行 Windows 程式",
+        "headline" : "Linux 使用 Wine 執行 Windows 程式",
+        "description" : "Wine 是讓 Linux、macOS 執行 Windows 程式的",
+        "inLanguage" : "zh-Hant-TW",
+        "author" : "wade",
+        "creator" : "wade",
+        "publisher": "wade",
+        "accountablePerson" : "wade",
+        "copyrightHolder" : "wade",
+        "copyrightYear" : "2020",
+        "datePublished": "2020-08-27 03:04:24 \u002b0000 \u002b0000",
+        "dateModified" : "2020-08-27 03:04:24 \u002b0000 \u002b0000",
+        "url" : "https:\/\/notes.wadeism.net\/post\/linux-run-win-program-by-wine\/",
+        "wordCount" : "1313",
+        "image" : "https:\/\/notes.wadeism.net\/https:\/\/image.wadeism.net\/wine00.jpg",
+        "keywords" : [ "Ubuntu","Wine","Blog" ]   
+    }
+    </script>
+
+
+
+ <title>Linux 使用 Wine 執行 Windows 程式 - Nothing but..</title>
+<meta property="og:title" content="Linux 使用 Wine 執行 Windows 程式 - Nothing but..">
+
+
+
+<meta name="description" content="My notes for everyone" />
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="all,follow">
+<meta name="googlebot" content="index,follow,snippet,archive">
+<link rel="stylesheet" id="ct-tracks-google-fonts-css" href="https://fonts.googleapis.com/css?family=Raleway%3A400%2C700&amp;subset=latin%2Clatin-ext&amp;ver=4.7.2" type="text/css" media="all">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+<link href="https://notes.wadeism.net/css/style.css?v=1684173173" rel="stylesheet" id="theme-stylesheet" type='text/css' media='all'>
+
+<link href="https://notes.wadeism.net/css/custom.css?v=1684173173" rel="stylesheet" type='text/css' media='all'>
+<link rel="shortcut icon" href="https://notes.wadeism.net/img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="https://notes.wadeism.net/img/favicon.ico" type="image/x-icon">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-120924943-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-120924943-1');
+</script>
+
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-120924943-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-120924943-1');
+</script>
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://notes.wadeism.net/css/prism.css" >
+
+
+<style>
+   
+   
+   
+  @import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Roboto+Mono&display=swap');
+</style>
+
+
+<link href="https://notes.wadeism.net/css/wade_custom.css?v=1684173173" rel="stylesheet" type='text/css' media='all'>
+</head>
+
+
+<body class="post-template-default single single-post single-format-standard ct-body singular singular-post not-front standard">
+
+  <div id="overflow-container" class="overflow-container">
+    <a class="skip-content" href="#main">Skip to content</a>
+    <header id="site-header" class="site-header" role="banner">
+      <div class='top-navigation'>
+        <div class='container'>
+
+  <div id="menu-secondary" class="menu-container menu-secondary" role="navigation">
+    <button id="toggle-secondary-navigation" class="toggle-secondary-navigation"><i class="fas fa-plus"></i></button>
+
+    <div class="menu">
+
+      <ul id="menu-secondary-items" class="menu-secondary-items">
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/bass">bass</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/developer">developer</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/linux">linux</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/mac">mac</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/office">office</a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+
+  </div>
+
+
+  <ul class="social-media-icons">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+    
+    <li>
+      <a href="https://github.com/wade-chiang" data-animate-hover="pulse" class="github" target="_blank">
+        <i class="fab fa-github" title="github"></i>
+        <span class="screen-reader-text">github</span>
+      </a>
+    </li>
+    
+
+
+    
+
+    
+    <li>
+      <a href="https://notes.wadeism.net/index.xml" data-animate-hover="pulse" class="rss" target="_blank">
+        <i class="fas fa-rss" title="rss"></i>
+        <span class="screen-reader-text">rss</span>
+      </a>
+    </li>
+    
+
+
+  </ul></div>
+
+      </div>
+
+      <div class="container">
+        <div id="title-info" class="title-info">
+  <div id='site-title' class='site-title'>
+    
+    <a href="/"> Nothing but.. </a>
+    </div>
+  </div>
+  <button id="toggle-navigation" class="toggle-navigation">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <div id="menu-primary-tracks" class="menu-primary-tracks"></div>
+  <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+    
+    <p class="site-description">Something here</p>
+    
+
+    <div class="menu">
+      <ul id="menu-primary-items" class="menu-primary-items">
+        
+        
+        <li class='menu-item menu-item-type-custom menu-item-object-custom '>
+          <a href="https://notes.wadeism.net/">Home</a>
+          
+        </li>
+        
+        <li class='menu-item menu-item-type-post_type menu-item-object-page '>
+          <a href="https://notes.wadeism.net/about/">About</a>
+          
+        </li>
+        
+        <li class='menu-item menu-item-type-post_type menu-item-object-page '>
+          <a href="https://notes.wadeism.net/contact/"></a>
+          
+        </li>
+        
+      </ul>
+    </div>
+
+  </div>
+
+      </div>
+    </header>
+
+    <div id="main" class="main" role="main">
+
+      
+  
+  
+    
+  
+  
+  <div id="loop-container" class="loop-container">
+    
+    <div class="post type-post status-publish format-standard has-post-thumbnail hentry category-design tag-design tag-standard-2 tag-tagalicious tag-travel entry full-without-featured odd excerpt-1">
+
+      <div class='featured-image lazy lazy-bg-image'  data-background="https://image.wadeism.net/wine00.jpg">
+      </div>
+      
+        <div class="entry-meta">
+          <span class="date">27 August 2020</span>	<span> / </span>
+
+          <span class="author">
+            <a href="https://notes.wadeism.net/" title="Posts by wade" rel="author">wade</a>
+          </span>
+
+
+          
+          <span class="category">
+            <span> / </span>
+
+            <a href="/categories/linux">Linux</a>
+          </span>
+          
+
+
+        </div>
+        <div class='entry-header'>
+          <h1 class='entry-title'> Linux 使用 Wine 執行 Windows 程式</h1>
+        </div>
+        <div class="entry-container">
+          <div class="entry-content">
+            <article>
+              <p>Wine 是讓 Linux、macOS 執行 Windows 程式的一個軟體。全名為「Wine Is Not an Emulator」，意指它不是用虛擬機的方式來執行 Win 程式，而是作為一個介面層，導入 Win 底下的函式庫，用它們來執行程式，因此效能會比虛擬機來的好，用起來也像是原生的程式。</p>
+<p>在 Wine 的官方網站中，有一個專門搜集軟體相容性的資料庫叫 <a href="https://appdb.winehq.org/" target="_blank">Wine Application Database</a>，裡面有全世界熱心網友所提供的資訊，例如某個程式能不能用 Wine 執行？是否有 Bug…之類的，並且有 Rating 來評價這些軟體在 Wine 的相容性，非常值得大家參考！</p>
+<p>近年來由於 Steam 的推廣與開發，甚至很多大型遊戲都可以透過 Wine 來玩了，例如 The Witcher 3、GTA 5，而且十分的簡單（Steam 都幫你弄好了），有興趣的朋友可以參考 <a href="https://www.protondb.com/" target="_blank">ProtonDB</a> 這個網頁，不過本篇主要介紹 Wine 的基本安裝、設定及使用。</p>
+<h2 id="安裝-wine">安裝 Wine</h2>
+<p>前往 <a href="https://wiki.winehq.org/Download" target="_blank">Wine Download</a> 頁面選擇適用的版本，本篇使用 <span class="hl-green">Ubuntu 20.04.1</span>，安裝步驟建議以官網為主。</p>
+<p>如果系統是 64 位元的話（應該大多都是了），先允許安裝 32 位元架構的程式</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo dpkg --add-architecture i386
+</span></span></code></pre></div><p><br>
+新增 repo 的 key</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wget -O - https://dl.winehq.org/wine-builds/winehq.key | sudo apt-key add -
+</span></span></code></pre></div><p><br>
+新增套件庫 for Ubuntu 20.04</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo add-apt-repository <span style="color:#e6db74">&#39;deb https://dl.winehq.org/wine-builds/ubuntu/ focal main&#39;</span>
+</span></span></code></pre></div><p><br>
+安裝穩定版的 Wine</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt install --install-recommends winehq-stable
+</span></span></code></pre></div><p>也可以選擇安裝 <span class="hl-blue">winehq-staging</span>，可以有更多最新的功能與較好的效能，不過個人偏好穩定版</p>
+<h2 id="初次設定-wine">初次設定 Wine</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>winecfg
+</span></span></code></pre></div><p>執行 <span class="hl-blue">winecfg</span> 可以進行 Wine 的設定，首次執行時會請使用者安裝幾個套件如 wine-mono 及 Gecko，然後會建立初始化的資料夾在 <span class="hl-blue">~/.wine</span> 裡面，接著就可以進入設定畫面</p>
+<h3 id="應用程式">應用程式</h3>
+<p><img src="https://image.wadeism.net/wine01.png" alt=""></p>
+<p>Wine 可以針對不同的程式選擇適合的 Windows 版本，有點類似 Windows 的相容性模式。</p>
+<h3 id="函式庫">函式庫</h3>
+<p><img src="https://image.wadeism.net/wine02.png" alt=""></p>
+<p>某些程式需要另外安裝函式庫，例如 d3dx9_xx.dll 之類的（在 Windows 上這種問題很常見）就需要從這邊安裝，不過個人推薦使用之後會介紹的 <a href="https://wiki.winehq.org/Winetricks" target="_blank">Winetricks</a> 來安裝這些細部的東西會更方便</p>
+<h3 id="顯示">顯示</h3>
+<p><img src="https://image.wadeism.net/wine03.png" alt=""></p>
+<p>調整視窗設定與螢幕解析度，通常可以不用動</p>
+<h3 id="桌面整合">桌面整合</h3>
+<p><img src="https://image.wadeism.net/wine04.png" alt=""></p>
+<p>設定佈景主題，比較重要的地方是可以設定讓 Windows 的 My Documents 與 Linux 本機的資料夾作連結，例如「我的音樂」連結到「/home/user/Music」</p>
+<h3 id="儲存裝置">儲存裝置</h3>
+<p><img src="https://image.wadeism.net/wine05.png" alt=""></p>
+<p>設定讓 Windows 的 C 槽、D 槽之類的儲存裝置連結到本機的資料夾或是光碟機等設備，預設 C 槽會連結到 <span class="hl-blue">/home/user/.wine/drive_c</span>，Z 槽會連結到本機的根目錄 <span class="hl-blue">/</span></p>
+<h3 id="音效">音效</h3>
+<p><img src="https://image.wadeism.net/wine06.png" alt=""></p>
+<p>設定輸出或輸入要使用本機的哪項音效裝置，如果有多個音訊輸出裝置時可以調整</p>
+<h2 id="使用-wine-安裝-windows-程式">使用 Wine 安裝 Windows 程式</h2>
+<p>要安裝或是執行 Windows 的程式方法都一樣，而且非常簡單，下面以我很常用的軟體 mp3tag 為例</p>
+<p>首先在安裝檔上按右鍵，選擇「以其他應用程式開啟」</p>
+<p><img src="https://image.wadeism.net/wine07.png" alt=""></p>
+<p><br>
+接著選擇「Wine Windows Program Loader」</p>
+<p><img src="https://image.wadeism.net/wine08.png" alt=""></p>
+<p><br>
+再來就會看到跟 Windows 一樣熟悉的安裝畫面了</p>
+<p><img src="https://image.wadeism.net/wine09.png" alt=""></p>
+<p><img src="https://image.wadeism.net/wine10.png" alt=""></p>
+<p>預設的安裝目錄 <span class="hl-blue">C:\users\wade\Mp3tag</span> 其實就是 <span class="hl-blue">~/.wine/drive_c/users/wade</span>，因為 C 槽預設已經跟 <span class="hl-blue">~/.wine/drive_c</span> 做連結了</p>
+<h2 id="使用-wine-執行-windows-程式">使用 Wine 執行 Windows 程式</h2>
+<p>安裝完後，通常 Wine 會自動在系統的程式集裡面建立捷徑，如果沒有的話，手動執行的方法也跟安裝一樣，先到 <span class="hl-blue">~/.wine/drive_c/users/wade/Mp3tag</span> 裡找到程式的執行檔 <span class="hl-blue">Mp3tag.exe</span></p>
+<p><img src="https://image.wadeism.net/wine11.png" alt=""></p>
+<p><br>
+按右鍵點選「以 Wine Windows Program Loader」開啟</p>
+<p><img src="https://image.wadeism.net/wine12.png" alt=""></p>
+<p><img src="https://image.wadeism.net/wine13.png" alt=""></p>
+<p>在 Terminal 底下，也可以直接用 wine 指令來執行：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wine ./Mp3tag
+</span></span></code></pre></div><p><span class="hl-red">建議優先選擇免安裝版本的軟體，通常都可以直接用 Wine 順利執行，省去安裝的麻煩</span>。（但盡量以官方的免安裝版為主）</p>
+<p>如果安裝時沒有自動建立捷徑，或是使用免安裝的程式，我們也可以為這些 Windows 程式建一個捷徑來開啟它，在 GUI 的環境中非常的實用，建立的方法可以參考 <a href="https://notes.wadeism.net/post/ubuntu-custom-app-shortcut/" target="_blank">Ubuntu 自訂應用程式捷徑</a> 這篇文章</p>
+<h3 id="wine-系列文章">Wine 系列文章：</h3>
+<p><a href="https://notes.wadeism.net/post/wine-create-multi-environment/" target="_blank">Wine 利用 prefix 建立多重環境</a></p>
+<p><a href="https://notes.wadeism.net/post/easy-using-winetricks/" target="_blank">Winetricks – 簡單易用的 Wine 輔助工具</a></p>
+<p><a href="https://notes.wadeism.net/post/my-personal-wine-setting/" target="_blank">My Personal Wine Setting</a></p>
+
+            </article>
+          </div>
+          
+      <div class='entry-meta-bottom'>
+        
+
+  <div class="entry-categories"><p><span>Categories</span>
+    
+    <a href="/categories/linux" title="View all posts in Linux">Linux</a>
+  </p>
+</div>
+
+
+
+<div class="entry-tags"><p><span>Tags</span>
+  
+  <a href="/tags/ubuntu" title="View all posts tagged Ubuntu">Ubuntu</a>
+  
+  <a href="/tags/wine" title="View all posts tagged Wine">Wine</a>
+  
+
+</p></div>	</div>
+
+	
+<div class="author-meta">
+
+  <div class="author">
+    	
+      <img alt='wade' src="https://www.gravatar.com/avatar/6fee0275681dd0b43da1d6acb66c336f?s=100&d=identicon" class='avatar avatar-72 photo' height='72' width='72'>
+    
+    <span>
+      Written by:<a href="https://notes.wadeism.net/" title="Posts by wade" rel="author">wade</a> </span>
+    </div>
+    <div class="bio">
+      
+      
+      <p>本站站長</p>
+      
+      
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a class="github" target="_blank"
+href="https://github.com/wade-chiang">
+<i class="fab fa-github"
+title="github icon"></i>
+</a>
+
+
+
+
+
+
+
+</div>
+</div>
+
+</div>
+</div>
+
+<section id="comments" class="comments">
+  <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+    var d = document, s = d.createElement('script');
+    s.src = 'https://notes-wadeism.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+</section>
+</div>
+
+ 
+
+
+
+    </div>
+
+    <footer id="site-footer" class="site-footer" role="contentinfo">
+	<h1>
+    
+    <a href=""> Nothing but.. </a>
+    
+	</h1>
+
+			
+			<p class="site-description">Something here</p>
+			
+
+		<div id="menu-footer" class="menu-container menu-footer" role="navigation">
+		<div class="menu">
+
+      <ul id="menu-footer-items" class="menu-footer-items">
+        
+</ul>
+
+</div>	</div>
+
+<ul class="social-media-icons">
+
+        
+
+        
+
+
+        
+
+        
+
+        
+
+        
+
+        
+
+
+        
+        <li>
+        <a href="https://github.com/wade-chiang"  class="github" target="_blank">
+            <i class="fab fa-github" title="github"></i>
+            <span class="screen-reader-text">github</span>
+        </a>
+        </li>
+        
+
+
+        
+
+        
+        <li>
+        <a href="https://notes.wadeism.net/index.xml" data-animate-hover="pulse" class="rss" target="_blank">
+            <i class="fas fa-rss" title="rss"></i>
+            <span class="screen-reader-text">rss</span>
+        </a>
+        </li>
+        
+
+				</ul>	<div class="design-credit">
+		
+		<p>© 2022 Wade</p>
+		
+		<p>Nederburg Hugo Theme by <a href="https://appernetic.io" target="_blank">Appernetic</a>.</p>
+		
+		<p>A port of Tracks by Compete Themes.</p>
+		
+	</div>
+</footer>
+
+  </div>
+  <script src="https://notes.wadeism.net/js/jquery.min.js"></script>
+<script src="https://notes.wadeism.net/js/jquerymigrate.js"></script>
+<script src="https://notes.wadeism.net/js/production.min.js?v=1684173173"></script>
+
+
+
+<script src="https://notes.wadeism.net/js/prism.js"></script>
+
+
+<script src="https://notes.wadeism.net/js/medium-zoom.js"></script>
+<script src="https://notes.wadeism.net/js/wade_custom.js"></script>
+
+
+
+
+
+<script type="text/javascript">var _jf = _jf || [];_jf.push(['p','63921']);_jf.push(['initAction',true]);_jf.push(['_setFont','xingothic-tc-w6','css','.xingothic-tc-w6']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-meta-bottom a']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-content h3']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-content h4']);_jf.push(['_setFont','xingothic-tc-w6','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w6','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w6','weight',600]);_jf.push(['_setFont','xingothic-tc-w5','css','.xingothic-tc-w5']);_jf.push(['_setFont','xingothic-tc-w5','css','div.entry-content p']);_jf.push(['_setFont','xingothic-tc-w5','css','div.excerpt-content p']);_jf.push(['_setFont','xingothic-tc-w5','css','div.post article']);_jf.push(['_setFont','xingothic-tc-w5','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w5','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w5','weight',500]);_jf.push(['_setFont','xingothic-tc-w7','css','.xingothic-tc-w7']);_jf.push(['_setFont','xingothic-tc-w7','css','h1.entry-title']);_jf.push(['_setFont','xingothic-tc-w7','css','h2.excerpt-title']);_jf.push(['_setFont','xingothic-tc-w7','css','div.entry-content h2']);_jf.push(['_setFont','xingothic-tc-w7','css','strong']);_jf.push(['_setFont','xingothic-tc-w7','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w7','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w7','weight',700]);(function(A,p,c,m,l,q,r,h,B,D){var b=A._jf;if(b.constructor!==Object){var t=!0,u=function(a){var f=!0,e;for(e in b)b[e][0]==a&&(f&&(f=f&&!1!==b[e][1].call(b)),b[e]=null,delete b[e])},v=/\S+/g,w=/[\t\r\n\f]/g,C=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,n="".trim,x=n&&!n.call("\ufeff\u00a0")?function(a){return null==a?"":n.call(a)}:function(a){return null==a?"":(a+"").replace(C,"")},k=function(a){var f,b,g;if("string"===typeof a&&a&&(a=(a||"").match(v)||[],f=h[c]?(" "+h[c]+" ").replace(w," "):" ")){for(g=0;b=a[g++];)0>f.indexOf(" "+b+" ")&&(f+=b+" ");h[c]=x(f)}},d=function(a){var b,e,g;if(0===arguments.length||"string"===typeof a&&a){var d=(a||"").match(v)||[];if(b=h[c]?(" "+h[c]+" ").replace(w," "):""){for(g=0;e=d[g++];)for(;0<=b.indexOf(" "+e+" ");)b=b.replace(" "+e+" "," ");h[c]=a?x(b):""}}},y;b.addScript=y=function(b,f,e,g,d,c){d=d||function(){};c=c||function(){};var a=p.createElement("script"),h=p.getElementsByTagName("script")[0],k,m=!1,l=function(){a.src="";a.parentNode.removeChild(a);a=a.onerror=a.onload=a.onreadystatechange=null};g&&(k=setTimeout(function(){l();c()},g));a.type=f||"text/javascript";a.async=e;a.onload=a.onreadystatechange=function(b,c){m||a.readyState&&!/loaded|complete/.test(a.readyState)||(m=!0,g&&clearTimeout(k),l(),c||d())};a.onerror=function(a,b,d){g&&clearTimeout(k);l();c();return!0};a.src=b;h.parentNode.insertBefore(a,h)};for(var z in b)"initAction"==b[z][0]&&(t=b[z][1]);b.push(["_eventPreload",function(){1==t&&k(m);y(B,null,!1,3E3,null,function(){u("_eventInactived")})}]);b.push(["_eventReload",function(){d(r);d(q);k(l)}]);b.push(["_eventActived",function(){d(m);d(l);k(q)}]);b.push(["_eventInactived",function(){d(m);d(l);k(r)}]);u("_eventPreload")}})(this,this.document,"className","jf-loading","jf-reloading","jf-active","jf-inactive",this.document.getElementsByTagName("html")[0],"//ds.justfont.com/js/stable/v/6.0/id/171309946041");</script>
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9504338511537027" crossorigin="anonymous"></script>
+
+
+<script src="https://notes.wadeism.net/js/back-to-top.js"></script>
+
+  
+  
+
+</body>
+</html>

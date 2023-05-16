@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>NFS on Nothing but..</title>
+    <link>https://notes.wadeism.net/tags/nfs/</link>
+    <description>Recent content in NFS on Nothing but..</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 24 Dec 2020 16:10:32 +0000</lastBuildDate><atom:link href="https://notes.wadeism.net/tags/nfs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>macOS Catalina 使用 autofs 自動掛載 NFS</title>
+      <link>https://notes.wadeism.net/post/macos-catalina-autofs-nfs/</link>
+      <pubDate>Thu, 24 Dec 2020 16:10:32 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/macos-catalina-autofs-nfs/</guid>
+      <description>之前提到過 autofs 是用來自動掛載遠端資料夾的好</description>
+    </item>
+    
+    <item>
+      <title>Mac 使用 autofs 自動掛載 NFS</title>
+      <link>https://notes.wadeism.net/post/mac-autofs-nfs/</link>
+      <pubDate>Mon, 17 Aug 2020 02:46:17 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/mac-autofs-nfs/</guid>
+      <description>macOS 也可以使用 autofs 來掛載，而且預設已有安裝了</description>
+    </item>
+    
+    <item>
+      <title>Mac 掛載 NFS 與 Operation not permitted 問題</title>
+      <link>https://notes.wadeism.net/post/mac-nfs-mount-operation-not-permitted/</link>
+      <pubDate>Fri, 14 Aug 2020 15:30:42 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/mac-nfs-mount-operation-not-permitted/</guid>
+      <description>前面提到大多數的 Unix 系統都有支援 NFS，M</description>
+    </item>
+    
+    <item>
+      <title>Ubuntu 使用 autofs 自動掛載 NFS</title>
+      <link>https://notes.wadeism.net/post/ubuntu-autofs-nfs/</link>
+      <pubDate>Fri, 14 Aug 2020 14:49:52 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/ubuntu-autofs-nfs/</guid>
+      <description>autofs 是自動掛載用的工具，它會偵測當使用者進</description>
+    </item>
+    
+    <item>
+      <title>CentOS 8 安裝與設定 NFS Server</title>
+      <link>https://notes.wadeism.net/post/centos8-nfs-server/</link>
+      <pubDate>Fri, 14 Aug 2020 14:40:32 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/centos8-nfs-server/</guid>
+      <description>NFS（Network File System）是</description>
+    </item>
+    
+  </channel>
+</rss>

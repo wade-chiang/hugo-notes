@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>掃瞄器 on Nothing but..</title>
+    <link>https://notes.wadeism.net/tags/%E6%8E%83%E7%9E%84%E5%99%A8/</link>
+    <description>Recent content in 掃瞄器 on Nothing but..</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 03 Oct 2021 09:48:00 +0000</lastBuildDate><atom:link href="https://notes.wadeism.net/tags/%E6%8E%83%E7%9E%84%E5%99%A8/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Manjaro 安裝 Brother MFC-L2740DW 雷射複合機</title>
+      <link>https://notes.wadeism.net/post/manjaro-install-brother-mfc-l2740dw/</link>
+      <pubDate>Sun, 03 Oct 2021 09:48:00 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/manjaro-install-brother-mfc-l2740dw/</guid>
+      <description>我家有台 Brother 的 MFC-L2740DW 雷射複合機。是台不算太新，</description>
+    </item>
+    
+  </channel>
+</rss>

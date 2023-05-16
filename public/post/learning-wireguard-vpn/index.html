@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="application/ld+json">
+    {
+        "@context" : "http://schema.org",
+        "@type" : "BlogPosting",
+        "mainEntityOfPage": {
+             "@type": "WebPage",
+             "@id": "https:\/\/notes.wadeism.net\/"
+        },
+        "articleSection" : "post",
+        "name" : "WireGuard VPN 設定與使用教學",
+        "headline" : "WireGuard VPN 設定與使用教學",
+        "description" : "其實 OpenVPN 我用了好一陣子，也沒碰到什麼問題，",
+        "inLanguage" : "zh-Hant-TW",
+        "author" : "wade",
+        "creator" : "wade",
+        "publisher": "wade",
+        "accountablePerson" : "wade",
+        "copyrightHolder" : "wade",
+        "copyrightYear" : "2020",
+        "datePublished": "2020-01-09 09:14:33 \u002b0000 \u002b0000",
+        "dateModified" : "2020-01-09 09:14:33 \u002b0000 \u002b0000",
+        "url" : "https:\/\/notes.wadeism.net\/post\/learning-wireguard-vpn\/",
+        "wordCount" : "3668",
+        "image" : "https:\/\/notes.wadeism.net\/https:\/\/image.wadeism.net\/wg02.jpg",
+        "keywords" : [ "CentOS","Server","Blog" ]   
+    }
+    </script>
+
+
+
+ <title>WireGuard VPN 設定與使用教學 - Nothing but..</title>
+<meta property="og:title" content="WireGuard VPN 設定與使用教學 - Nothing but..">
+
+
+
+<meta name="description" content="My notes for everyone" />
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="all,follow">
+<meta name="googlebot" content="index,follow,snippet,archive">
+<link rel="stylesheet" id="ct-tracks-google-fonts-css" href="https://fonts.googleapis.com/css?family=Raleway%3A400%2C700&amp;subset=latin%2Clatin-ext&amp;ver=4.7.2" type="text/css" media="all">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+<link href="https://notes.wadeism.net/css/style.css?v=1684173172" rel="stylesheet" id="theme-stylesheet" type='text/css' media='all'>
+
+<link href="https://notes.wadeism.net/css/custom.css?v=1684173172" rel="stylesheet" type='text/css' media='all'>
+<link rel="shortcut icon" href="https://notes.wadeism.net/img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="https://notes.wadeism.net/img/favicon.ico" type="image/x-icon">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-120924943-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-120924943-1');
+</script>
+
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-120924943-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-120924943-1');
+</script>
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://notes.wadeism.net/css/prism.css" >
+
+
+<style>
+   
+   
+   
+  @import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Roboto+Mono&display=swap');
+</style>
+
+
+<link href="https://notes.wadeism.net/css/wade_custom.css?v=1684173172" rel="stylesheet" type='text/css' media='all'>
+</head>
+
+
+<body class="post-template-default single single-post single-format-standard ct-body singular singular-post not-front standard">
+
+  <div id="overflow-container" class="overflow-container">
+    <a class="skip-content" href="#main">Skip to content</a>
+    <header id="site-header" class="site-header" role="banner">
+      <div class='top-navigation'>
+        <div class='container'>
+
+  <div id="menu-secondary" class="menu-container menu-secondary" role="navigation">
+    <button id="toggle-secondary-navigation" class="toggle-secondary-navigation"><i class="fas fa-plus"></i></button>
+
+    <div class="menu">
+
+      <ul id="menu-secondary-items" class="menu-secondary-items">
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/bass">bass</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/developer">developer</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/linux">linux</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/mac">mac</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/office">office</a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+
+  </div>
+
+
+  <ul class="social-media-icons">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+    
+    <li>
+      <a href="https://github.com/wade-chiang" data-animate-hover="pulse" class="github" target="_blank">
+        <i class="fab fa-github" title="github"></i>
+        <span class="screen-reader-text">github</span>
+      </a>
+    </li>
+    
+
+
+    
+
+    
+    <li>
+      <a href="https://notes.wadeism.net/index.xml" data-animate-hover="pulse" class="rss" target="_blank">
+        <i class="fas fa-rss" title="rss"></i>
+        <span class="screen-reader-text">rss</span>
+      </a>
+    </li>
+    
+
+
+  </ul></div>
+
+      </div>
+
+      <div class="container">
+        <div id="title-info" class="title-info">
+  <div id='site-title' class='site-title'>
+    
+    <a href="/"> Nothing but.. </a>
+    </div>
+  </div>
+  <button id="toggle-navigation" class="toggle-navigation">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <div id="menu-primary-tracks" class="menu-primary-tracks"></div>
+  <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+    
+    <p class="site-description">Something here</p>
+    
+
+    <div class="menu">
+      <ul id="menu-primary-items" class="menu-primary-items">
+        
+        
+        <li class='menu-item menu-item-type-custom menu-item-object-custom '>
+          <a href="https://notes.wadeism.net/">Home</a>
+          
+        </li>
+        
+        <li class='menu-item menu-item-type-post_type menu-item-object-page '>
+          <a href="https://notes.wadeism.net/about/">About</a>
+          
+        </li>
+        
+        <li class='menu-item menu-item-type-post_type menu-item-object-page '>
+          <a href="https://notes.wadeism.net/contact/"></a>
+          
+        </li>
+        
+      </ul>
+    </div>
+
+  </div>
+
+      </div>
+    </header>
+
+    <div id="main" class="main" role="main">
+
+      
+  
+  
+    
+  
+  
+  <div id="loop-container" class="loop-container">
+    
+    <div class="post type-post status-publish format-standard has-post-thumbnail hentry category-design tag-design tag-standard-2 tag-tagalicious tag-travel entry full-without-featured odd excerpt-1">
+
+      <div class='featured-image lazy lazy-bg-image'  data-background="https://image.wadeism.net/wg02.jpg">
+      </div>
+      
+        <div class="entry-meta">
+          <span class="date">09 January 2020</span>	<span> / </span>
+
+          <span class="author">
+            <a href="https://notes.wadeism.net/" title="Posts by wade" rel="author">wade</a>
+          </span>
+
+
+          
+          <span class="category">
+            <span> / </span>
+
+            <a href="/categories/linux">Linux</a>
+          </span>
+          
+
+
+        </div>
+        <div class='entry-header'>
+          <h1 class='entry-title'> WireGuard VPN 設定與使用教學</h1>
+        </div>
+        <div class="entry-container">
+          <div class="entry-content">
+            <article>
+              <p>其實 OpenVPN 我用了好一陣子，也沒碰到什麼問題，頂多是中間曾改版過，安裝與設定的方法有點不太一樣，原本一直有打算記錄下來，但前幾天看到 iTHome 的一篇文章「<a href="https://www.ithome.com.tw/news/134865" target="_blank">WireGuard將併入Linux 5.6成為VPN新標準</a>」講的一副屌打 OpenVPN 與 IPsec 的樣子所以就來試試看了</p>
+<p><span class="hl-blue">為了操作方便，建議暫時將使用者切到 root 身份再來進行下面的步驟</span></p>
+<h2 id="安裝-wireguard">安裝 WireGuard</h2>
+<p>WireGuard 的<a href="https://www.wireguard.com/install/" target="_blank">官網</a>有提供許多系統的安裝方式，不管是 Mac、各種 Linux 甚至 OpenWRT 都有，<span class="hl-red">由於官網的安裝步驟有在持續更新，建議安裝前，還是先以官網的步驟為主！</span>而這邊我先由原本的 CentOS 7 改列最近實測過的 CentOS 8 安裝步驟</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>yum install epel-release
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>yum config-manager --set-enabled PowerTools
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>yum copr enable jdoss/wireguard
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>yum install wireguard-dkms wireguard-tools
+</span></span></code></pre></div><p>WireGuard 的軟體是不分 server 與 client 的，所以兩邊安裝的東西都一樣，並且也有提供手機版的 app，只要去 App Store 或 Play Store 搜尋 WireGuard 就可以找到了</p>
+<h2 id="設定-wireguard-server">設定 WireGuard Server</h2>
+<h3 id="1-建立設定檔資料夾與設定權限">1. 建立設定檔資料夾與設定權限</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mkdir /etc/wireguard <span style="color:#f92672">&amp;&amp;</span> cd /etc/wireguard
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>umask <span style="color:#ae81ff">077</span>
+</span></span></code></pre></div><p>大部分的文章都會下 umask 077 這個指令，主要是確保之後編寫的設定檔權限不會太寬鬆</p>
+<h3 id="2-製作-server-端的金鑰">2. 製作 server 端的金鑰</h3>
+<p>製作 server 端私鑰</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wg genkey &gt; server_privateKey
+</span></span></code></pre></div><p>製作 server 端公鑰，這個指令會利用剛才製作的私鑰來生成公鑰</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wg pubkey &lt; server_privateKey &gt; server_publicKey
+</span></span></code></pre></div><p>上面的指令也可以用一行來完成</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wg genkey | tee server_privateKey | wg pubkey &gt; server_publicKey
+</span></span></code></pre></div><p>執行後我們會在 /etc/wireguard 裡得到兩個檔案，分別是公鑰 <span class="hl-blue">server_publicKey</span> 與私鑰 <span class="hl-blue">server_privateKey</span></p>
+<p><br>
+另外也可以再多製作 pre share 的金鑰來加強保護，這部分則是可有可無，server 端與 client 端會使用同一份金鑰，毋需區分</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wg genpsk &gt; psk
+</span></span></code></pre></div><h3 id="3-製作-server-端的設定檔">3. 製作 server 端的設定檔</h3>
+<p>首先查詢我們機器的網路介面（網路卡）名稱，請輸入下面的指令：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ip a
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu <span style="color:#ae81ff">65536</span> qdisc noqueue state UNKNOWN group default qlen <span style="color:#ae81ff">1000</span>
+</span></span><span style="display:flex;"><span>    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+</span></span><span style="display:flex;"><span>    inet 127.0.0.1/8 scope host lo
+</span></span><span style="display:flex;"><span>       valid_lft forever preferred_lft forever
+</span></span><span style="display:flex;"><span>    inet6 ::1/128 scope host
+</span></span><span style="display:flex;"><span>       valid_lft forever preferred_lft forever
+</span></span><span style="display:flex;"><span>2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span style="color:#ae81ff">1460</span> qdisc pfifo_fast state UP group default qlen <span style="color:#ae81ff">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 22:11:0b:3a:10:22 brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>    inet 10.140.0.3/32 brd 10.140.0.3 scope global noprefixroute dynamic eth0
+</span></span><span style="display:flex;"><span>       valid_lft 58812sec preferred_lft 58812sec
+</span></span><span style="display:flex;"><span>    inet6 0:0:0:0:0:ffff:a8c:3/64 scope link noprefixroute
+</span></span><span style="display:flex;"><span>       valid_lft forever preferred_lft forever
+</span></span></code></pre></div><p>上面的資訊中第一個 ip 127.0.0.1 是機器本身的 loop，這裡不用管它，我們看到第二個 ip 10.140.0.3/32，這個 ip 對應的 <span class="hl-blue">eth0</span> 就是主要使用的網路介面代號（一般來說系統預設的名稱經常是 eth0，但現在很多版本如 Ubuntu 都不太用 eth0 作為預設的網卡名稱了，所以一定要先查過）</p>
+<p>接著在 /etc/wireguard/ 底下建立設定檔，內容如下，檔名可自訂，這裡取名為 <span class="hl-blue">wg0-server.conf</span>，<span class="hl-blue">wg0-server</span> 這個名稱也會等同 vpn 在機器裡的 network interface 名稱，設定檔分為兩個部分，<span class="hl-blue">Interface</span> 與 <span class="hl-blue">Peer</span></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span>[<span style="color:#a6e22e">Interface</span>]<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#a6e22e">Address</span>    = <span style="color:#ae81ff">192</span>.<span style="color:#ae81ff">168</span>.<span style="color:#ae81ff">100</span>.<span style="color:#ae81ff">1</span>/<span style="color:#ae81ff">24</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#a6e22e">PrivateKey</span> = <span style="color:#a6e22e">server</span> 端的 <span style="color:#a6e22e">Private</span> <span style="color:#a6e22e">Key</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#a6e22e">PostUp</span>     = <span style="color:#a6e22e">firewall</span>-<span style="color:#a6e22e">cmd</span> --<span style="color:#a6e22e">zone</span>=<span style="color:#a6e22e">public</span> --<span style="color:#a6e22e">add</span>-<span style="color:#a6e22e">port</span> <span style="color:#ae81ff">51820</span>/<span style="color:#a6e22e">udp</span> &amp;&amp; <span style="color:#a6e22e">firewall</span>-<span style="color:#a6e22e">cmd</span> --<span style="color:#a6e22e">zone</span>=<span style="color:#a6e22e">public</span> --<span style="color:#a6e22e">add</span>-<span style="color:#a6e22e">masquerade</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#a6e22e">PostDown</span>   = <span style="color:#a6e22e">firewall</span>-<span style="color:#a6e22e">cmd</span> --<span style="color:#a6e22e">zone</span>=<span style="color:#a6e22e">public</span> --<span style="color:#a6e22e">remove</span>-<span style="color:#a6e22e">port</span> <span style="color:#ae81ff">51820</span>/<span style="color:#a6e22e">udp</span> &amp;&amp; <span style="color:#a6e22e">firewall</span>-<span style="color:#a6e22e">cmd</span> --<span style="color:#a6e22e">zone</span>=<span style="color:#a6e22e">public</span> --<span style="color:#a6e22e">remove</span>-<span style="color:#a6e22e">masquerade</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#a6e22e">ListenPort</span> = <span style="color:#ae81ff">51820</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span># <span style="color:#a6e22e">client</span> <span style="color:#ae81ff">1</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>[<span style="color:#a6e22e">Peer</span>]<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#a6e22e">PublicKey</span>    = <span style="color:#a6e22e">client</span> 端的 <span style="color:#a6e22e">Public</span> <span style="color:#a6e22e">Key</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#a6e22e">PresharedKey</span> = <span style="color:#a6e22e">psk</span> 檔裡的內容<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#a6e22e">AllowedIPs</span>   = <span style="color:#ae81ff">192</span>.<span style="color:#ae81ff">168</span>.<span style="color:#ae81ff">100</span>.<span style="color:#ae81ff">2</span>/<span style="color:#ae81ff">32</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><h4 id="-interface-">[ Interface ]</h4>
+<p>WireGuard 的主要設定都在裡面，這邊是設定一個新的網路介面，並且指定它的 ip、listen port…等等，server 端與 client 端都會有一個專屬的 interface</p>
+<ul>
+<li><span class="hl-green mono">Address</span>：設定 server 的 ip，之後的 client 端也要設定與 server 在同網段底下</li>
+<li><span class="hl-green mono">PrivateKey</span>：這裡貼上剛才做的私鑰「server_privateKey」的內容</li>
+<li><span class="hl-green mono">PostUp</span>：啟動 vpn 時要連帶執行的指令或 script</li>
+<li><span class="hl-green mono">PostDown</span>：關閉 vpn 時執行的指定，這邊就是把 NAT 與 port 給關掉，通常是 PostUp 開了什麼，這邊就關掉什麼</li>
+<li><span class="hl-green mono">ListenPort</span>：WireGuard 要使用的 port，也是你的防火牆或 GCP、AWS…等要開的 UDP port</li>
+</ul>
+<p><span class="hl-blue">PostUp</span>這邊加了兩個指令讓 WireGuard 啟動時也連帶執行，分別是開啟 udp 的 port 與設定 NAT，範例中使用 firewalld，其中 <span class="hl-blue">&ndash;zone=public</span> 為非必要，要視自己防火牆的情況來調整，可用「 <span class="hl-blue">sudo firewall-cmd &ndash;get-default-zone</span> 」這個指令看目前預設的防火牆是哪個 zone 來自訂，一般大多是 public，另外「 <span class="hl-blue">&ndash;add-port 51820/udp</span> 」這段也要看你想讓 WireGuard 用哪個 port 來自訂</p>
+<p>另外也有 iptables 的版本可供參考：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span><span style="color:#a6e22e">PostUp</span> = <span style="color:#a6e22e">iptables</span> -<span style="color:#a6e22e">A</span> <span style="color:#a6e22e">FORWARD</span> -<span style="color:#a6e22e">i</span> <span style="color:#a6e22e">wg0</span>-<span style="color:#a6e22e">server</span> -<span style="color:#a6e22e">j</span> <span style="color:#a6e22e">ACCEPT</span> &amp;&amp; <span style="color:#a6e22e">iptables</span> -<span style="color:#a6e22e">t</span> <span style="color:#a6e22e">nat</span> -<span style="color:#a6e22e">A</span> <span style="color:#a6e22e">POSTROUTING</span> -<span style="color:#a6e22e">s</span> <span style="color:#ae81ff">192</span>.<span style="color:#ae81ff">168</span>.<span style="color:#ae81ff">100</span>.<span style="color:#ae81ff">0</span>/<span style="color:#ae81ff">24</span> -<span style="color:#a6e22e">o</span> <span style="color:#a6e22e">eth0</span> -<span style="color:#a6e22e">j</span> <span style="color:#a6e22e">MASQUERADE</span> &amp;&amp; <span style="color:#a6e22e">iptables</span> -<span style="color:#a6e22e">A</span> <span style="color:#a6e22e">INPUT</span> -<span style="color:#a6e22e">i</span> <span style="color:#a6e22e">wg0</span>-<span style="color:#a6e22e">server</span> -<span style="color:#a6e22e">p</span> <span style="color:#a6e22e">udp</span> --<span style="color:#a6e22e">dport</span> <span style="color:#ae81ff">51820</span> -<span style="color:#a6e22e">j</span> <span style="color:#a6e22e">ACCEPT</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>    <span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#a6e22e">PostDown</span> = <span style="color:#a6e22e">iptables</span> -<span style="color:#a6e22e">D</span> <span style="color:#a6e22e">FORWARD</span> -<span style="color:#a6e22e">i</span> <span style="color:#a6e22e">wg0</span>-<span style="color:#a6e22e">server</span> -<span style="color:#a6e22e">j</span> <span style="color:#a6e22e">ACCEPT</span> &amp;&amp; <span style="color:#a6e22e">iptables</span> -<span style="color:#a6e22e">t</span> <span style="color:#a6e22e">nat</span> -<span style="color:#a6e22e">D</span> <span style="color:#a6e22e">POSTROUTING</span> -<span style="color:#a6e22e">s</span> <span style="color:#ae81ff">192</span>.<span style="color:#ae81ff">168</span>.<span style="color:#ae81ff">100</span>.<span style="color:#ae81ff">0</span>/<span style="color:#ae81ff">24</span> -<span style="color:#a6e22e">o</span> <span style="color:#a6e22e">eth0</span> -<span style="color:#a6e22e">j</span> <span style="color:#a6e22e">MASQUERADE</span> &amp;&amp; <span style="color:#a6e22e">iptables</span> -<span style="color:#a6e22e">D</span> <span style="color:#a6e22e">INPUT</span> -<span style="color:#a6e22e">i</span> <span style="color:#a6e22e">wg0</span>-<span style="color:#a6e22e">server</span> -<span style="color:#a6e22e">p</span> <span style="color:#a6e22e">udp</span> --<span style="color:#a6e22e">dport</span> <span style="color:#ae81ff">51820</span> -<span style="color:#a6e22e">j</span> <span style="color:#a6e22e">ACCEPT</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><p>iptables 的版本中，PostUp 與 Down 裡面都由 3 個指令以 「&amp;&amp;」符號來連起來，這邊也稍微說明一下：</p>
+<p><span class="hl-blue">iptables -A FORWARD -i wg0-server -j ACCEPT</span><br>
+允許 wg0-server 這個介面的轉址<br>
+wg0-server 是我們的設定檔名稱，同時也會是 WireGuard 所建立的網路介面名稱</p>
+<p><span class="hl-blue">iptables -t nat -A POSTROUTING -s 192.168.100.0/24 -o eth0 -j MASQUERADE</span><br>
+允許從 192.168.100.0/24 的來源轉由 eth0 出去<br>
+其中 ip 網段的部分需視上面的設定更改，本例中將 server 的 ip 設為 192.168.100.1，之後client 端的網段就會在 192.168.100.0/24，eth0 的部分則一樣視機器主要連外的網卡名稱來自訂</p>
+<p><span class="hl-blue">iptables -A INPUT -i wg0-server -p udp &ndash;dport 51820 -j ACCEPT</span><br>
+開 port，本例為 51820 port<br>
+如果像 AWS 的機器，統一都用 Security Group管理，系統內部沒有使用防火牆，那這條就不用設定了</p>
+<p><br>
+PostUp 與 PostDown 這兩個選項不一定需要，我們也可以直接在 Linux 防火牆裡處理，在 conf 裡設定的好處是防火牆的開通只在 vpn 開啟時有效，關閉後就沒有了，另外也可以將指令分別寫到 script 裡，PostUp and Down 這個選項除了直接執行指令外，也可以執行 script</p>
+<h4 id="-peer-">[ Peer ]</h4>
+<p>前面的 <span class="hl-blue">[Interface]</span> 在 server 與 client 端都是指設定自己本身的網路介面，而 Peer 的部分在 server 與 client 上則有不同的意義。<span class="hl-red">server 端裡的 Peer 指的是每一個要連進來的節點</span>，因此如果有三台機器想要連入，就必須建立三個 Peer，<span class="hl-red">client 端裡的 Peer 指的則是 server</span>，這邊先說明 server 端的 Peer 內容</p>
+<ul>
+<li><span class="hl-green mono">PublicKey</span>：這邊填入 client 端生成的 Public Key，這個在等一下的 client 設定裡會建立</li>
+<li><span class="hl-green mono">PresharedKey</span>：填入剛才生成的 psk 檔內容，該選項非必要，如果 server 有設定，那 client 端也要貼一樣的內容，無論 Peer 有多少個，都會使用與 server 一樣的 psk</li>
+<li><span class="hl-green mono">AllowedIPs</span>：要賦予 client 端的 IP，本例給 client 的 IP 為 192.168.100.2/32，請注意後面的 netmask 一定要是 32 ，不可以設 24，多個 client 時，每個 Peer 都要有一組自己的 IP，不可重覆</li>
+</ul>
+<h2 id="設定-sysctlconf">設定 sysctl.conf</h2>
+<p>這個步驟在蠻多原文的教學裡都有提到，但我自己的測試中，即使沒有加上這個設定，VPN 還是可以順利的使用，所以大家可以視情況來調整，如果 VPN 沒辦法連線的話，可以試試加上這段的設定</p>
+<p>編輯 /etc/sysctl.conf</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat <span style="color:#e6db74">&lt;&lt; EOF &gt;&gt; /etc/sysctl.conf
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">net.ipv4.ip_forward=1
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">net.ipv6.conf.all.forwarding=1
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
+</span></span></code></pre></div><p><br>
+重新載入 sysctl.conf 設定</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sysctl -p
+</span></span></code></pre></div><h2 id="啟動-wireguard-server">啟動 WireGuard Server</h2>
+<p>建立好 server 的 conf 設定檔後，我們就可以試著啟動 WireGuard 的 server，這邊介紹兩種啟動方式</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>systemctl start wg-quick@wg0-server
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wg-quick up wg0-server
+</span></span></code></pre></div><p>第一種就是一般 systemd 常用的啟動方式，第二種則是 WireGuard 自己的指令，兩種都可以用，後面的 <span class="hl-blue">wg0-server</span> 就是我們設定檔的名稱，同時也是 WireGuard 建立的網卡代號，我們可以再一次用指令檢查</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ip a
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu <span style="color:#ae81ff">65536</span> qdisc noqueue state UNKNOWN group default qlen <span style="color:#ae81ff">1000</span>
+</span></span><span style="display:flex;"><span>    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+</span></span><span style="display:flex;"><span>    inet 127.0.0.1/8 scope host lo
+</span></span><span style="display:flex;"><span>       valid_lft forever preferred_lft forever
+</span></span><span style="display:flex;"><span>    inet6 ::1/128 scope host
+</span></span><span style="display:flex;"><span>       valid_lft forever preferred_lft forever
+</span></span><span style="display:flex;"><span>2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span style="color:#ae81ff">1460</span> qdisc pfifo_fast state UP group default qlen <span style="color:#ae81ff">1000</span>
+</span></span><span style="display:flex;"><span>    link/ether 22:11:0b:3a:10:22 brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>    inet 10.140.0.3/32 brd 10.138.0.2 scope global noprefixroute dynamic eth0
+</span></span><span style="display:flex;"><span>       valid_lft 82564sec preferred_lft 82564sec
+</span></span><span style="display:flex;"><span>    inet6 fe80::4001:aff:fe8a:2/64 scope link noprefixroute
+</span></span><span style="display:flex;"><span>       valid_lft forever preferred_lft forever
+</span></span><span style="display:flex;"><span>32: wg0-server: &lt;POINTOPOINT,NOARP,UP,LOWER_UP&gt; mtu <span style="color:#ae81ff">1380</span> qdisc noqueue state UNKNOWN group default qlen <span style="color:#ae81ff">1000</span>
+</span></span><span style="display:flex;"><span>    link/none
+</span></span><span style="display:flex;"><span>    inet 192.168.100.1/24 scope global wg0-server
+</span></span><span style="display:flex;"><span>       valid_lft forever preferred_lft forever
+</span></span><span style="display:flex;"><span>    inet6 fe80::e813:3764:1d66:889e/64 scope link flags <span style="color:#ae81ff">800</span>
+</span></span><span style="display:flex;"><span>       valid_lft forever preferred_lft forever
+</span></span></code></pre></div><p>可以看到多出了一個 wg0-server 的介面，ip 為我們設定的 192.168.100.1 ， 表示有啟動成功，server 端的設定就算是告一段落</p>
+<h2 id="設定-wireguard-client">設定 WireGuard Client</h2>
+<p>client 端 WireGuard 的安裝方式與 server 相同，因此我們一樣按照官網的說明就可以了</p>
+<h3 id="1-建立設定檔資料夾與設定權限-1">1. 建立設定檔資料夾與設定權限</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mkdir /etc/wireguard <span style="color:#f92672">&amp;&amp;</span> cd /etc/wireguard
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>umask <span style="color:#ae81ff">077</span>
+</span></span></code></pre></div><h3 id="2-製作-client-端的金鑰">2. 製作 client 端的金鑰</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wg genkey | tee client1_privateKey | wg pubkey &gt; client1_publicKey
+</span></span></code></pre></div><h3 id="3-製作-client-端的設定檔">3. 製作 client 端的設定檔</h3>
+<p>一樣在 /etc/wireguard/ 底下建立設定檔，內容如下，本範例檔名為 <span class="hl-blue">client1.conf</span></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span>[<span style="color:#a6e22e">Interface</span>]<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#a6e22e">Address</span>    = <span style="color:#ae81ff">192</span>.<span style="color:#ae81ff">168</span>.<span style="color:#ae81ff">100</span>.<span style="color:#ae81ff">2</span>/<span style="color:#ae81ff">24</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#a6e22e">PrivateKey</span> = <span style="color:#a6e22e">client</span> <span style="color:#ae81ff">1</span> 的 <span style="color:#a6e22e">Private</span> <span style="color:#a6e22e">Key</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#a6e22e">DNS</span> = <span style="color:#ae81ff">8</span>.<span style="color:#ae81ff">8</span>.<span style="color:#ae81ff">8</span>.<span style="color:#ae81ff">8</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>[<span style="color:#a6e22e">Peer</span>]<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#a6e22e">PublicKey</span>    = <span style="color:#a6e22e">server</span> 的 <span style="color:#a6e22e">Public</span> <span style="color:#a6e22e">Key</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#a6e22e">PresharedKey</span> = <span style="color:#a6e22e">server</span> <span style="color:#a6e22e">psk</span> 檔裡的內容<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#a6e22e">AllowedIPs</span>   = <span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">0</span>/<span style="color:#ae81ff">0</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#a6e22e">Endpoint</span>     = <span style="color:#ae81ff">33</span>.<span style="color:#ae81ff">33</span>.<span style="color:#ae81ff">33</span>.<span style="color:#ae81ff">33</span>:<span style="color:#ae81ff">51820</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#a6e22e">PersistentKeepalive</span> = <span style="color:#ae81ff">30</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><h4 id="-interface--1">[ Interface ]</h4>
+<ul>
+<li><span class="hl-green mono">Address</span>：設定 client 的 ip</li>
+<li><span class="hl-green mono">PrivateKey</span>：這裡貼上剛才做的私鑰「client1_privateKey」的內容</li>
+<li><span class="hl-green mono">DNS：client</span> 端連線後使用的 DNS，建議要設</li>
+</ul>
+<h4 id="-peer--1">[ Peer ]</h4>
+<ul>
+<li><span class="hl-green mono">PublicKey</span>：這邊填入 server 端生成的 Public Key</li>
+<li><span class="hl-green mono">PresharedKey</span>：填入剛才生成的 psk 檔內容，<span class="hl-blue">該選項非必要</span>，但如果 server 有設定，那 client 端也要貼一樣的內容，無論 Peer 有多少個，都會使用與 server 一樣的 psk</li>
+<li><span class="hl-green mono">AllowedIPs</span>：client 這邊的 allowed ip 設為 0.0.0.0/0 是指將所有的對外連線都透過 WireGuard 的介面出去，也可以設定只有特定的連線要透過 vpn 出去</li>
+<li><span class="hl-green mono">Endpoint</span>：server 的實體外部 ip 與 WireGuard 所使用的 port</li>
+<li><span class="hl-green mono">PersistentKeepalive</span>：讓 WireGuard client 每 30 秒就檢查一次連線，可保持與 server 的連線不中斷</li>
+</ul>
+<p>上面的內容都設好之後存檔離開，我們就可以來測試 VPN 是否有弄成功了</p>
+<h2 id="啟動-wireguard-client">啟動 WireGuard Client</h2>
+<p>因為本例中 client 端的設定檔名為 client1.conf，因此啟動的指令如下，一樣有兩種方式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>systemctl start wg-quick@client1
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wg-quick up client1
+</span></span></code></pre></div><p>啟動後，我們可以用下面的指令來檢查是否有成功</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl ipinfo.io/ip
+</span></span></code></pre></div><p>執行完後，如果顯示的 ip 已更改，變成與 server 的 ip 相同，即表示 VPN 通道已成功建立並啟用</p>
+<h2 id="手機使用-wireguard-的方法">手機使用 WireGuard 的方法</h2>
+<p>如果是想讓手機使用 vpn，方法也很簡單，我們可以直接使用剛才已經在 client 端的電腦上面建立的 conf 設定檔，也可以另外建立一組新的設定檔給手機用，只要先製作一組新的 key，再去 server 端的 conf 裡新增一個 Peer，之後照剛才 client 的設定教學做出另一個設定檔就可以了，再提醒一下：<span class="hl-blue">同一時間，一組 conf 與 key 都只能給一個 client 使用</span>，在這次的範例中，我們直接讓手機使用剛才做好的 client1.conf</p>
+<p>手機安裝完 WireGuard 後，開啟就會進入主畫面，這裡有三種方式可以把設定檔加入：</p>
+<ol>
+<li>直接把檔案傳到手機上，直接開啟 conf 檔</li>
+<li>在電腦上建立 QR Code 讓手機掃瞄</li>
+<li>手動輸入 conf 裡的內容</li>
+</ol>
+<p><img src="https://image.wadeism.net/wg03.png#center" alt="wg03"></p>
+<p>當然我們不太可能手動去輸入那麼複雜的金鑰內容，所以第三種方式除非萬不得已才會去使用，而第一種方式就只要想辦法把檔案傳到手機上就可以，但個人覺得第二種用 QR Code的方式最為便利，使用方法也很簡單！</p>
+<p>首先在我們剛才 client 端的電腦（或是放有 client.conf 的電腦）裡安裝生成 qrcode 的軟體</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>yum install qrencode
+</span></span></code></pre></div><p>再來只要一個指令就可以生成 QR Code</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>qrencode -t ansiutf8 &lt; /etc/wireguard/client1.conf
+</span></span></code></pre></div><p>最後讓手機的 WireGuard 掃瞄一下畫面上的 QR Code 就大功告成啦！</p>
+<p>最近剛好碰到朋友需要使用 VPN 下載東西，因此順便檢視我原有的 OpenVPN 與 WireGuard，對於 OVPN 設定的複雜頓時非常的有感。WireGuard 的介紹中提到效能與安全性都更好，雖然這點還不敢確定，不過我想憑藉它簡易的安裝設定與使用方式，未來應該是有機會成為主流的~</p>
+
+            </article>
+          </div>
+          
+      <div class='entry-meta-bottom'>
+        
+
+  <div class="entry-categories"><p><span>Categories</span>
+    
+    <a href="/categories/linux" title="View all posts in Linux">Linux</a>
+  </p>
+</div>
+
+
+
+<div class="entry-tags"><p><span>Tags</span>
+  
+  <a href="/tags/centos" title="View all posts tagged CentOS">CentOS</a>
+  
+  <a href="/tags/server" title="View all posts tagged Server">Server</a>
+  
+
+</p></div>	</div>
+
+	
+<div class="author-meta">
+
+  <div class="author">
+    	
+      <img alt='wade' src="https://www.gravatar.com/avatar/6fee0275681dd0b43da1d6acb66c336f?s=100&d=identicon" class='avatar avatar-72 photo' height='72' width='72'>
+    
+    <span>
+      Written by:<a href="https://notes.wadeism.net/" title="Posts by wade" rel="author">wade</a> </span>
+    </div>
+    <div class="bio">
+      
+      
+      <p>本站站長</p>
+      
+      
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a class="github" target="_blank"
+href="https://github.com/wade-chiang">
+<i class="fab fa-github"
+title="github icon"></i>
+</a>
+
+
+
+
+
+
+
+</div>
+</div>
+
+</div>
+</div>
+
+<section id="comments" class="comments">
+  <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+    var d = document, s = d.createElement('script');
+    s.src = 'https://notes-wadeism.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+</section>
+</div>
+
+ 
+
+
+
+    </div>
+
+    <footer id="site-footer" class="site-footer" role="contentinfo">
+	<h1>
+    
+    <a href=""> Nothing but.. </a>
+    
+	</h1>
+
+			
+			<p class="site-description">Something here</p>
+			
+
+		<div id="menu-footer" class="menu-container menu-footer" role="navigation">
+		<div class="menu">
+
+      <ul id="menu-footer-items" class="menu-footer-items">
+        
+</ul>
+
+</div>	</div>
+
+<ul class="social-media-icons">
+
+        
+
+        
+
+
+        
+
+        
+
+        
+
+        
+
+        
+
+
+        
+        <li>
+        <a href="https://github.com/wade-chiang"  class="github" target="_blank">
+            <i class="fab fa-github" title="github"></i>
+            <span class="screen-reader-text">github</span>
+        </a>
+        </li>
+        
+
+
+        
+
+        
+        <li>
+        <a href="https://notes.wadeism.net/index.xml" data-animate-hover="pulse" class="rss" target="_blank">
+            <i class="fas fa-rss" title="rss"></i>
+            <span class="screen-reader-text">rss</span>
+        </a>
+        </li>
+        
+
+				</ul>	<div class="design-credit">
+		
+		<p>© 2022 Wade</p>
+		
+		<p>Nederburg Hugo Theme by <a href="https://appernetic.io" target="_blank">Appernetic</a>.</p>
+		
+		<p>A port of Tracks by Compete Themes.</p>
+		
+	</div>
+</footer>
+
+  </div>
+  <script src="https://notes.wadeism.net/js/jquery.min.js"></script>
+<script src="https://notes.wadeism.net/js/jquerymigrate.js"></script>
+<script src="https://notes.wadeism.net/js/production.min.js?v=1684173172"></script>
+
+
+
+<script src="https://notes.wadeism.net/js/prism.js"></script>
+
+
+<script src="https://notes.wadeism.net/js/medium-zoom.js"></script>
+<script src="https://notes.wadeism.net/js/wade_custom.js"></script>
+
+
+
+
+
+<script type="text/javascript">var _jf = _jf || [];_jf.push(['p','63921']);_jf.push(['initAction',true]);_jf.push(['_setFont','xingothic-tc-w6','css','.xingothic-tc-w6']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-meta-bottom a']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-content h3']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-content h4']);_jf.push(['_setFont','xingothic-tc-w6','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w6','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w6','weight',600]);_jf.push(['_setFont','xingothic-tc-w5','css','.xingothic-tc-w5']);_jf.push(['_setFont','xingothic-tc-w5','css','div.entry-content p']);_jf.push(['_setFont','xingothic-tc-w5','css','div.excerpt-content p']);_jf.push(['_setFont','xingothic-tc-w5','css','div.post article']);_jf.push(['_setFont','xingothic-tc-w5','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w5','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w5','weight',500]);_jf.push(['_setFont','xingothic-tc-w7','css','.xingothic-tc-w7']);_jf.push(['_setFont','xingothic-tc-w7','css','h1.entry-title']);_jf.push(['_setFont','xingothic-tc-w7','css','h2.excerpt-title']);_jf.push(['_setFont','xingothic-tc-w7','css','div.entry-content h2']);_jf.push(['_setFont','xingothic-tc-w7','css','strong']);_jf.push(['_setFont','xingothic-tc-w7','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w7','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w7','weight',700]);(function(A,p,c,m,l,q,r,h,B,D){var b=A._jf;if(b.constructor!==Object){var t=!0,u=function(a){var f=!0,e;for(e in b)b[e][0]==a&&(f&&(f=f&&!1!==b[e][1].call(b)),b[e]=null,delete b[e])},v=/\S+/g,w=/[\t\r\n\f]/g,C=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,n="".trim,x=n&&!n.call("\ufeff\u00a0")?function(a){return null==a?"":n.call(a)}:function(a){return null==a?"":(a+"").replace(C,"")},k=function(a){var f,b,g;if("string"===typeof a&&a&&(a=(a||"").match(v)||[],f=h[c]?(" "+h[c]+" ").replace(w," "):" ")){for(g=0;b=a[g++];)0>f.indexOf(" "+b+" ")&&(f+=b+" ");h[c]=x(f)}},d=function(a){var b,e,g;if(0===arguments.length||"string"===typeof a&&a){var d=(a||"").match(v)||[];if(b=h[c]?(" "+h[c]+" ").replace(w," "):""){for(g=0;e=d[g++];)for(;0<=b.indexOf(" "+e+" ");)b=b.replace(" "+e+" "," ");h[c]=a?x(b):""}}},y;b.addScript=y=function(b,f,e,g,d,c){d=d||function(){};c=c||function(){};var a=p.createElement("script"),h=p.getElementsByTagName("script")[0],k,m=!1,l=function(){a.src="";a.parentNode.removeChild(a);a=a.onerror=a.onload=a.onreadystatechange=null};g&&(k=setTimeout(function(){l();c()},g));a.type=f||"text/javascript";a.async=e;a.onload=a.onreadystatechange=function(b,c){m||a.readyState&&!/loaded|complete/.test(a.readyState)||(m=!0,g&&clearTimeout(k),l(),c||d())};a.onerror=function(a,b,d){g&&clearTimeout(k);l();c();return!0};a.src=b;h.parentNode.insertBefore(a,h)};for(var z in b)"initAction"==b[z][0]&&(t=b[z][1]);b.push(["_eventPreload",function(){1==t&&k(m);y(B,null,!1,3E3,null,function(){u("_eventInactived")})}]);b.push(["_eventReload",function(){d(r);d(q);k(l)}]);b.push(["_eventActived",function(){d(m);d(l);k(q)}]);b.push(["_eventInactived",function(){d(m);d(l);k(r)}]);u("_eventPreload")}})(this,this.document,"className","jf-loading","jf-reloading","jf-active","jf-inactive",this.document.getElementsByTagName("html")[0],"//ds.justfont.com/js/stable/v/6.0/id/171309946041");</script>
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9504338511537027" crossorigin="anonymous"></script>
+
+
+<script src="https://notes.wadeism.net/js/back-to-top.js"></script>
+
+  
+  
+
+</body>
+</html>

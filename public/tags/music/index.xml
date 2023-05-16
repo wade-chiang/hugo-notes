@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Music on Nothing but..</title>
+    <link>https://notes.wadeism.net/tags/music/</link>
+    <description>Recent content in Music on Nothing but..</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 31 Dec 2020 07:59:14 +0000</lastBuildDate><atom:link href="https://notes.wadeism.net/tags/music/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>自架音樂串流 Server  - mStream</title>
+      <link>https://notes.wadeism.net/post/create-music-stream-server-mstream/</link>
+      <pubDate>Thu, 31 Dec 2020 07:59:14 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/create-music-stream-server-mstream/</guid>
+      <description>自從出來租屋後，聽音樂成了一大問題。畢竟</description>
+    </item>
+    
+  </channel>
+</rss>

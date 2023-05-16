@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>LibreOffice on Nothing but..</title>
+    <link>https://notes.wadeism.net/tags/libreoffice/</link>
+    <description>Recent content in LibreOffice on Nothing but..</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 15 Mar 2020 15:12:36 +0000</lastBuildDate><atom:link href="https://notes.wadeism.net/tags/libreoffice/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[Excel] 將四位數字自動轉為時間格式</title>
+      <link>https://notes.wadeism.net/post/excel-digit-to-time-form/</link>
+      <pubDate>Sun, 15 Mar 2020 15:12:36 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/excel-digit-to-time-form/</guid>
+      <description>最近在幫忙處理一些 Excel 的工作時數表，碰到了</description>
+    </item>
+    
+  </channel>
+</rss>

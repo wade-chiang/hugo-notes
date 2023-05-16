@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CentOS 8 on Nothing but..</title>
+    <link>https://notes.wadeism.net/tags/centos-8/</link>
+    <description>Recent content in CentOS 8 on Nothing but..</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 31 Dec 2020 07:59:14 +0000</lastBuildDate><atom:link href="https://notes.wadeism.net/tags/centos-8/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>自架音樂串流 Server  - mStream</title>
+      <link>https://notes.wadeism.net/post/create-music-stream-server-mstream/</link>
+      <pubDate>Thu, 31 Dec 2020 07:59:14 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/create-music-stream-server-mstream/</guid>
+      <description>自從出來租屋後，聽音樂成了一大問題。畢竟</description>
+    </item>
+    
+    <item>
+      <title>macOS Catalina 使用 autofs 自動掛載 NFS</title>
+      <link>https://notes.wadeism.net/post/macos-catalina-autofs-nfs/</link>
+      <pubDate>Thu, 24 Dec 2020 16:10:32 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/macos-catalina-autofs-nfs/</guid>
+      <description>之前提到過 autofs 是用來自動掛載遠端資料夾的好</description>
+    </item>
+    
+    <item>
+      <title>Nginx 反向代理到 Tomcat</title>
+      <link>https://notes.wadeism.net/post/nginx-reverse-proxy-tomcat/</link>
+      <pubDate>Sat, 12 Sep 2020 03:32:00 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/nginx-reverse-proxy-tomcat/</guid>
+      <description>本篇以鐵人賽「用30天來介紹和使用 Docker 系列</description>
+    </item>
+    
+    <item>
+      <title>CentOS 解決 /boot 空間不足的問題</title>
+      <link>https://notes.wadeism.net/post/centos-insufficient-boot-space/</link>
+      <pubDate>Mon, 31 Aug 2020 13:53:04 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/centos-insufficient-boot-space/</guid>
+      <description>安裝系統時，如果 /boot 分區給的空間太少，在更</description>
+    </item>
+    
+    <item>
+      <title>CentOS 8 安裝與設定 NFS Server</title>
+      <link>https://notes.wadeism.net/post/centos8-nfs-server/</link>
+      <pubDate>Fri, 14 Aug 2020 14:40:32 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/centos8-nfs-server/</guid>
+      <description>NFS（Network File System）是</description>
+    </item>
+    
+  </channel>
+</rss>

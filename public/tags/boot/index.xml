@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Boot on Nothing but..</title>
+    <link>https://notes.wadeism.net/tags/boot/</link>
+    <description>Recent content in Boot on Nothing but..</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 07 Sep 2020 14:31:25 +0000</lastBuildDate><atom:link href="https://notes.wadeism.net/tags/boot/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Win 10 與 Ubuntu 多重開機安裝筆記</title>
+      <link>https://notes.wadeism.net/post/win10-ubuntu-multiboot/</link>
+      <pubDate>Mon, 07 Sep 2020 14:31:25 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/win10-ubuntu-multiboot/</guid>
+      <description>安裝環境：兩顆 SSD，分別安裝 Win 10 與 Ubuntu 以</description>
+    </item>
+    
+    <item>
+      <title>GRUB2 無法讀取 Kernel 的問題</title>
+      <link>https://notes.wadeism.net/post/grub2-unable-to-load-kernel/</link>
+      <pubDate>Mon, 31 Aug 2020 05:51:22 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/grub2-unable-to-load-kernel/</guid>
+      <description>如果換硬碟之類的動作，造成 Linux 在開機時無法</description>
+    </item>
+    
+  </channel>
+</rss>

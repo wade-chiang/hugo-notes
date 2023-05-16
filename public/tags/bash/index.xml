@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bash on Nothing but..</title>
+    <link>https://notes.wadeism.net/tags/bash/</link>
+    <description>Recent content in Bash on Nothing but..</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 10 Sep 2020 15:06:29 +0000</lastBuildDate><atom:link href="https://notes.wadeism.net/tags/bash/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Shell Script 判斷檔案狀態的 if 條件句</title>
+      <link>https://notes.wadeism.net/post/shellscript-file-status/</link>
+      <pubDate>Thu, 10 Sep 2020 15:06:29 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/shellscript-file-status/</guid>
+      <description>在 Bash 或 Shell Script 裡，可以用下面幾個參數來判斷檔</description>
+    </item>
+    
+    <item>
+      <title>Linux Shell 處理檔名開頭為連字號「-」的檔案</title>
+      <link>https://notes.wadeism.net/post/linux-leading-hyphen-issue/</link>
+      <pubDate>Wed, 19 Aug 2020 08:44:37 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/linux-leading-hyphen-issue/</guid>
+      <description>在 Bash 裡，如果檔案的檔名開頭是連字號「-」</description>
+    </item>
+    
+    <item>
+      <title>Linux 將 BIG5 文字檔轉成 UTF-8 格式</title>
+      <link>https://notes.wadeism.net/post/linux-big5-to-utf8/</link>
+      <pubDate>Wed, 12 Aug 2020 07:17:44 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/linux-big5-to-utf8/</guid>
+      <description>自從日常的桌面環境從 Windows 轉到 Linux 後，時常會發</description>
+    </item>
+    
+    <item>
+      <title>Linux 用檔名清單批次重新命名檔案</title>
+      <link>https://notes.wadeism.net/post/linux-rename-by-list-file/</link>
+      <pubDate>Wed, 12 Aug 2020 01:56:13 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/linux-rename-by-list-file/</guid>
+      <description>如果我有一張專輯的音樂檔，檔名的格式較複</description>
+    </item>
+    
+    <item>
+      <title>Linux 檔案處理批次作業</title>
+      <link>https://notes.wadeism.net/post/linux-batch-file-operate/</link>
+      <pubDate>Wed, 12 Aug 2020 01:46:06 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/linux-batch-file-operate/</guid>
+      <description>記錄一些我用過的批次處理，基本上都是指令</description>
+    </item>
+    
+    <item>
+      <title>Linux 以數字順序批次改檔名並前綴補 0</title>
+      <link>https://notes.wadeism.net/post/linux-rename-order-by-number/</link>
+      <pubDate>Fri, 07 Aug 2020 07:57:51 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/linux-rename-order-by-number/</guid>
+      <description>在用數字順序排檔名時，前綴補 0 可以讓檔案</description>
+    </item>
+    
+    <item>
+      <title>Linux 使用 rename 進行大量檔案批次更名</title>
+      <link>https://notes.wadeism.net/post/linux-batch-rename/</link>
+      <pubDate>Thu, 06 Aug 2020 08:32:05 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/linux-batch-rename/</guid>
+      <description>Linux 的 rename 指令可以做大量的檔案更名，它使用 perl</description>
+    </item>
+    
+    <item>
+      <title>Shell Script 截取變數中的部分字串</title>
+      <link>https://notes.wadeism.net/post/shell-script-get-part-of-variable/</link>
+      <pubDate>Wed, 05 Aug 2020 04:17:02 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/shell-script-get-part-of-variable/</guid>
+      <description>除了常見的 cut、aws、sed…這些字</description>
+    </item>
+    
+    <item>
+      <title>使用 sudo 權限 cat 或 echo 文字到檔案</title>
+      <link>https://notes.wadeism.net/post/cat-or-echo-to-file-by-sudo/</link>
+      <pubDate>Sat, 01 Aug 2020 10:54:16 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/cat-or-echo-to-file-by-sudo/</guid>
+      <description>有時候不想切換到 root 帳號，但又想把文字寫入</description>
+    </item>
+    
+    <item>
+      <title>Bash 快捷鍵介紹</title>
+      <link>https://notes.wadeism.net/post/bash-hot-key/</link>
+      <pubDate>Wed, 29 Jul 2020 13:30:15 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/bash-hot-key/</guid>
+      <description>介紹一些 Bash 上實用的快捷鍵，雖然有的人會覺</description>
+    </item>
+    
+    <item>
+      <title>Shell Script 截取檔案名稱與副檔名</title>
+      <link>https://notes.wadeism.net/post/shell-script-get-filename-and-ext/</link>
+      <pubDate>Sun, 12 Jul 2020 17:07:32 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/shell-script-get-filename-and-ext/</guid>
+      <description>在 Shell Script 中經常會需要對檔案做存取，大多數的</description>
+    </item>
+    
+    <item>
+      <title>Bash 建立暫存檔並賦值給變數</title>
+      <link>https://notes.wadeism.net/post/bash-create-temp-and-assign/</link>
+      <pubDate>Fri, 29 May 2020 07:26:27 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/bash-create-temp-and-assign/</guid>
+      <description>我們在寫 Shell Script 的過程中，有時會需要將資料放</description>
+    </item>
+    
+    <item>
+      <title>修正 tty console 中的方塊字</title>
+      <link>https://notes.wadeism.net/post/fix-tty-tofu/</link>
+      <pubDate>Mon, 25 Jun 2018 22:51:18 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/fix-tty-tofu/</guid>
+      <description>當我們安裝 Linux 時選擇中文語言，安裝完成後的</description>
+    </item>
+    
+  </channel>
+</rss>

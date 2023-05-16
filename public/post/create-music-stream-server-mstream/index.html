@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="application/ld+json">
+    {
+        "@context" : "http://schema.org",
+        "@type" : "BlogPosting",
+        "mainEntityOfPage": {
+             "@type": "WebPage",
+             "@id": "https:\/\/notes.wadeism.net\/"
+        },
+        "articleSection" : "post",
+        "name" : "自架音樂串流 Server  - mStream",
+        "headline" : "自架音樂串流 Server  - mStream",
+        "description" : "自從出來租屋後，聽音樂成了一大問題。畢竟",
+        "inLanguage" : "zh-Hant-TW",
+        "author" : "wade",
+        "creator" : "wade",
+        "publisher": "wade",
+        "accountablePerson" : "wade",
+        "copyrightHolder" : "wade",
+        "copyrightYear" : "2020",
+        "datePublished": "2020-12-31 07:59:14 \u002b0000 \u002b0000",
+        "dateModified" : "2020-12-31 07:59:14 \u002b0000 \u002b0000",
+        "url" : "https:\/\/notes.wadeism.net\/post\/create-music-stream-server-mstream\/",
+        "wordCount" : "1635",
+        "image" : "https:\/\/notes.wadeism.net\/https:\/\/image.wadeism.net\/mStream00.jpg",
+        "keywords" : [ "CentOS","CentOS 8","Docker","Music","Server","Blog" ]   
+    }
+    </script>
+
+
+
+ <title>自架音樂串流 Server  - mStream - Nothing but..</title>
+<meta property="og:title" content="自架音樂串流 Server  - mStream - Nothing but..">
+
+
+
+<meta name="description" content="My notes for everyone" />
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="all,follow">
+<meta name="googlebot" content="index,follow,snippet,archive">
+<link rel="stylesheet" id="ct-tracks-google-fonts-css" href="https://fonts.googleapis.com/css?family=Raleway%3A400%2C700&amp;subset=latin%2Clatin-ext&amp;ver=4.7.2" type="text/css" media="all">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+<link href="https://notes.wadeism.net/css/style.css?v=1684173173" rel="stylesheet" id="theme-stylesheet" type='text/css' media='all'>
+
+<link href="https://notes.wadeism.net/css/custom.css?v=1684173173" rel="stylesheet" type='text/css' media='all'>
+<link rel="shortcut icon" href="https://notes.wadeism.net/img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="https://notes.wadeism.net/img/favicon.ico" type="image/x-icon">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-120924943-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-120924943-1');
+</script>
+
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-120924943-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-120924943-1');
+</script>
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://notes.wadeism.net/css/prism.css" >
+
+
+<style>
+   
+   
+   
+  @import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Roboto+Mono&display=swap');
+</style>
+
+
+<link href="https://notes.wadeism.net/css/wade_custom.css?v=1684173173" rel="stylesheet" type='text/css' media='all'>
+</head>
+
+
+<body class="post-template-default single single-post single-format-standard ct-body singular singular-post not-front standard">
+
+  <div id="overflow-container" class="overflow-container">
+    <a class="skip-content" href="#main">Skip to content</a>
+    <header id="site-header" class="site-header" role="banner">
+      <div class='top-navigation'>
+        <div class='container'>
+
+  <div id="menu-secondary" class="menu-container menu-secondary" role="navigation">
+    <button id="toggle-secondary-navigation" class="toggle-secondary-navigation"><i class="fas fa-plus"></i></button>
+
+    <div class="menu">
+
+      <ul id="menu-secondary-items" class="menu-secondary-items">
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/bass">bass</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/developer">developer</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/linux">linux</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/mac">mac</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/office">office</a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+
+  </div>
+
+
+  <ul class="social-media-icons">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+    
+    <li>
+      <a href="https://github.com/wade-chiang" data-animate-hover="pulse" class="github" target="_blank">
+        <i class="fab fa-github" title="github"></i>
+        <span class="screen-reader-text">github</span>
+      </a>
+    </li>
+    
+
+
+    
+
+    
+    <li>
+      <a href="https://notes.wadeism.net/index.xml" data-animate-hover="pulse" class="rss" target="_blank">
+        <i class="fas fa-rss" title="rss"></i>
+        <span class="screen-reader-text">rss</span>
+      </a>
+    </li>
+    
+
+
+  </ul></div>
+
+      </div>
+
+      <div class="container">
+        <div id="title-info" class="title-info">
+  <div id='site-title' class='site-title'>
+    
+    <a href="/"> Nothing but.. </a>
+    </div>
+  </div>
+  <button id="toggle-navigation" class="toggle-navigation">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <div id="menu-primary-tracks" class="menu-primary-tracks"></div>
+  <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+    
+    <p class="site-description">Something here</p>
+    
+
+    <div class="menu">
+      <ul id="menu-primary-items" class="menu-primary-items">
+        
+        
+        <li class='menu-item menu-item-type-custom menu-item-object-custom '>
+          <a href="https://notes.wadeism.net/">Home</a>
+          
+        </li>
+        
+        <li class='menu-item menu-item-type-post_type menu-item-object-page '>
+          <a href="https://notes.wadeism.net/about/">About</a>
+          
+        </li>
+        
+        <li class='menu-item menu-item-type-post_type menu-item-object-page '>
+          <a href="https://notes.wadeism.net/contact/"></a>
+          
+        </li>
+        
+      </ul>
+    </div>
+
+  </div>
+
+      </div>
+    </header>
+
+    <div id="main" class="main" role="main">
+
+      
+  
+  
+    
+  
+  
+  <div id="loop-container" class="loop-container">
+    
+    <div class="post type-post status-publish format-standard has-post-thumbnail hentry category-design tag-design tag-standard-2 tag-tagalicious tag-travel entry full-without-featured odd excerpt-1">
+
+      <div class='featured-image lazy lazy-bg-image'  data-background="https://image.wadeism.net/mStream00.jpg">
+      </div>
+      
+        <div class="entry-meta">
+          <span class="date">31 December 2020</span>	<span> / </span>
+
+          <span class="author">
+            <a href="https://notes.wadeism.net/" title="Posts by wade" rel="author">wade</a>
+          </span>
+
+
+          
+          <span class="category">
+            <span> / </span>
+
+            <a href="/categories/linux">Linux</a>
+          </span>
+          
+
+
+        </div>
+        <div class='entry-header'>
+          <h1 class='entry-title'> 自架音樂串流 Server  - mStream</h1>
+        </div>
+        <div class="entry-container">
+          <div class="entry-content">
+            <article>
+              <p>自從出來租屋後，聽音樂成了一大問題。畢竟筆電容量有限，不可能把上萬首的音樂都丟進來，而且如果又複製一份的話，變成有三地要做檔案同步，非常的麻煩。</p>
+<p>起初是打算使用 VPN 掛載 NFS，用 Mac 上的 Music Player 來播遠端的檔案，不過 NFS 的外網速度實在差強人意，連音樂檔的 index 都跑不完全，所以就放棄這招了（也許之後可以用 SAMBA 再試一次）。</p>
+<p>後來我想到了自架串流 server 的方式，不過串流 server 一些比較細部的功能可能就不會有了。我除了介面要看了順眼之外，最重要是需要<span class="hl-blue">短秒數前進與倒帶的功能</span>，這個在練琴時非常的實用。因此就以這兩個方向去找，總算找到了一個介面算好看，又有倒帶功能的 <a href="https://www.mstream.io/" target="_blank">mStream</a>，雖然一次倒帶的單位是30秒，不過總比沒有好的多！</p>
+<h2 id="環境說明">環境說明</h2>
+<p><span class="hl-green">Server</span>：192.168.199.180，CentOS 8 minimal with Docker installed</p>
+<h2 id="安裝與啟動-mstream">安裝與啟動 mStream</h2>
+<p>mStream 官方提供了 Linux、Windows、Mac 的版本，另外也有 <a href="https://www.linuxserver.io/" target="_blank">LinuxServer</a><a href="https://www.linuxserver.io/" target="_blank">.io</a> 團隊維護的 <a href="https://hub.docker.com/r/linuxserver/mstream" target="_blank">Docker 版</a>本，為求方便所以個人是使用 Docker 版，安裝方式如下：</p>
+<h3 id="使用-docker-compose建議">使用 docker-compose（建議）</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>version: <span style="color:#e6db74">&#34;2.1&#34;</span>
+</span></span><span style="display:flex;"><span>services:
+</span></span><span style="display:flex;"><span>mstream:
+</span></span><span style="display:flex;"><span>image: ghcr.io/linuxserver/mstream
+</span></span><span style="display:flex;"><span>container_name: mstream
+</span></span><span style="display:flex;"><span>environment:
+</span></span><span style="display:flex;"><span>- PUID<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span>
+</span></span><span style="display:flex;"><span>- PGID<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span>
+</span></span><span style="display:flex;"><span>- USER<span style="color:#f92672">=</span>admin
+</span></span><span style="display:flex;"><span>- PASSWORD<span style="color:#f92672">=</span>password
+</span></span><span style="display:flex;"><span>- USE_JSON<span style="color:#f92672">=</span>true/false
+</span></span><span style="display:flex;"><span>- TZ<span style="color:#f92672">=</span>Asia/Taipei
+</span></span><span style="display:flex;"><span>volumes:
+</span></span><span style="display:flex;"><span>- /pathToConfig:/config
+</span></span><span style="display:flex;"><span>- /pathToMusic:/music
+</span></span><span style="display:flex;"><span>ports:
+</span></span><span style="display:flex;"><span>- 3000:3000
+</span></span><span style="display:flex;"><span>restart: unless-stopped
+</span></span></code></pre></div><p>將檔案存成 docker-mstream.yml 後，執行下面指令啟動 mstream server</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker-compose -f docker-mstream.yml up -d
+</span></span></code></pre></div><h3 id="使用-docker-cli">使用 docker cli</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker run -d <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--name<span style="color:#f92672">=</span>mstream <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>-e PUID<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>-e PGID<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>-e USER<span style="color:#f92672">=</span>admin <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>-e PASSWORD<span style="color:#f92672">=</span>password <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>-e USE_JSON<span style="color:#f92672">=</span>true/false <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>-e TZ<span style="color:#f92672">=</span>Asia/Taipei <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>-p 3000:3000 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>-v /pathToConfig:/config <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>-v /pathToMusic:/music <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>--restart unless-stopped <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>ghcr.io/linuxserver/mstream
+</span></span></code></pre></div><p><br>
+基本上兩種啟動方式的意思一樣，docker-compose 會比較好管理與修改，下面我用 cli 的選項來做說明</p>
+<ul>
+<li><span class="hl-green mono">-e USER</span>：登入用的帳號</li>
+<li><span class="hl-green mono">-e PASSWORD</span>：帳號的登入密碼</li>
+<li><span class="hl-green mono">-e TZ</span>：Time Zone，在台灣的話就寫 Asia/Taipei</li>
+<li><span class="hl-green mono">-p 3000:3000</span>：將 Server 上的 3000 port 與 container 裡的 3000 port 做綁定，可視需求調整 Server 上想開的 port</li>
+<li><span class="hl-green mono">-v /pathToConfig:/config</span>：選一個 server 上的資料夾掛載到 container 裡的 <span class="hl-blue">/config</span> 上， 例如 <span class="hl-blue">/etc/opt/mstream</span>，<span class="hl-blue">/etc/opt</span> 是我習慣拿來統一放置 container 設定檔的地方。掛載後，裡面會存放 mstream 的設定檔與 db 資料</li>
+<li><span class="hl-green mono">-v /pathToMusic:/music</span>：將 server 裡的存放音樂檔的資料夾掛載到 container 裡的 <span class="hl-blue">/music</span></li>
+</ul>
+<p><br>
+開啟防火牆</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo firewall-cmd --add-port<span style="color:#f92672">=</span>3000/tcp --permanent <span style="color:#f92672">&amp;&amp;</span> sudo firewall-cmd --reload
+</span></span></code></pre></div><h2 id="測試登入與使用">測試登入與使用</h2>
+<p>用瀏覽器前往 <span class="hl-blue">192.168.199.180:3000</span>，應該就可以看到登入畫面</p>
+<p><img src="https://image.wadeism.net/mStream01.png" alt=""></p>
+<p><img src="https://image.wadeism.net/mStream02.png" alt=""></p>
+<p>不過要注意一點，<span class="hl-red">mStream 在 FireFox 會無法正常播放音樂，要改用其它瀏覽器</span></p>
+<h2 id="將-mstream-的-artist-tag-轉為-album-artist-tag">將 mStream 的 Artist tag 轉為 Album Artist tag</h2>
+<p>常用 Mp3Tag 來編輯音樂檔 tag 的朋友們應該都知道，音樂檔的 tag 有 <span class="hl-blue">Artist</span> 與 <span class="hl-blue">Album Artist</span> 兩種，一般是使用 Artist，不過碰到一些大合輯的時候就會出現個麻煩的問題，以 <span class="hl-green">[Who Loves You? A Tribute to Jaco Pastorius]</span> 這張專輯為例：</p>
+<p><img src="https://image.wadeism.net/mStream03.png" alt=""></p>
+<p>每一首歌的演奏者（Artist）都不同，有的還有多位樂手，這樣的音樂資訊，放到只支援 Artist tag 的播放器中，會無法好好的分類。因為太多樂手了，如果用 Artist 來分類會變得相當凌亂，像 mStream 目前也只有支援 Artist tag 的，自然也不意外</p>
+<p><img src="https://image.wadeism.net/mStream04.png" alt=""></p>
+<div style="text-align: center">變成有一大堆的 Artists，非常亂！</div>
+<p>但這張專輯實際上我會想把它歸到 Jaco 的作品（畢竟是為他致敬之作），同樣的情況在現代很多 feat. 的專輯上也會出現，也因此有了 Album Artist  tag 的誕生。</p>
+<p>在前面的圖中可以看到除了 Artist 之外，我在 Album Artist 裡都填上了 [A Tribute to Jaco Pastorius]，這樣一來，只要以 Album Artist 來分類，這些歌就可以歸在同一個 Artist 底下了。</p>
+<p>不過 Album Artist 這個 tag 通常這是比較專業的播放軟體如 foobar2000 才有支援，mStream 沒有支援對我來說是非常麻煩的一災難，所幸我的運氣不錯，在進入 container 後被我找到了可以將 artist 改成 album artist 的方法，下面就來示範如何更改</p>
+<h3 id="make-artist-tag-turn-into-albumartist-tag-in-mstream-server">make Artist tag turn into AlbumArtist tag in mStream server</h3>
+<p>首先進入 container 內部的 cli</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker exec -it mstream <span style="color:#e6db74">&#34;/bin/bash&#34;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>root@d34e21dccb2b:/# 
+</span></span></code></pre></div><p><br>
+接著編輯 <span class="hl-blue">/opt/mstream/modules/db-write/database-default-loki.js</span> 這個檔案</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vi /opt/mstream/modules/db-write/database-default-loki.js
+</span></span></code></pre></div><p><br>
+找到以下這段設定：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#a6e22e">fileCollection</span>.<span style="color:#a6e22e">insert</span>({
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;title&#34;</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">song</span>.<span style="color:#a6e22e">title</span> <span style="color:#f92672">?</span> String(<span style="color:#a6e22e">song</span>.<span style="color:#a6e22e">title</span>) <span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;artist&#34;</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">song</span>.<span style="color:#a6e22e">artist</span> <span style="color:#f92672">?</span> String(<span style="color:#a6e22e">song</span>.<span style="color:#a6e22e">artist</span>) <span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;year&#34;</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">song</span>.<span style="color:#a6e22e">year</span> <span style="color:#f92672">?</span> <span style="color:#a6e22e">song</span>.<span style="color:#a6e22e">year</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;album&#34;</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">song</span>.<span style="color:#a6e22e">album</span> <span style="color:#f92672">?</span> String(<span style="color:#a6e22e">song</span>.<span style="color:#a6e22e">album</span>) <span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;filepath&#34;</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">song</span>.<span style="color:#a6e22e">filePath</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;format&#34;</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">song</span>.<span style="color:#a6e22e">format</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;track&#34;</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">song</span>.<span style="color:#a6e22e">track</span>.<span style="color:#a6e22e">no</span> <span style="color:#f92672">?</span> <span style="color:#a6e22e">song</span>.<span style="color:#a6e22e">track</span>.<span style="color:#a6e22e">no</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;disk&#34;</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">song</span>.<span style="color:#a6e22e">disk</span>.<span style="color:#a6e22e">no</span> <span style="color:#f92672">?</span> <span style="color:#a6e22e">song</span>.<span style="color:#a6e22e">disk</span>.<span style="color:#a6e22e">no</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;modified&#34;</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">song</span>.<span style="color:#a6e22e">modified</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;hash&#34;</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">song</span>.<span style="color:#a6e22e">hash</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;aaFile&#34;</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">song</span>.<span style="color:#a6e22e">aaFile</span> <span style="color:#f92672">?</span> <span style="color:#a6e22e">song</span>.<span style="color:#a6e22e">aaFile</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;vpath&#34;</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">vpath</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;ts&#34;</span><span style="color:#f92672">:</span> Math.<span style="color:#a6e22e">floor</span>(Date.<span style="color:#a6e22e">now</span>() <span style="color:#f92672">/</span> <span style="color:#ae81ff">1000</span>)
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div><p><br>
+修改 &ldquo;artist&rdquo;: song.artist ? String(song.artist) : null, 這段如下</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#a6e22e">fileCollection</span>.<span style="color:#a6e22e">insert</span>({
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;title&#34;</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">song</span>.<span style="color:#a6e22e">title</span> <span style="color:#f92672">?</span> String(<span style="color:#a6e22e">song</span>.<span style="color:#a6e22e">title</span>) <span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;artist&#34;</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">song</span>.<span style="color:#a6e22e">albumartist</span> <span style="color:#f92672">?</span> String(<span style="color:#a6e22e">song</span>.<span style="color:#a6e22e">albumartist</span>) <span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;year&#34;</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">song</span>.<span style="color:#a6e22e">year</span> <span style="color:#f92672">?</span> <span style="color:#a6e22e">song</span>.<span style="color:#a6e22e">year</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;album&#34;</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">song</span>.<span style="color:#a6e22e">album</span> <span style="color:#f92672">?</span> String(<span style="color:#a6e22e">song</span>.<span style="color:#a6e22e">album</span>) <span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;filepath&#34;</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">song</span>.<span style="color:#a6e22e">filePath</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;format&#34;</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">song</span>.<span style="color:#a6e22e">format</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;track&#34;</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">song</span>.<span style="color:#a6e22e">track</span>.<span style="color:#a6e22e">no</span> <span style="color:#f92672">?</span> <span style="color:#a6e22e">song</span>.<span style="color:#a6e22e">track</span>.<span style="color:#a6e22e">no</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;disk&#34;</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">song</span>.<span style="color:#a6e22e">disk</span>.<span style="color:#a6e22e">no</span> <span style="color:#f92672">?</span> <span style="color:#a6e22e">song</span>.<span style="color:#a6e22e">disk</span>.<span style="color:#a6e22e">no</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;modified&#34;</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">song</span>.<span style="color:#a6e22e">modified</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;hash&#34;</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">song</span>.<span style="color:#a6e22e">hash</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;aaFile&#34;</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">song</span>.<span style="color:#a6e22e">aaFile</span> <span style="color:#f92672">?</span> <span style="color:#a6e22e">song</span>.<span style="color:#a6e22e">aaFile</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;vpath&#34;</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">vpath</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;ts&#34;</span><span style="color:#f92672">:</span> Math.<span style="color:#a6e22e">floor</span>(Date.<span style="color:#a6e22e">now</span>() <span style="color:#f92672">/</span> <span style="color:#ae81ff">1000</span>)
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div><p><span class="hl-red">主要就是把 artist 字串直接改成  albumartist 字串</span></p>
+<p><br>
+存檔後離開 container，回到 server 並移除 mStream 的 db</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo rm /etc/opt/mstream/db/files.loki-v2.db
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># /etc/opt/mstream 的路徑部分請依自己掛載的目錄做修改</span>
+</span></span></code></pre></div><p><br>
+最後重啟 mStream，待 db rebuild 後，就可以看到 artist 的分類不再凌亂，變成 album artist 了</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker container restart mstream
+</span></span></code></pre></div><p><img src="https://image.wadeism.net/mStream05.png" alt=""></p>
+<p>可以回頭看一下<a href="https://image.wadeism.net/mStream04.png" target="_blank">修改前</a>的樣子，是不是差很多呀！</p>
+
+            </article>
+          </div>
+          
+      <div class='entry-meta-bottom'>
+        
+
+  <div class="entry-categories"><p><span>Categories</span>
+    
+    <a href="/categories/linux" title="View all posts in Linux">Linux</a>
+  </p>
+</div>
+
+
+
+<div class="entry-tags"><p><span>Tags</span>
+  
+  <a href="/tags/centos" title="View all posts tagged CentOS">CentOS</a>
+  
+  <a href="/tags/centos-8" title="View all posts tagged CentOS 8">CentOS 8</a>
+  
+  <a href="/tags/docker" title="View all posts tagged Docker">Docker</a>
+  
+  <a href="/tags/music" title="View all posts tagged Music">Music</a>
+  
+  <a href="/tags/server" title="View all posts tagged Server">Server</a>
+  
+
+</p></div>	</div>
+
+	
+<div class="author-meta">
+
+  <div class="author">
+    	
+      <img alt='wade' src="https://www.gravatar.com/avatar/6fee0275681dd0b43da1d6acb66c336f?s=100&d=identicon" class='avatar avatar-72 photo' height='72' width='72'>
+    
+    <span>
+      Written by:<a href="https://notes.wadeism.net/" title="Posts by wade" rel="author">wade</a> </span>
+    </div>
+    <div class="bio">
+      
+      
+      <p>本站站長</p>
+      
+      
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a class="github" target="_blank"
+href="https://github.com/wade-chiang">
+<i class="fab fa-github"
+title="github icon"></i>
+</a>
+
+
+
+
+
+
+
+</div>
+</div>
+
+</div>
+</div>
+
+<section id="comments" class="comments">
+  <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+    var d = document, s = d.createElement('script');
+    s.src = 'https://notes-wadeism.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+</section>
+</div>
+
+ 
+
+
+
+    </div>
+
+    <footer id="site-footer" class="site-footer" role="contentinfo">
+	<h1>
+    
+    <a href=""> Nothing but.. </a>
+    
+	</h1>
+
+			
+			<p class="site-description">Something here</p>
+			
+
+		<div id="menu-footer" class="menu-container menu-footer" role="navigation">
+		<div class="menu">
+
+      <ul id="menu-footer-items" class="menu-footer-items">
+        
+</ul>
+
+</div>	</div>
+
+<ul class="social-media-icons">
+
+        
+
+        
+
+
+        
+
+        
+
+        
+
+        
+
+        
+
+
+        
+        <li>
+        <a href="https://github.com/wade-chiang"  class="github" target="_blank">
+            <i class="fab fa-github" title="github"></i>
+            <span class="screen-reader-text">github</span>
+        </a>
+        </li>
+        
+
+
+        
+
+        
+        <li>
+        <a href="https://notes.wadeism.net/index.xml" data-animate-hover="pulse" class="rss" target="_blank">
+            <i class="fas fa-rss" title="rss"></i>
+            <span class="screen-reader-text">rss</span>
+        </a>
+        </li>
+        
+
+				</ul>	<div class="design-credit">
+		
+		<p>© 2022 Wade</p>
+		
+		<p>Nederburg Hugo Theme by <a href="https://appernetic.io" target="_blank">Appernetic</a>.</p>
+		
+		<p>A port of Tracks by Compete Themes.</p>
+		
+	</div>
+</footer>
+
+  </div>
+  <script src="https://notes.wadeism.net/js/jquery.min.js"></script>
+<script src="https://notes.wadeism.net/js/jquerymigrate.js"></script>
+<script src="https://notes.wadeism.net/js/production.min.js?v=1684173173"></script>
+
+
+
+<script src="https://notes.wadeism.net/js/prism.js"></script>
+
+
+<script src="https://notes.wadeism.net/js/medium-zoom.js"></script>
+<script src="https://notes.wadeism.net/js/wade_custom.js"></script>
+
+
+
+
+
+<script type="text/javascript">var _jf = _jf || [];_jf.push(['p','63921']);_jf.push(['initAction',true]);_jf.push(['_setFont','xingothic-tc-w6','css','.xingothic-tc-w6']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-meta-bottom a']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-content h3']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-content h4']);_jf.push(['_setFont','xingothic-tc-w6','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w6','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w6','weight',600]);_jf.push(['_setFont','xingothic-tc-w5','css','.xingothic-tc-w5']);_jf.push(['_setFont','xingothic-tc-w5','css','div.entry-content p']);_jf.push(['_setFont','xingothic-tc-w5','css','div.excerpt-content p']);_jf.push(['_setFont','xingothic-tc-w5','css','div.post article']);_jf.push(['_setFont','xingothic-tc-w5','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w5','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w5','weight',500]);_jf.push(['_setFont','xingothic-tc-w7','css','.xingothic-tc-w7']);_jf.push(['_setFont','xingothic-tc-w7','css','h1.entry-title']);_jf.push(['_setFont','xingothic-tc-w7','css','h2.excerpt-title']);_jf.push(['_setFont','xingothic-tc-w7','css','div.entry-content h2']);_jf.push(['_setFont','xingothic-tc-w7','css','strong']);_jf.push(['_setFont','xingothic-tc-w7','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w7','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w7','weight',700]);(function(A,p,c,m,l,q,r,h,B,D){var b=A._jf;if(b.constructor!==Object){var t=!0,u=function(a){var f=!0,e;for(e in b)b[e][0]==a&&(f&&(f=f&&!1!==b[e][1].call(b)),b[e]=null,delete b[e])},v=/\S+/g,w=/[\t\r\n\f]/g,C=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,n="".trim,x=n&&!n.call("\ufeff\u00a0")?function(a){return null==a?"":n.call(a)}:function(a){return null==a?"":(a+"").replace(C,"")},k=function(a){var f,b,g;if("string"===typeof a&&a&&(a=(a||"").match(v)||[],f=h[c]?(" "+h[c]+" ").replace(w," "):" ")){for(g=0;b=a[g++];)0>f.indexOf(" "+b+" ")&&(f+=b+" ");h[c]=x(f)}},d=function(a){var b,e,g;if(0===arguments.length||"string"===typeof a&&a){var d=(a||"").match(v)||[];if(b=h[c]?(" "+h[c]+" ").replace(w," "):""){for(g=0;e=d[g++];)for(;0<=b.indexOf(" "+e+" ");)b=b.replace(" "+e+" "," ");h[c]=a?x(b):""}}},y;b.addScript=y=function(b,f,e,g,d,c){d=d||function(){};c=c||function(){};var a=p.createElement("script"),h=p.getElementsByTagName("script")[0],k,m=!1,l=function(){a.src="";a.parentNode.removeChild(a);a=a.onerror=a.onload=a.onreadystatechange=null};g&&(k=setTimeout(function(){l();c()},g));a.type=f||"text/javascript";a.async=e;a.onload=a.onreadystatechange=function(b,c){m||a.readyState&&!/loaded|complete/.test(a.readyState)||(m=!0,g&&clearTimeout(k),l(),c||d())};a.onerror=function(a,b,d){g&&clearTimeout(k);l();c();return!0};a.src=b;h.parentNode.insertBefore(a,h)};for(var z in b)"initAction"==b[z][0]&&(t=b[z][1]);b.push(["_eventPreload",function(){1==t&&k(m);y(B,null,!1,3E3,null,function(){u("_eventInactived")})}]);b.push(["_eventReload",function(){d(r);d(q);k(l)}]);b.push(["_eventActived",function(){d(m);d(l);k(q)}]);b.push(["_eventInactived",function(){d(m);d(l);k(r)}]);u("_eventPreload")}})(this,this.document,"className","jf-loading","jf-reloading","jf-active","jf-inactive",this.document.getElementsByTagName("html")[0],"//ds.justfont.com/js/stable/v/6.0/id/171309946041");</script>
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9504338511537027" crossorigin="anonymous"></script>
+
+
+<script src="https://notes.wadeism.net/js/back-to-top.js"></script>
+
+  
+  
+
+</body>
+</html>

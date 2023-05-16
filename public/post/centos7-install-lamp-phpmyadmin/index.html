@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="application/ld+json">
+    {
+        "@context" : "http://schema.org",
+        "@type" : "BlogPosting",
+        "mainEntityOfPage": {
+             "@type": "WebPage",
+             "@id": "https:\/\/notes.wadeism.net\/"
+        },
+        "articleSection" : "post",
+        "name" : "CentOS 7 安裝 LAMP 與 phpMyAdmin",
+        "headline" : "CentOS 7 安裝 LAMP 與 phpMyAdmin",
+        "description" : "LAMP：Linux、Apache、Ma",
+        "inLanguage" : "zh-Hant-TW",
+        "author" : "wade",
+        "creator" : "wade",
+        "publisher": "wade",
+        "accountablePerson" : "wade",
+        "copyrightHolder" : "wade",
+        "copyrightYear" : "2018",
+        "datePublished": "2018-06-25 10:20:39 \u002b0000 \u002b0000",
+        "dateModified" : "2018-06-25 10:20:39 \u002b0000 \u002b0000",
+        "url" : "https:\/\/notes.wadeism.net\/post\/centos7-install-lamp-phpmyadmin\/",
+        "wordCount" : "1223",
+        "image" : "https:\/\/notes.wadeism.net\/https:\/\/image.wadeism.net\/lamp01.webp",
+        "keywords" : [ "Server","Blog" ]   
+    }
+    </script>
+
+
+
+ <title>CentOS 7 安裝 LAMP 與 phpMyAdmin - Nothing but..</title>
+<meta property="og:title" content="CentOS 7 安裝 LAMP 與 phpMyAdmin - Nothing but..">
+
+
+
+<meta name="description" content="My notes for everyone" />
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="all,follow">
+<meta name="googlebot" content="index,follow,snippet,archive">
+<link rel="stylesheet" id="ct-tracks-google-fonts-css" href="https://fonts.googleapis.com/css?family=Raleway%3A400%2C700&amp;subset=latin%2Clatin-ext&amp;ver=4.7.2" type="text/css" media="all">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+<link href="https://notes.wadeism.net/css/style.css?v=1684173172" rel="stylesheet" id="theme-stylesheet" type='text/css' media='all'>
+
+<link href="https://notes.wadeism.net/css/custom.css?v=1684173172" rel="stylesheet" type='text/css' media='all'>
+<link rel="shortcut icon" href="https://notes.wadeism.net/img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="https://notes.wadeism.net/img/favicon.ico" type="image/x-icon">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-120924943-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-120924943-1');
+</script>
+
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-120924943-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-120924943-1');
+</script>
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://notes.wadeism.net/css/prism.css" >
+
+
+<style>
+   
+   
+   
+  @import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Roboto+Mono&display=swap');
+</style>
+
+
+<link href="https://notes.wadeism.net/css/wade_custom.css?v=1684173172" rel="stylesheet" type='text/css' media='all'>
+</head>
+
+
+<body class="post-template-default single single-post single-format-standard ct-body singular singular-post not-front standard">
+
+  <div id="overflow-container" class="overflow-container">
+    <a class="skip-content" href="#main">Skip to content</a>
+    <header id="site-header" class="site-header" role="banner">
+      <div class='top-navigation'>
+        <div class='container'>
+
+  <div id="menu-secondary" class="menu-container menu-secondary" role="navigation">
+    <button id="toggle-secondary-navigation" class="toggle-secondary-navigation"><i class="fas fa-plus"></i></button>
+
+    <div class="menu">
+
+      <ul id="menu-secondary-items" class="menu-secondary-items">
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/bass">bass</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/developer">developer</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/linux">linux</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/mac">mac</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/office">office</a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+
+  </div>
+
+
+  <ul class="social-media-icons">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+    
+    <li>
+      <a href="https://github.com/wade-chiang" data-animate-hover="pulse" class="github" target="_blank">
+        <i class="fab fa-github" title="github"></i>
+        <span class="screen-reader-text">github</span>
+      </a>
+    </li>
+    
+
+
+    
+
+    
+    <li>
+      <a href="https://notes.wadeism.net/index.xml" data-animate-hover="pulse" class="rss" target="_blank">
+        <i class="fas fa-rss" title="rss"></i>
+        <span class="screen-reader-text">rss</span>
+      </a>
+    </li>
+    
+
+
+  </ul></div>
+
+      </div>
+
+      <div class="container">
+        <div id="title-info" class="title-info">
+  <div id='site-title' class='site-title'>
+    
+    <a href="/"> Nothing but.. </a>
+    </div>
+  </div>
+  <button id="toggle-navigation" class="toggle-navigation">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <div id="menu-primary-tracks" class="menu-primary-tracks"></div>
+  <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+    
+    <p class="site-description">Something here</p>
+    
+
+    <div class="menu">
+      <ul id="menu-primary-items" class="menu-primary-items">
+        
+        
+        <li class='menu-item menu-item-type-custom menu-item-object-custom '>
+          <a href="https://notes.wadeism.net/">Home</a>
+          
+        </li>
+        
+        <li class='menu-item menu-item-type-post_type menu-item-object-page '>
+          <a href="https://notes.wadeism.net/about/">About</a>
+          
+        </li>
+        
+        <li class='menu-item menu-item-type-post_type menu-item-object-page '>
+          <a href="https://notes.wadeism.net/contact/"></a>
+          
+        </li>
+        
+      </ul>
+    </div>
+
+  </div>
+
+      </div>
+    </header>
+
+    <div id="main" class="main" role="main">
+
+      
+  
+  
+    
+  
+  
+  <div id="loop-container" class="loop-container">
+    
+    <div class="post type-post status-publish format-standard has-post-thumbnail hentry category-design tag-design tag-standard-2 tag-tagalicious tag-travel entry full-without-featured odd excerpt-1">
+
+      <div class='featured-image lazy lazy-bg-image'  data-background="https://image.wadeism.net/lamp01.webp">
+      </div>
+      
+        <div class="entry-meta">
+          <span class="date">25 June 2018</span>	<span> / </span>
+
+          <span class="author">
+            <a href="https://notes.wadeism.net/" title="Posts by wade" rel="author">wade</a>
+          </span>
+
+
+          
+          <span class="category">
+            <span> / </span>
+
+            <a href="/categories/linux">Linux</a>
+          </span>
+          
+
+
+        </div>
+        <div class='entry-header'>
+          <h1 class='entry-title'> CentOS 7 安裝 LAMP 與 phpMyAdmin</h1>
+        </div>
+        <div class="entry-container">
+          <div class="entry-content">
+            <article>
+              <p>LAMP：Linux、Apache、MariaDB or MySQL、PHP 的縮寫，是架設網站最基本的組合套件。如果只是純靜態網站的話，只要裝 Apache 就足夠了，不過以 WordPress 為例，它包含了前後端的各種功能，因此全套的 LAMP 還是得用上。有關 Linux 的安裝就不再多說，下面介紹另外三套軟體與 phpMyAdmin 的安裝方法：</p>
+<h2 id="安裝-apache">安裝 Apache</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo yum install httpd
+</span></span></code></pre></div><p><br>
+設定在開機時自動開啟 Apache</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl enable httpd
+</span></span></code></pre></div><p><br>
+啟動 Apache</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl start httpd
+</span></span></code></pre></div><p><br>
+設定防火牆允許外面連入網站</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo firewall-cmd --permanent --add-service<span style="color:#f92672">=</span>http
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo firewall-cmd --permanent --add-service<span style="color:#f92672">=</span>https
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo firewall-cmd --reload
+</span></span></code></pre></div><h2 id="安裝-php">安裝 PHP</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo yum install php php-mysql php-pdo php-gd php-mbstring php-mcrypt
+</span></span></code></pre></div><p><br>
+修改 PHP 的時區設定</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo sed -i <span style="color:#e6db74">&#39;s/;date.timezone =/date.timezone = Asia\/Taipei/&#39;</span> /etc/php.ini
+</span></span></code></pre></div><p><br>
+建立測試用 php 檔，用來驗證 php 是否安裝成功</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>echo <span style="color:#e6db74">&#39;&lt;?php phpinfo(); ?&gt;&#39;</span> | sudo tee /var/www/html/index.php
+</span></span></code></pre></div><p><br>
+重新啟動 Apache</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl restart httpd
+</span></span></code></pre></div><p><br>
+測試 Apache</p>
+<p>在瀏覽器的網址列打上 Server 的 IP，如果出現下方頁面表示 Apache 與 PHP 已安裝成功</p>
+<p><img src="https://image.wadeism.net/lamp02.png" alt=""></p>
+<h2 id="安裝-mariadb">安裝 MariaDB</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo yum install mariadb-server mariadb
+</span></span></code></pre></div><p><br>
+設定在開機時自動開啟 MariaDB</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl enable mariadb
+</span></span></code></pre></div><p><br>
+啟動 MariaDB</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl start mariadb
+</span></span></code></pre></div><p><br>
+初始化 MariaDB 的安全設定（請見文末的補充說明）</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo /usr/bin/mysql_secure_installation
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>NOTE: RUNNING ALL PARTS OF THIS SCRIPT IS RECOMMENDED FOR ALL MariaDB
+</span></span><span style="display:flex;"><span>      SERVERS IN PRODUCTION USE!  PLEASE READ EACH STEP CAREFULLY!
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>In order to log into MariaDB to secure it, we<span style="color:#e6db74">&#39;ll need the current
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">password for the root user.  If you&#39;</span>ve just installed MariaDB, and
+</span></span><span style="display:flex;"><span>you haven<span style="color:#e6db74">&#39;t set the root password yet, the password will be blank,
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">so you should just press enter here.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Enter current password for root (enter for none): 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">OK, successfully used password, moving on...
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Setting the root password ensures that nobody can log into the MariaDB
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">root user without the proper authorisation.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Set root password? [Y/n] Y
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">New password: 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Re-enter new password: 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Password updated successfully!
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Reloading privilege tables..
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> ... Success!
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">By default, a MariaDB installation has an anonymous user, allowing anyone
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">to log into MariaDB without having to have a user account created for
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">them.  This is intended only for testing, and to make the installation
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">go a bit smoother.  You should remove them before moving into a
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">production environment.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Remove anonymous users? [Y/n] Y
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> ... Success!
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Normally, root should only be allowed to connect from &#39;</span>localhost<span style="color:#e6db74">&#39;.  This
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">ensures that someone cannot guess at the root password from the network.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Disallow root login remotely? [Y/n] Y    # 如果之後需要遠端登入 DB 的話，這個選項請選「n」
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> ... Success!
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">By default, MariaDB comes with a database named &#39;</span>test<span style="color:#e6db74">&#39; that anyone can
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">access.  This is also intended only for testing, and should be removed
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">before moving into a production environment.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Remove test database and access to it? [Y/n] Y
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> - Dropping test database...
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> ... Success!
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> - Removing privileges on test database...
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> ... Success!
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Reloading the privilege tables will ensure that all changes made so far
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">will take effect immediately.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Reload privilege tables now? [Y/n] Y
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> ... Success!
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Cleaning up...
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">All done!  If you&#39;</span>ve completed all of the above steps, your MariaDB
+</span></span><span style="display:flex;"><span>installation should now be secure.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Thanks <span style="color:#66d9ef">for</span> using MariaDB!
+</span></span></code></pre></div><p><br>
+設定防火牆允許連入 SQL 資料庫</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo firewall-cmd --permanent --add-service<span style="color:#f92672">=</span>mysql
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo firewall-cmd --reload
+</span></span></code></pre></div><p><br>
+安裝 phpMyAdmin</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo yum install epel-release
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo yum install phpmyadmin
+</span></span></code></pre></div><p><br>
+修改 phpMyAdmin 的設定</p>
+<p>在預設情況下，CentOS 7 上的 phpMyAdmin 只允許從本機 (127.0.0.1) 連進去。為了能遠端連線，需要改變它的設定。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo vim /etc/httpd/conf.d/phpMyAdmin.conf
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ApacheConf" data-lang="ApacheConf"><span style="display:flex;"><span><span style="color:#75715e"># phpMyAdmin - Web based MySQL browser written in php</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># </span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Allows only localhost by default</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># But allowing phpMyAdmin to anyone other than localhost should be considered</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># dangerous unless properly secured by SSL</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>Alias <span style="color:#e6db74">/phpMyAdmin</span> <span style="color:#e6db74">/usr/share/phpMyAdmin</span>
+</span></span><span style="display:flex;"><span>Alias <span style="color:#e6db74">/phpmyadmin</span> <span style="color:#e6db74">/usr/share/phpMyAdmin</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;Directory</span> <span style="color:#e6db74">/usr/share/phpMyAdmin/</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>   AddDefaultCharset UTF-8
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;IfModule</span> <span style="color:#e6db74">mod_authz_core.c</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#75715e"># Apache 2.4</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">&lt;RequireAny&gt;</span>
+</span></span><span style="display:flex;"><span>       Require ip <span style="color:#ae81ff">127.0.0.1</span>
+</span></span><span style="display:flex;"><span>       Require ip ::1
+</span></span><span style="display:flex;"><span>       Require ip XX.XX.XX.XX  ← 在這裡新增允許連入的IP
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">&lt;/RequireAny&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;/IfModule&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;IfModule</span> <span style="color:#e6db74">!mod_authz_core.c</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#75715e"># Apache 2.2</span>
+</span></span><span style="display:flex;"><span>     Order Deny,Allow
+</span></span><span style="display:flex;"><span>     Deny from <span style="color:#66d9ef">All</span>
+</span></span><span style="display:flex;"><span>     Allow from <span style="color:#ae81ff">127.0.0.1</span>
+</span></span><span style="display:flex;"><span>     Allow from ::1
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;/IfModule&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/Directory&gt;</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;Directory</span> <span style="color:#e6db74">/usr/share/phpMyAdmin/setup/</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;IfModule</span> <span style="color:#e6db74">mod_authz_core.c</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#75715e"># Apache 2.4</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">&lt;RequireAny&gt;</span>
+</span></span><span style="display:flex;"><span>       Require ip <span style="color:#ae81ff">127.0.0.1</span>
+</span></span><span style="display:flex;"><span>       Require ip ::1
+</span></span><span style="display:flex;"><span>       Require ip XX.XX.XX.XX  ← 在這裡新增允許連入的IP
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">&lt;/RequireAny&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;/IfModule&gt;</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;IfModule</span> <span style="color:#e6db74">!mod_authz_core.c</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>     <span style="color:#75715e"># Apache 2.2</span>
+</span></span><span style="display:flex;"><span>     Order Deny,Allow
+</span></span><span style="display:flex;"><span>     Deny from <span style="color:#66d9ef">All</span>
+</span></span><span style="display:flex;"><span>     Allow from <span style="color:#ae81ff">127.0.0.1</span>
+</span></span><span style="display:flex;"><span>     Allow from ::1
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&lt;/IfModule&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/Directory&gt;</span>
+</span></span></code></pre></div><p><br>
+如果不指定 Require ip，改為「Require all granted」的話，表示所有的主機都能使用你的 phpMyAdmin</p>
+<p><br>
+重新啟動 Apache Service</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl restart httpd
+</span></span></code></pre></div><p><br>
+測試安裝是否成功</p>
+<p>用瀏覽器鍵入下面位址（記得改成你的 ip 或 domain name ），如果出現同樣的畫面表示設定成功，你可以開始用 phpMyAdmin 來操作 SQL 資料庫了</p>
+<p><img src="https://image.wadeism.net/lamp03.png" alt=""></p>
+<h3 id="注意事項">注意事項：</h3>
+<ul>
+<li>如果當 php 要上傳檔案到資料夾時出現權限問題（ SELinux 已設定好），有可能是資料夾權限的關係，用 ps aux | grep httpd 可以查看執行 httpd 的使用者是誰，如果是 apache 的話，上傳的資料夾 owner 得設為 apache 才能上傳成功</li>
+<li>使用 DB 時必須建一個權限為任意主機的帳號才能遠端連線，預設 root 是無法遠端連線的</li>
+<li>想要使用 root 權限遠端登入 MariaDB 的話，帳號不能是 root，需建立一個非 root 但有 root 權限的帳號，而且執行 /usr/bin/mysql_secure_installation 時，Disallow root login remotely的選項要選「n」</li>
+</ul>
+<p><a href="https://www.techcress.com/how-to-install-linux-apache-mysql-and-php-on-ubuntu-14-04/" target="_blank">cover by</a></p>
+
+            </article>
+          </div>
+          
+      <div class='entry-meta-bottom'>
+        
+
+  <div class="entry-categories"><p><span>Categories</span>
+    
+    <a href="/categories/linux" title="View all posts in Linux">Linux</a>
+  </p>
+</div>
+
+
+
+<div class="entry-tags"><p><span>Tags</span>
+  
+  <a href="/tags/server" title="View all posts tagged Server">Server</a>
+  
+
+</p></div>	</div>
+
+	
+<div class="author-meta">
+
+  <div class="author">
+    	
+      <img alt='wade' src="https://www.gravatar.com/avatar/6fee0275681dd0b43da1d6acb66c336f?s=100&d=identicon" class='avatar avatar-72 photo' height='72' width='72'>
+    
+    <span>
+      Written by:<a href="https://notes.wadeism.net/" title="Posts by wade" rel="author">wade</a> </span>
+    </div>
+    <div class="bio">
+      
+      
+      <p>本站站長</p>
+      
+      
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a class="github" target="_blank"
+href="https://github.com/wade-chiang">
+<i class="fab fa-github"
+title="github icon"></i>
+</a>
+
+
+
+
+
+
+
+</div>
+</div>
+
+</div>
+</div>
+
+<section id="comments" class="comments">
+  <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+    var d = document, s = d.createElement('script');
+    s.src = 'https://notes-wadeism.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+</section>
+</div>
+
+ 
+
+
+
+    </div>
+
+    <footer id="site-footer" class="site-footer" role="contentinfo">
+	<h1>
+    
+    <a href=""> Nothing but.. </a>
+    
+	</h1>
+
+			
+			<p class="site-description">Something here</p>
+			
+
+		<div id="menu-footer" class="menu-container menu-footer" role="navigation">
+		<div class="menu">
+
+      <ul id="menu-footer-items" class="menu-footer-items">
+        
+</ul>
+
+</div>	</div>
+
+<ul class="social-media-icons">
+
+        
+
+        
+
+
+        
+
+        
+
+        
+
+        
+
+        
+
+
+        
+        <li>
+        <a href="https://github.com/wade-chiang"  class="github" target="_blank">
+            <i class="fab fa-github" title="github"></i>
+            <span class="screen-reader-text">github</span>
+        </a>
+        </li>
+        
+
+
+        
+
+        
+        <li>
+        <a href="https://notes.wadeism.net/index.xml" data-animate-hover="pulse" class="rss" target="_blank">
+            <i class="fas fa-rss" title="rss"></i>
+            <span class="screen-reader-text">rss</span>
+        </a>
+        </li>
+        
+
+				</ul>	<div class="design-credit">
+		
+		<p>© 2022 Wade</p>
+		
+		<p>Nederburg Hugo Theme by <a href="https://appernetic.io" target="_blank">Appernetic</a>.</p>
+		
+		<p>A port of Tracks by Compete Themes.</p>
+		
+	</div>
+</footer>
+
+  </div>
+  <script src="https://notes.wadeism.net/js/jquery.min.js"></script>
+<script src="https://notes.wadeism.net/js/jquerymigrate.js"></script>
+<script src="https://notes.wadeism.net/js/production.min.js?v=1684173172"></script>
+
+
+
+<script src="https://notes.wadeism.net/js/prism.js"></script>
+
+
+<script src="https://notes.wadeism.net/js/medium-zoom.js"></script>
+<script src="https://notes.wadeism.net/js/wade_custom.js"></script>
+
+
+
+
+
+<script type="text/javascript">var _jf = _jf || [];_jf.push(['p','63921']);_jf.push(['initAction',true]);_jf.push(['_setFont','xingothic-tc-w6','css','.xingothic-tc-w6']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-meta-bottom a']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-content h3']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-content h4']);_jf.push(['_setFont','xingothic-tc-w6','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w6','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w6','weight',600]);_jf.push(['_setFont','xingothic-tc-w5','css','.xingothic-tc-w5']);_jf.push(['_setFont','xingothic-tc-w5','css','div.entry-content p']);_jf.push(['_setFont','xingothic-tc-w5','css','div.excerpt-content p']);_jf.push(['_setFont','xingothic-tc-w5','css','div.post article']);_jf.push(['_setFont','xingothic-tc-w5','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w5','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w5','weight',500]);_jf.push(['_setFont','xingothic-tc-w7','css','.xingothic-tc-w7']);_jf.push(['_setFont','xingothic-tc-w7','css','h1.entry-title']);_jf.push(['_setFont','xingothic-tc-w7','css','h2.excerpt-title']);_jf.push(['_setFont','xingothic-tc-w7','css','div.entry-content h2']);_jf.push(['_setFont','xingothic-tc-w7','css','strong']);_jf.push(['_setFont','xingothic-tc-w7','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w7','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w7','weight',700]);(function(A,p,c,m,l,q,r,h,B,D){var b=A._jf;if(b.constructor!==Object){var t=!0,u=function(a){var f=!0,e;for(e in b)b[e][0]==a&&(f&&(f=f&&!1!==b[e][1].call(b)),b[e]=null,delete b[e])},v=/\S+/g,w=/[\t\r\n\f]/g,C=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,n="".trim,x=n&&!n.call("\ufeff\u00a0")?function(a){return null==a?"":n.call(a)}:function(a){return null==a?"":(a+"").replace(C,"")},k=function(a){var f,b,g;if("string"===typeof a&&a&&(a=(a||"").match(v)||[],f=h[c]?(" "+h[c]+" ").replace(w," "):" ")){for(g=0;b=a[g++];)0>f.indexOf(" "+b+" ")&&(f+=b+" ");h[c]=x(f)}},d=function(a){var b,e,g;if(0===arguments.length||"string"===typeof a&&a){var d=(a||"").match(v)||[];if(b=h[c]?(" "+h[c]+" ").replace(w," "):""){for(g=0;e=d[g++];)for(;0<=b.indexOf(" "+e+" ");)b=b.replace(" "+e+" "," ");h[c]=a?x(b):""}}},y;b.addScript=y=function(b,f,e,g,d,c){d=d||function(){};c=c||function(){};var a=p.createElement("script"),h=p.getElementsByTagName("script")[0],k,m=!1,l=function(){a.src="";a.parentNode.removeChild(a);a=a.onerror=a.onload=a.onreadystatechange=null};g&&(k=setTimeout(function(){l();c()},g));a.type=f||"text/javascript";a.async=e;a.onload=a.onreadystatechange=function(b,c){m||a.readyState&&!/loaded|complete/.test(a.readyState)||(m=!0,g&&clearTimeout(k),l(),c||d())};a.onerror=function(a,b,d){g&&clearTimeout(k);l();c();return!0};a.src=b;h.parentNode.insertBefore(a,h)};for(var z in b)"initAction"==b[z][0]&&(t=b[z][1]);b.push(["_eventPreload",function(){1==t&&k(m);y(B,null,!1,3E3,null,function(){u("_eventInactived")})}]);b.push(["_eventReload",function(){d(r);d(q);k(l)}]);b.push(["_eventActived",function(){d(m);d(l);k(q)}]);b.push(["_eventInactived",function(){d(m);d(l);k(r)}]);u("_eventPreload")}})(this,this.document,"className","jf-loading","jf-reloading","jf-active","jf-inactive",this.document.getElementsByTagName("html")[0],"//ds.justfont.com/js/stable/v/6.0/id/171309946041");</script>
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9504338511537027" crossorigin="anonymous"></script>
+
+
+<script src="https://notes.wadeism.net/js/back-to-top.js"></script>
+
+  
+  
+
+</body>
+</html>

@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="application/ld+json">
+    {
+        "@context" : "http://schema.org",
+        "@type" : "BlogPosting",
+        "mainEntityOfPage": {
+             "@type": "WebPage",
+             "@id": "https:\/\/notes.wadeism.net\/"
+        },
+        "articleSection" : "post",
+        "name" : "rsync 的安裝與使用",
+        "headline" : "rsync 的安裝與使用",
+        "description" : "在不知道有 rsync 之前，我備份檔案的方式就是用",
+        "inLanguage" : "zh-Hant-TW",
+        "author" : "wade",
+        "creator" : "wade",
+        "publisher": "wade",
+        "accountablePerson" : "wade",
+        "copyrightHolder" : "wade",
+        "copyrightYear" : "2018",
+        "datePublished": "2018-09-13 08:32:57 \u002b0000 \u002b0000",
+        "dateModified" : "2018-09-13 08:32:57 \u002b0000 \u002b0000",
+        "url" : "https:\/\/notes.wadeism.net\/post\/install-and-setup-rsync\/",
+        "wordCount" : "2134",
+        "image" : "https:\/\/notes.wadeism.net\/%!s(\u003cnil\u003e)",
+        "keywords" : [ "CentOS","rsync","Server","Blog" ]   
+    }
+    </script>
+
+
+
+ <title>rsync 的安裝與使用 - Nothing but..</title>
+<meta property="og:title" content="rsync 的安裝與使用 - Nothing but..">
+
+
+
+<meta name="description" content="My notes for everyone" />
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="all,follow">
+<meta name="googlebot" content="index,follow,snippet,archive">
+<link rel="stylesheet" id="ct-tracks-google-fonts-css" href="https://fonts.googleapis.com/css?family=Raleway%3A400%2C700&amp;subset=latin%2Clatin-ext&amp;ver=4.7.2" type="text/css" media="all">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+<link href="https://notes.wadeism.net/css/style.css?v=1684173172" rel="stylesheet" id="theme-stylesheet" type='text/css' media='all'>
+
+<link href="https://notes.wadeism.net/css/custom.css?v=1684173172" rel="stylesheet" type='text/css' media='all'>
+<link rel="shortcut icon" href="https://notes.wadeism.net/img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="https://notes.wadeism.net/img/favicon.ico" type="image/x-icon">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-120924943-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-120924943-1');
+</script>
+
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-120924943-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-120924943-1');
+</script>
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://notes.wadeism.net/css/prism.css" >
+
+
+<style>
+   
+   
+   
+  @import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Roboto+Mono&display=swap');
+</style>
+
+
+<link href="https://notes.wadeism.net/css/wade_custom.css?v=1684173172" rel="stylesheet" type='text/css' media='all'>
+</head>
+
+
+<body class="post-template-default single single-post single-format-standard ct-body singular singular-post not-front standard">
+
+  <div id="overflow-container" class="overflow-container">
+    <a class="skip-content" href="#main">Skip to content</a>
+    <header id="site-header" class="site-header" role="banner">
+      <div class='top-navigation'>
+        <div class='container'>
+
+  <div id="menu-secondary" class="menu-container menu-secondary" role="navigation">
+    <button id="toggle-secondary-navigation" class="toggle-secondary-navigation"><i class="fas fa-plus"></i></button>
+
+    <div class="menu">
+
+      <ul id="menu-secondary-items" class="menu-secondary-items">
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/bass">bass</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/developer">developer</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/linux">linux</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/mac">mac</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/office">office</a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+
+  </div>
+
+
+  <ul class="social-media-icons">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+    
+    <li>
+      <a href="https://github.com/wade-chiang" data-animate-hover="pulse" class="github" target="_blank">
+        <i class="fab fa-github" title="github"></i>
+        <span class="screen-reader-text">github</span>
+      </a>
+    </li>
+    
+
+
+    
+
+    
+    <li>
+      <a href="https://notes.wadeism.net/index.xml" data-animate-hover="pulse" class="rss" target="_blank">
+        <i class="fas fa-rss" title="rss"></i>
+        <span class="screen-reader-text">rss</span>
+      </a>
+    </li>
+    
+
+
+  </ul></div>
+
+      </div>
+
+      <div class="container">
+        <div id="title-info" class="title-info">
+  <div id='site-title' class='site-title'>
+    
+    <a href="/"> Nothing but.. </a>
+    </div>
+  </div>
+  <button id="toggle-navigation" class="toggle-navigation">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <div id="menu-primary-tracks" class="menu-primary-tracks"></div>
+  <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+    
+    <p class="site-description">Something here</p>
+    
+
+    <div class="menu">
+      <ul id="menu-primary-items" class="menu-primary-items">
+        
+        
+        <li class='menu-item menu-item-type-custom menu-item-object-custom '>
+          <a href="https://notes.wadeism.net/">Home</a>
+          
+        </li>
+        
+        <li class='menu-item menu-item-type-post_type menu-item-object-page '>
+          <a href="https://notes.wadeism.net/about/">About</a>
+          
+        </li>
+        
+        <li class='menu-item menu-item-type-post_type menu-item-object-page '>
+          <a href="https://notes.wadeism.net/contact/"></a>
+          
+        </li>
+        
+      </ul>
+    </div>
+
+  </div>
+
+      </div>
+    </header>
+
+    <div id="main" class="main" role="main">
+
+      
+  
+  
+    
+  
+  
+  <div id="loop-container" class="loop-container">
+    
+
+      <div class="post type-post status-publish format-standard hentry category-standard category-travel entry full-without-featured odd excerpt-1">
+
+        
+        <div class="entry-meta">
+          <span class="date">13 September 2018</span>	<span> / </span>
+
+          <span class="author">
+            <a href="https://notes.wadeism.net/" title="Posts by wade" rel="author">wade</a>
+          </span>
+
+
+          
+          <span class="category">
+            <span> / </span>
+
+            <a href="/categories/linux">Linux</a>
+          </span>
+          
+
+
+        </div>
+        <div class='entry-header'>
+          <h1 class='entry-title'> rsync 的安裝與使用</h1>
+        </div>
+        <div class="entry-container">
+          <div class="entry-content">
+            <article>
+              <p>在不知道有 rsync 之前，我備份檔案的方式就是用人工去檢查檔案並且複製與貼上，常常不知道哪些有備份過或是版本有更動而不斷的在做無意義的檔案覆寫，既笨又耗時間。自從有了 rsync 後，整個都不一樣了，備份變得非常簡單且有效率，雖然以前在 Windows 上也有用過一些同步軟體啦，但都沒什麼深刻的印象…</p>
+<p>在記錄 rsync 的安裝與用之前，先提一下效能的部分。我最開始使用 rsync 是在自己的電腦與 Synology 的 NAS 間做同步，當初買的 NAS 是屬於低階款，而 rsync 的傳輸過程是加密的，因此雖然家裡的區域網路速度是 gigalan，但我的 rsync 始終只能跑個 50Mb/s，原因就在於我那台 NAS 的 CPU 太弱了，雖然有研究過 rsync 的非加密傳輸，但試過幾次似乎無法改善這個問題，不知道是 NAS 太爛還是怎麼弄都還是使用加密連線。</p>
+<h2 id="安裝-rsync">安裝 rsync</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo yum install rsync
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 現在一般的 distro 應該都有內建了</span>
+</span></span></code></pre></div><h2 id="rsync-基本參數">rsync 基本參數</h2>
+<ul>
+<li><span class="hl-green mono">-a</span>：最常用的備份模式，等同於 -rlptgoD</li>
+<li><span class="hl-green mono">-r</span>：&ndash;recursive，遞歸模式，備份目錄時必用</li>
+<li><span class="hl-green mono">-l</span>：&ndash;links，單純的以符號連結的樣態來備份符號連結</li>
+<li><span class="hl-green mono">-p</span>：&ndash;perms，維持原檔案的權限屬性</li>
+<li><span class="hl-green mono">-t</span>：&ndash;times，維持檔案的 modification time</li>
+<li><span class="hl-green mono">-g</span>：&ndash;group，維持檔案原本的所屬群組</li>
+<li><span class="hl-green mono">-o</span>：&ndash;owner，維持檔案原本的擁有者</li>
+<li><span class="hl-green mono">-D</span>：&ndash;devices、&ndash;specials，允許同步裝置檔案與特殊檔案</li>
+<li><span class="hl-green mono">-v</span>：&ndash;verbose，詳細模式，在 terminal 中列出所有的詳細過程</li>
+<li><span class="hl-green mono">-P</span>：等同 &ndash;partial &ndash;progress &ndash;partial：當傳輸中斷時，保留不完整的檔案</li>
+<li><span class="hl-green mono">&ndash;progress</span>：讓傳輸過程有進度可看</li>
+<li><span class="hl-green mono">&ndash;dry-run</span>：測試指令的結果，但不會真的進行同步，可用在先檢查哪些檔案會同步，很重要的參數</li>
+<li><span class="hl-green mono">&ndash;delete</span>：沒有加這個參數的時候，來源端只會不斷的把新東西同步到目的端，一旦加了 &ndash;delete，rsync 會把來源端沒有但目的端有的檔案刪掉，讓兩個資料夾完完全全的呈現一致的內容</li>
+<li><span class="hl-green mono">&ndash;exclude=PATTERN</span>：排除不想同步的檔案</li>
+<li><span class="hl-green mono">&ndash;exclude-from=FILE</span>：讀取自訂的列表，使用列表的內容來排除不想同步的檔案，在排除多個檔案時較為實用。列表中的路徑必須是以來源端來看的相對路徑，每一行為一個要排除的資料夾或檔案</li>
+</ul>
+<h2 id="使用方法">使用方法</h2>
+<p>本機資料夾 sync，將 A 的內容同步到 B</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rsync -avP /A/ /B/
+</span></span></code></pre></div><p><br>
+將 A 的內容同步到 B，並且刪除 B 裡面 A 所沒有的資料</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rsync -avP --delete /A/ /B/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 加上 --delete 參數後，會讓 B 與 A 的內容完全一樣</span>
+</span></span></code></pre></div><p><br>
+將本機中的 /home 資料夾中的 png 圖檔同步到遠端電腦的 /mnt</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rsync -avP /home/*.png user@192.168.x.x:/mnt/
+</span></span></code></pre></div><p>基本的遠端同步用法與 scp 類似</p>
+<h3 id="exclude-from-的用法">exclude-from 的用法</h3>
+<p>假設 /home 裡面有a、b、c、d、e，5個檔案，我們可以自訂 /mnt/file 這個檔案來排除 d、e，只將 a、b、c 同步到 /tmp</p>
+<p>先檢視一下 /home 的內容</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ls /home
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>a b c d e
+</span></span></code></pre></div><p><br>
+編輯 /mnt/file 檔案</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>echo -e <span style="color:#e6db74">&#34;d\ne&#34;</span> &gt; /mnt/file
+</span></span></code></pre></div><p><br>
+查看 /mnt/file 內容</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat /mnt/file
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>d
+</span></span><span style="display:flex;"><span>e
+</span></span></code></pre></div><p><br>
+進行同步並加上 exclude 參數</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rsync -avP --exclude-from<span style="color:#f92672">=</span>/mnt/file /home /tmp
+</span></span></code></pre></div><p><br>
+查看 /tmp 的資料夾內容</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ls /tmp
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>a b c
+</span></span></code></pre></div><h2 id="daemon-模式">Daemon 模式</h2>
+<p>rsync 另外還有一種 daemon 模式，用起來跟 samba 與 nfs 類似，必須先在 server 端做設定，之後 client 端與 server 端同步時就可以不用輸入完整的路徑。</p>
+<h3 id="server-端設定">Server 端設定</h3>
+<p>首先要在 server 與 client 都安裝 rsync，然後編輯 server 端的 <span class="hl-blue">/etc/rsyncd.conf</span></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vim /etc/rsyncd.conf
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>pid file <span style="color:#f92672">=</span> /var/run/rsyncd.pid
+</span></span><span style="display:flex;"><span>lock file <span style="color:#f92672">=</span> /var/run/rsync.lock
+</span></span><span style="display:flex;"><span>log file <span style="color:#f92672">=</span> /var/log/rsyncd.log
+</span></span><span style="display:flex;"><span>use chroot <span style="color:#f92672">=</span> no
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 在範例中，我們建立一個名為 music 的 module，</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 之後 rsync 只要指定 module name 就可以同步了</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>music<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>comment <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Fox&#39;s Music&#34;</span>
+</span></span><span style="display:flex;"><span>path <span style="color:#f92672">=</span> /home/Fox/Music
+</span></span><span style="display:flex;"><span>uid <span style="color:#f92672">=</span> Fox <span style="color:#f92672">(</span> 該目錄的使用者 <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>gid <span style="color:#f92672">=</span> Fox <span style="color:#f92672">(</span> 該目錄的群組 <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># uid 與 gid 關係到檔案複製過去後的所屬，用 root 的話 owner 會變 1000，</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 所以 uid 跟 gid 一定要設遠端使用者的所屬，</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 如 Fox:Fox，權限不對可能造成傳送失敗</span>
+</span></span><span style="display:flex;"><span>read only <span style="color:#f92672">=</span> no
+</span></span><span style="display:flex;"><span>list <span style="color:#f92672">=</span> yes
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># list 設為 no 的話，client 端使用 --list-only會看不到這個 module</span>
+</span></span><span style="display:flex;"><span>charset <span style="color:#f92672">=</span> utf-8
+</span></span><span style="display:flex;"><span>hosts allow <span style="color:#f92672">=</span> 192.168.x.x  <span style="color:#75715e"># 允許的 ip</span>
+</span></span><span style="display:flex;"><span>auth users<span style="color:#f92672">=</span> fox  <span style="color:#75715e"># 允許的使用者</span>
+</span></span><span style="display:flex;"><span>secrets file <span style="color:#f92672">=</span> /etc/rsyncd.secrets
+</span></span></code></pre></div><p>有關 uid 與 gid，<span class="hl-green">可以的話最好是 server 端與 client 的使用者都要同一個 uid 與 gid ，然後 server 的帳號大小寫一定要正確</span>！！不然 uid gid 即使設為 server 使用者的所屬，一樣會有問題。以我自己用 NAS 的例子，原本用 root 讓 NAS 裡的同步檔案全變成 1000:1000 是因為在 clinet 裡我的帳號 fox 的 uid 與 gid 就是1000，所以同步上傳後，那些檔案的擁有者也改變了，而因為NAS裡沒有 fox，Fox 的 uid 也不是1000</p>
+<p>auth users 必須參照 secrets file，file 裡面沒有的帳號無法使用，例如當 secrets file 裡的帳號是 acid :111，那 clinet 端使用 rynsc 時就要用 acid 來登入，ex. <a href="mailto:acid@192.168.122.xx">acid@192.168.122.xx</a>::backup，這裡跟 samba 很類似，不看 server 端的帳號而是看 rsync 自己的帳號密碼系統。</p>
+<p>新增 <span class="hl-blue">/etc/rsyncd.secrets</span> 檔，格式為：「<span class="hl-blue">使用者：密碼</span>」，並將該文件權限設為600  (必要！)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;fox:123&#34;</span> | sudo tee /etc/rsyncd.secrets
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo chmod <span style="color:#ae81ff">600</span> /etc/rsyncd.secrets
+</span></span></code></pre></div><p><br>
+確認 rsyncd.conf 中的 path 有效，建立需要的資料夾。如果是用 root 建立資料夾的話，可能需要參考rsyncd.conf 中的 uid 與 gid 將資料夾更改擁有者與群組</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl start rsyncd <span style="color:#f92672">&amp;&amp;</span> sudo systemctl enable rsyncd
+</span></span></code></pre></div><h3 id="修改-selinux-權限">修改 Selinux 權限</h3>
+<p>讓無權限的使用者可以寫入</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo setsebool -P allow_rsync_anon_write<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span></code></pre></div><p><br>
+設定目錄寫入權限</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo chcon -t public_content_rw_t /path/folder
+</span></span></code></pre></div><p><br>
+以這份筆記為例，有兩個路徑要設</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo chcon -t public_content_rw_t /home/<span style="color:#f92672">[</span>UserName<span style="color:#f92672">]</span>/Music
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo chcon -t public_content_rw_t /home/<span style="color:#f92672">[</span>UserName<span style="color:#f92672">]</span>
+</span></span></code></pre></div><ul>
+<li><span class="hl-red">chcon 加上參數 -R 可以連同該目錄下的次目錄也同時修改</span></li>
+<li><span class="hl-red">target 資料夾與它上一層的資料夾都必須設定！！</span></li>
+</ul>
+<p><br>
+如果有開啟 firewalld，檢查防火牆的狀態</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 新增允許 rsync 服務指令：</span>
+</span></span><span style="display:flex;"><span>sudo firewall-cmd --add-service rsyncd --permanent
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo firewall-cmd --reload
+</span></span></code></pre></div><h3 id="client-端的使用">Client 端的使用</h3>
+<p>Server 端設定好後，就可以來使用 daemon 模式的 rsync 了，基本用法如下</p>
+<p><br>
+列出 Server 端可供同步的 target</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rsync --list-only $ServerIP::
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>music      <span style="color:#e6db74">&#34;User&#39;s Music&#34;</span>
+</span></span></code></pre></div><p><br>
+同步 client 的 music 資料夾到 server 端的 music 裡</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rsync -avP /home/<span style="color:#f92672">[</span>UserName<span style="color:#f92672">]</span>/music/ <span style="color:#f92672">[</span>UserName<span style="color:#f92672">]</span>@$ServerIP::music/
+</span></span></code></pre></div>
+            </article>
+          </div>
+          
+      <div class='entry-meta-bottom'>
+        
+
+  <div class="entry-categories"><p><span>Categories</span>
+    
+    <a href="/categories/linux" title="View all posts in Linux">Linux</a>
+  </p>
+</div>
+
+
+
+<div class="entry-tags"><p><span>Tags</span>
+  
+  <a href="/tags/centos" title="View all posts tagged CentOS">CentOS</a>
+  
+  <a href="/tags/rsync" title="View all posts tagged rsync">rsync</a>
+  
+  <a href="/tags/server" title="View all posts tagged Server">Server</a>
+  
+
+</p></div>	</div>
+
+	
+<div class="author-meta">
+
+  <div class="author">
+    	
+      <img alt='wade' src="https://www.gravatar.com/avatar/6fee0275681dd0b43da1d6acb66c336f?s=100&d=identicon" class='avatar avatar-72 photo' height='72' width='72'>
+    
+    <span>
+      Written by:<a href="https://notes.wadeism.net/" title="Posts by wade" rel="author">wade</a> </span>
+    </div>
+    <div class="bio">
+      
+      
+      <p>本站站長</p>
+      
+      
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a class="github" target="_blank"
+href="https://github.com/wade-chiang">
+<i class="fab fa-github"
+title="github icon"></i>
+</a>
+
+
+
+
+
+
+
+</div>
+</div>
+
+</div>
+</div>
+
+<section id="comments" class="comments">
+  <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+    var d = document, s = d.createElement('script');
+    s.src = 'https://notes-wadeism.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+</section>
+</div>
+
+ 
+
+
+
+    </div>
+
+    <footer id="site-footer" class="site-footer" role="contentinfo">
+	<h1>
+    
+    <a href=""> Nothing but.. </a>
+    
+	</h1>
+
+			
+			<p class="site-description">Something here</p>
+			
+
+		<div id="menu-footer" class="menu-container menu-footer" role="navigation">
+		<div class="menu">
+
+      <ul id="menu-footer-items" class="menu-footer-items">
+        
+</ul>
+
+</div>	</div>
+
+<ul class="social-media-icons">
+
+        
+
+        
+
+
+        
+
+        
+
+        
+
+        
+
+        
+
+
+        
+        <li>
+        <a href="https://github.com/wade-chiang"  class="github" target="_blank">
+            <i class="fab fa-github" title="github"></i>
+            <span class="screen-reader-text">github</span>
+        </a>
+        </li>
+        
+
+
+        
+
+        
+        <li>
+        <a href="https://notes.wadeism.net/index.xml" data-animate-hover="pulse" class="rss" target="_blank">
+            <i class="fas fa-rss" title="rss"></i>
+            <span class="screen-reader-text">rss</span>
+        </a>
+        </li>
+        
+
+				</ul>	<div class="design-credit">
+		
+		<p>© 2022 Wade</p>
+		
+		<p>Nederburg Hugo Theme by <a href="https://appernetic.io" target="_blank">Appernetic</a>.</p>
+		
+		<p>A port of Tracks by Compete Themes.</p>
+		
+	</div>
+</footer>
+
+  </div>
+  <script src="https://notes.wadeism.net/js/jquery.min.js"></script>
+<script src="https://notes.wadeism.net/js/jquerymigrate.js"></script>
+<script src="https://notes.wadeism.net/js/production.min.js?v=1684173172"></script>
+
+
+
+<script src="https://notes.wadeism.net/js/prism.js"></script>
+
+
+<script src="https://notes.wadeism.net/js/medium-zoom.js"></script>
+<script src="https://notes.wadeism.net/js/wade_custom.js"></script>
+
+
+
+
+
+<script type="text/javascript">var _jf = _jf || [];_jf.push(['p','63921']);_jf.push(['initAction',true]);_jf.push(['_setFont','xingothic-tc-w6','css','.xingothic-tc-w6']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-meta-bottom a']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-content h3']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-content h4']);_jf.push(['_setFont','xingothic-tc-w6','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w6','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w6','weight',600]);_jf.push(['_setFont','xingothic-tc-w5','css','.xingothic-tc-w5']);_jf.push(['_setFont','xingothic-tc-w5','css','div.entry-content p']);_jf.push(['_setFont','xingothic-tc-w5','css','div.excerpt-content p']);_jf.push(['_setFont','xingothic-tc-w5','css','div.post article']);_jf.push(['_setFont','xingothic-tc-w5','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w5','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w5','weight',500]);_jf.push(['_setFont','xingothic-tc-w7','css','.xingothic-tc-w7']);_jf.push(['_setFont','xingothic-tc-w7','css','h1.entry-title']);_jf.push(['_setFont','xingothic-tc-w7','css','h2.excerpt-title']);_jf.push(['_setFont','xingothic-tc-w7','css','div.entry-content h2']);_jf.push(['_setFont','xingothic-tc-w7','css','strong']);_jf.push(['_setFont','xingothic-tc-w7','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w7','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w7','weight',700]);(function(A,p,c,m,l,q,r,h,B,D){var b=A._jf;if(b.constructor!==Object){var t=!0,u=function(a){var f=!0,e;for(e in b)b[e][0]==a&&(f&&(f=f&&!1!==b[e][1].call(b)),b[e]=null,delete b[e])},v=/\S+/g,w=/[\t\r\n\f]/g,C=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,n="".trim,x=n&&!n.call("\ufeff\u00a0")?function(a){return null==a?"":n.call(a)}:function(a){return null==a?"":(a+"").replace(C,"")},k=function(a){var f,b,g;if("string"===typeof a&&a&&(a=(a||"").match(v)||[],f=h[c]?(" "+h[c]+" ").replace(w," "):" ")){for(g=0;b=a[g++];)0>f.indexOf(" "+b+" ")&&(f+=b+" ");h[c]=x(f)}},d=function(a){var b,e,g;if(0===arguments.length||"string"===typeof a&&a){var d=(a||"").match(v)||[];if(b=h[c]?(" "+h[c]+" ").replace(w," "):""){for(g=0;e=d[g++];)for(;0<=b.indexOf(" "+e+" ");)b=b.replace(" "+e+" "," ");h[c]=a?x(b):""}}},y;b.addScript=y=function(b,f,e,g,d,c){d=d||function(){};c=c||function(){};var a=p.createElement("script"),h=p.getElementsByTagName("script")[0],k,m=!1,l=function(){a.src="";a.parentNode.removeChild(a);a=a.onerror=a.onload=a.onreadystatechange=null};g&&(k=setTimeout(function(){l();c()},g));a.type=f||"text/javascript";a.async=e;a.onload=a.onreadystatechange=function(b,c){m||a.readyState&&!/loaded|complete/.test(a.readyState)||(m=!0,g&&clearTimeout(k),l(),c||d())};a.onerror=function(a,b,d){g&&clearTimeout(k);l();c();return!0};a.src=b;h.parentNode.insertBefore(a,h)};for(var z in b)"initAction"==b[z][0]&&(t=b[z][1]);b.push(["_eventPreload",function(){1==t&&k(m);y(B,null,!1,3E3,null,function(){u("_eventInactived")})}]);b.push(["_eventReload",function(){d(r);d(q);k(l)}]);b.push(["_eventActived",function(){d(m);d(l);k(q)}]);b.push(["_eventInactived",function(){d(m);d(l);k(r)}]);u("_eventPreload")}})(this,this.document,"className","jf-loading","jf-reloading","jf-active","jf-inactive",this.document.getElementsByTagName("html")[0],"//ds.justfont.com/js/stable/v/6.0/id/171309946041");</script>
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9504338511537027" crossorigin="anonymous"></script>
+
+
+<script src="https://notes.wadeism.net/js/back-to-top.js"></script>
+
+  
+  
+
+</body>
+</html>

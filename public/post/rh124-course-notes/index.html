@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="application/ld+json">
+    {
+        "@context" : "http://schema.org",
+        "@type" : "BlogPosting",
+        "mainEntityOfPage": {
+             "@type": "WebPage",
+             "@id": "https:\/\/notes.wadeism.net\/"
+        },
+        "articleSection" : "post",
+        "name" : "RH124 課堂筆記",
+        "headline" : "RH124 課堂筆記",
+        "description" : "Chapter 9 systemd systemctl status 預設看 service unit，所以這類的物",
+        "inLanguage" : "zh-Hant-TW",
+        "author" : "wade",
+        "creator" : "wade",
+        "publisher": "wade",
+        "accountablePerson" : "wade",
+        "copyrightHolder" : "wade",
+        "copyrightYear" : "2020",
+        "datePublished": "2020-08-01 14:43:53 \u002b0000 \u002b0000",
+        "dateModified" : "2020-08-01 14:43:53 \u002b0000 \u002b0000",
+        "url" : "https:\/\/notes.wadeism.net\/post\/rh124-course-notes\/",
+        "wordCount" : "2386",
+        "image" : "https:\/\/notes.wadeism.net\/%!s(\u003cnil\u003e)",
+        "keywords" : [ "CentOS","RH124","RHCSA","Blog" ]   
+    }
+    </script>
+
+
+
+ <title>RH124 課堂筆記 - Nothing but..</title>
+<meta property="og:title" content="RH124 課堂筆記 - Nothing but..">
+
+
+
+<meta name="description" content="My notes for everyone" />
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="all,follow">
+<meta name="googlebot" content="index,follow,snippet,archive">
+<link rel="stylesheet" id="ct-tracks-google-fonts-css" href="https://fonts.googleapis.com/css?family=Raleway%3A400%2C700&amp;subset=latin%2Clatin-ext&amp;ver=4.7.2" type="text/css" media="all">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+<link href="https://notes.wadeism.net/css/style.css?v=1684173172" rel="stylesheet" id="theme-stylesheet" type='text/css' media='all'>
+
+<link href="https://notes.wadeism.net/css/custom.css?v=1684173172" rel="stylesheet" type='text/css' media='all'>
+<link rel="shortcut icon" href="https://notes.wadeism.net/img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="https://notes.wadeism.net/img/favicon.ico" type="image/x-icon">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-120924943-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-120924943-1');
+</script>
+
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-120924943-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-120924943-1');
+</script>
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://notes.wadeism.net/css/prism.css" >
+
+
+<style>
+   
+   
+   
+  @import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Roboto+Mono&display=swap');
+</style>
+
+
+<link href="https://notes.wadeism.net/css/wade_custom.css?v=1684173172" rel="stylesheet" type='text/css' media='all'>
+</head>
+
+
+<body class="post-template-default single single-post single-format-standard ct-body singular singular-post not-front standard">
+
+  <div id="overflow-container" class="overflow-container">
+    <a class="skip-content" href="#main">Skip to content</a>
+    <header id="site-header" class="site-header" role="banner">
+      <div class='top-navigation'>
+        <div class='container'>
+
+  <div id="menu-secondary" class="menu-container menu-secondary" role="navigation">
+    <button id="toggle-secondary-navigation" class="toggle-secondary-navigation"><i class="fas fa-plus"></i></button>
+
+    <div class="menu">
+
+      <ul id="menu-secondary-items" class="menu-secondary-items">
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/bass">bass</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/developer">developer</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/linux">linux</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/mac">mac</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/office">office</a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+
+  </div>
+
+
+  <ul class="social-media-icons">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+    
+    <li>
+      <a href="https://github.com/wade-chiang" data-animate-hover="pulse" class="github" target="_blank">
+        <i class="fab fa-github" title="github"></i>
+        <span class="screen-reader-text">github</span>
+      </a>
+    </li>
+    
+
+
+    
+
+    
+    <li>
+      <a href="https://notes.wadeism.net/index.xml" data-animate-hover="pulse" class="rss" target="_blank">
+        <i class="fas fa-rss" title="rss"></i>
+        <span class="screen-reader-text">rss</span>
+      </a>
+    </li>
+    
+
+
+  </ul></div>
+
+      </div>
+
+      <div class="container">
+        <div id="title-info" class="title-info">
+  <div id='site-title' class='site-title'>
+    
+    <a href="/"> Nothing but.. </a>
+    </div>
+  </div>
+  <button id="toggle-navigation" class="toggle-navigation">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <div id="menu-primary-tracks" class="menu-primary-tracks"></div>
+  <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+    
+    <p class="site-description">Something here</p>
+    
+
+    <div class="menu">
+      <ul id="menu-primary-items" class="menu-primary-items">
+        
+        
+        <li class='menu-item menu-item-type-custom menu-item-object-custom '>
+          <a href="https://notes.wadeism.net/">Home</a>
+          
+        </li>
+        
+        <li class='menu-item menu-item-type-post_type menu-item-object-page '>
+          <a href="https://notes.wadeism.net/about/">About</a>
+          
+        </li>
+        
+        <li class='menu-item menu-item-type-post_type menu-item-object-page '>
+          <a href="https://notes.wadeism.net/contact/"></a>
+          
+        </li>
+        
+      </ul>
+    </div>
+
+  </div>
+
+      </div>
+    </header>
+
+    <div id="main" class="main" role="main">
+
+      
+  
+  
+    
+  
+  
+  <div id="loop-container" class="loop-container">
+    
+
+      <div class="post type-post status-publish format-standard hentry category-standard category-travel entry full-without-featured odd excerpt-1">
+
+        
+        <div class="entry-meta">
+          <span class="date">01 August 2020</span>	<span> / </span>
+
+          <span class="author">
+            <a href="https://notes.wadeism.net/" title="Posts by wade" rel="author">wade</a>
+          </span>
+
+
+          
+          <span class="category">
+            <span> / </span>
+
+            <a href="/categories/linux">Linux</a>
+          </span>
+          
+
+
+        </div>
+        <div class='entry-header'>
+          <h1 class='entry-title'> RH124 課堂筆記</h1>
+        </div>
+        <div class="entry-container">
+          <div class="entry-content">
+            <article>
+              <h2 id="chapter-9">Chapter 9</h2>
+<h3 id="systemd">systemd</h3>
+<ul>
+<li>systemctl status 預設看 service unit，所以這類的物件不加.service結尾是可以的，但如 socket 之類的就不行了，一定要打上完整的 unit 名稱</li>
+<li>某些重要的 static daemon 是無法自行啟動或停止的，大多是系統內重要的服務</li>
+<li>單純執行 systemctl 可以顯示所有的 unit 的 status，但不包括 inactive 的</li>
+<li>加 -l就可以顯示完整的文字</li>
+<li>systemctl is-active sshd、systemctl is-enabled sshd，好用的觀察指令</li>
+<li>systemctl 預設的 SubCommand 是 list-units</li>
+<li>systemctl restart 會把 daemon 的 PID 改變，但 reload 不會，reload 不一定會成功，restart比較穩</li>
+<li>systemctl list-dependencies graphical.target | grep target</li>
+<li>mask 是無法被手動或自動啟用的，disabled 則可以，所以兩個還是不太一樣，如果要確保 service 不會被意外啟用，就使用 mask</li>
+<li>mask 其實是建 /dev/null 到設定檔</li>
+</ul>
+<h3 id="ssh">ssh</h3>
+<ul>
+<li>對稱式加密：演算法較簡單，強度較強，但使用較麻煩，適合用在大量訊息加密</li>
+<li>非對稱式加密：演算法較複雜，強度較弱，同時產生出公開金鑰與私有金鑰，建議使用較長bit的加密法，但不適合用在大量訊息加密，因為演算法跟加密法複雜，會增加主機的 loading</li>
+<li>SSH Server 的公開金鑰放在 /etc/ssh/<em>key</em></li>
+<li>每一次 ssh 都會下載金鑰，只是第二次以後不會再問你要不要存，但實際上每次都下載</li>
+<li>ssh 的密碼登入就是對稱式加密、私有金鑰登入則是非對稱式登入</li>
+<li>ssh-keygen 的 passphrase 是一種通關密語，防止私有金鑰外流時被登入，但登入時每次都得輸入通關密語</li>
+<li>承上，可以使用 ssh-agent 來管理通關密語，這樣又可以不用自行輸入了，不然每次都要輸入通關密語（而不是密碼）</li>
+<li>再使用 ssh-copy-id 可以將公開金鑰複製到 remote 端，不過這次當然要密碼登入</li>
+<li>ssh-copy-id -i ~/.ssh/id_rsa.pub <a href="mailto:root@serverX.example.com">root@serverX.example.com</a></li>
+<li>-i 的意思為指定 key 的路徑，上傳後，金鑰會存在 remote 的 ~/.ssh/authorized.keys 裡</li>
+<li>/etc/ssh/sshd_config：ssh server 端的設定、/etc/ssh/ssh_config：ssh client 端的設定</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 必考的選項</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>/etc/ssh/sshd_config：PermitRootLogin
+</span></span><span style="display:flex;"><span>/etc/ssh/sshd_config：PasswordAuthentication
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 啟用 agent 的指令，可以玩玩看</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ ssh-agent bash
+</span></span><span style="display:flex;"><span>$ ssh-add
+</span></span></code></pre></div><hr>
+<h2 id="chapter-10">Chapter 10</h2>
+<ul>
+<li>log 一定要有 Facility，Serverity 的值也一定要有，其值有一個公開標準 (0 ~ 7)</li>
+<li>設定檔盡量放在 xxx.d/*.conf 裡比較好，不會被覆蓋掉，不然原本的 conf 容易被更新覆蓋</li>
+<li>rsyslog 的 manual.html 檔可以去看一下！</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>journalctl --since <span style="color:#e6db74">&#34;2014-0210 20:30:00&#34;</span> --until <span style="color:#e6db74">&#34;2014-0213 12:00&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 有點廢，但會考的指令！</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ journalctl -b            <span style="color:#75715e"># 看這次開機的log</span>
+</span></span><span style="display:flex;"><span>$ journalctl -b <span style="color:#ae81ff">1</span>          <span style="color:#75715e"># 看上次開機的log</span>
+</span></span><span style="display:flex;"><span>$ journalctl -b <span style="color:#ae81ff">2</span>          <span style="color:#75715e"># 看上上次開機的log</span>
+</span></span></code></pre></div><ul>
+<li>RTC hardware 時間會以世界協調標準時間，local 的時間再去加減</li>
+<li>NTP server 的設定建議加上 iburst指令，p248</li>
+<li>hwclock -w 立即設定硬體的時間</li>
+<li>timedatectl 最好回家練習一下！ p252</li>
+</ul>
+<hr>
+<h2 id="chapter-11">Chapter 11</h2>
+<ul>
+<li>做好 default gateway 設定，就可以拿到 default route  p261</li>
+<li>eth0 eth1 這些名稱是不固定的，rhel7之 後，改用 enpxx enoxx 這種固定的名稱  p262</li>
+</ul>
+<p>必考下列網路設定</p>
+<ul>
+<li>IP address - ping</li>
+<li>Subnet Mask - traceroute</li>
+<li>Default gateway - SS</li>
+<li>DNS Server - nslookup</li>
+<li>use ss instead netstat</li>
+</ul>
+<p>NetworkManager.service：</p>
+<ul>
+<li>
+<p>nm-connection-editor (GUI)</p>
+</li>
+<li>
+<p>nmcli (Command Line Utility)</p>
+</li>
+<li>
+<p>/etc/sysconfig/network-script/ifcfg-*</p>
+</li>
+<li>
+<p>nmcli connection add 時，dns 一定要在之後用 modify 改，add 時不能改！</p>
+</li>
+<li>
+<p>建議一個 interface 設 auto connect 就好</p>
+</li>
+<li>
+<p>hostname 指令可以看，也可以暫時的改 hostname</p>
+</li>
+<li>
+<p>如果沒有設定 hostname，Linux 會先去 dns 詢問 ip 是否有對應的 hostname，因此常常不用設定也可以有 hostname，但那是暫時的</p>
+</li>
+<li>
+<p>名稱解析：/etc/hosts．/etc/resolv.conf</p>
+</li>
+<li>
+<p>/etc/resolv.conf 不建議直接修改，因為網路組態改過後就會被更動，因此不適合做永遠的設定，建議直接在網路組態裡修改</p>
+</li>
+<li>
+<p>getenv 可以拿來抓設定檔裡的內容</p>
+</li>
+<li>
+<p>host 指令會避開 host file 檔案，直接去 dns server 裡查</p>
+</li>
+<li>
+<p>p283 底下的 important 要看！</p>
+</li>
+</ul>
+<hr>
+<h2 id="chapter-12">Chapter 12</h2>
+<h3 id="tar-and-rsync">tar and rsync</h3>
+<ul>
+<li>tar 會直接覆寫現在資料夾中的同名檔案，所以建立時一定要注意目錄中有沒有同名檔案！</li>
+<li>檔案如果沒有 r 的權限，或目錄沒有 rx 權限是無法打包的</li>
+<li>Tar 預設不打包 SELinux 的屬性跟 ACL，要包的話需要延伸選項 &ndash;xattrs</li>
+<li>解包前最好去空目錄解</li>
+<li>只有 root 解包時可以保留檔案原本的屬性，一般使用者解開後就是他自己的，無法保留使用者屬性，但權限可保留</li>
+<li>一般使用者解檔案時，會被 umask 的權限影響，如果要保留原本的權限，要加選項 p，所以打包時其實有保留原本的權限</li>
+<li>解壓縮時可以不用加上 x j J的 選項，因為系統已經認得該壓縮檔是哪一種壓縮方式</li>
+<li>scp 無法保留檔案權限（除非加選項？）</li>
+<li>執行 rsync 前最好先用 -n 的 dry run 測試一遍比較安全</li>
+<li>rsync -a 無法同步 hard link，要同步 hard link 要加上 -H 的選項；也無法同步 ACL 跟 SELinux，如果要同步 ACL要加 -A, 要同步 SELinux 要加 -X</li>
+<li>rsync 的目錄有 / 或沒有 / 差很多，如果只要同步 source 裡面的內容，source 的目錄最後要加 /，最後會把檔案直接複製到 local 資料夾裡，不會另外新建 remote 的目錄，p305 一定要再看一次！</li>
+</ul>
+<hr>
+<h2 id="chapter-13">Chapter 13</h2>
+<ul>
+<li>rpm 檔名中的 noarch 表示不 care 64 or 32 位元</li>
+<li>rpm 安裝時驗證的公開金鑰放在 /etc/pki/rpm-gpg</li>
+</ul>
+<p>自訂 yum 容器設定檔： /etc/yum.repos.d/*.repo<br>
+[repo_id]<br>
+name=<br>
+baseurl=</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>yum repolist         
+</span></span><span style="display:flex;"><span>yum clean all <span style="color:#75715e"># 可以清掉 yum download 下的 cache 檔</span>
+</span></span></code></pre></div><p>yum （向 yum server 發出 request）</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 查詢</span>
+</span></span><span style="display:flex;"><span>yum list
+</span></span><span style="display:flex;"><span>yum search
+</span></span><span style="display:flex;"><span>yum info <span style="color:#75715e"># 以上三個後面都跟套件名稱</span>
+</span></span><span style="display:flex;"><span>yum provides $command name
+</span></span><span style="display:flex;"><span>yum groups list
+</span></span><span style="display:flex;"><span>yum groups info
+</span></span><span style="display:flex;"><span>yum history
+</span></span><span style="display:flex;"><span>yum history info
+</span></span><span style="display:flex;"><span>yum history undo
+</span></span><span style="display:flex;"><span>yum list yum* <span style="color:#75715e"># 列出 yum 開頭的套件，前面有 @ 符號代表可安裝</span>
+</span></span><span style="display:flex;"><span>yum search <span style="color:#e6db74">&#34;web server&#34;</span> <span style="color:#75715e"># 查有無相關的套件，只有 metadata</span>
+</span></span><span style="display:flex;"><span>yum search all <span style="color:#e6db74">&#34;web server&#34;</span> <span style="color:#75715e"># 找更多，包括名稱、簡介、描述檔</span>
+</span></span><span style="display:flex;"><span>yum group list hidden <span style="color:#75715e"># 顯示所有套件</span>
+</span></span><span style="display:flex;"><span>yum group list id <span style="color:#75715e"># 顯示套件的 id</span>
+</span></span><span style="display:flex;"><span>yum history undo $number <span style="color:#75715e"># undo 還是會問 yes/no</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 安裝</span>
+</span></span><span style="display:flex;"><span>yum -y install
+</span></span><span style="display:flex;"><span>yum -y groupinstall
+</span></span><span style="display:flex;"><span>yum install --no-gpg-check
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># yum install 如果用 -d 會 download 到本機，套件會放在 /var/cache/yum/XXX中</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 更新</span>
+</span></span><span style="display:flex;"><span>yum -y update
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 移除</span>
+</span></span><span style="display:flex;"><span>yum -y remove
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># kernel 更新</span>
+</span></span><span style="display:flex;"><span>yum update kernel 
+</span></span><span style="display:flex;"><span>yum list kernel
+</span></span></code></pre></div><p>rpm（查詢已安裝套件或套件安裝檔）</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 查詢</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 主要查詢已安裝套件名稱</span>
+</span></span><span style="display:flex;"><span>rpm -qa
+</span></span><span style="display:flex;"><span>rpm -ql
+</span></span><span style="display:flex;"><span>rpm -qi
+</span></span><span style="display:flex;"><span>rpm -qd（找文件）
+</span></span><span style="display:flex;"><span>rpm -qc（找conf）
+</span></span><span style="display:flex;"><span>rpm -qp --scripts
+</span></span><span style="display:flex;"><span>rpm -qp --changlog
+</span></span><span style="display:flex;"><span>rpm -qf
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 主要查詢套件安裝檔名</span>
+</span></span><span style="display:flex;"><span>rpm -qpl
+</span></span><span style="display:flex;"><span>rpm -qpi
+</span></span><span style="display:flex;"><span>rpm -qpd
+</span></span><span style="display:flex;"><span>rpm -qpc
+</span></span><span style="display:flex;"><span>rpm -qp --scripts
+</span></span><span style="display:flex;"><span>rpm -qp --changlog
+</span></span><span style="display:flex;"><span>yum localinstall
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 安裝</span>
+</span></span><span style="display:flex;"><span>yum localinstall
+</span></span><span style="display:flex;"><span>rpm -ivh
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 更新</span>
+</span></span><span style="display:flex;"><span>rpm -Uvh
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 移除</span>
+</span></span><span style="display:flex;"><span>rpm -e
+</span></span></code></pre></div><p>yum repolist 預設只 show enableyum repolist all 全show<br>
+yum-config-manager &ndash;enable rhel-dvd<br>
+yum-config-manager &ndash;add-repo=&ldquo;<a href="http://dl.fedoraproject.org/pub/epel/xxx/%22" target="_blank">http://dl.fedoraproject.org/pub/epel/xxx/&#34;</a><br>
+*.repo 檔如果沒寫 enabled 的話，預設為 enabled=1gpgcheck = 0（取消 gpg 金鑰 check）<br>
+p343 rpm cpio 解包看檔案</p>
+<hr>
+<h2 id="chapter-14">Chapter 14</h2>
+<p>LVM<br>
+/dev/vgname/lvname</p>
+<p>Physical Volume 1<br>
+Volume Group<br>
+Logical Volume</p>
+<p>Partition 的管理<br>
+MBR：fdisk、fdisk -l<br>
+GPT：gdisk、gdisk -l</p>
+<p>File System 的建立：mkfs<br>
+blkid</p>
+<p>File System 的掛載：mount<br>
+df -h、du -h<br>
+du -h / &ndash;max-depth=1</p>
+<ul>
+<li>lsof /mount_point</li>
+</ul>
+<p>hard link</p>
+<ul>
+<li>只能建立在檔案上</li>
+<li>不能跨 file system</li>
+</ul>
+<p>Soft Link</p>
+<ul>
+<li>建立 soft link 最好全部用絕對路徑</li>
+<li>可建立在檔案與目錄上</li>
+<li>可跨 File system</li>
+</ul>
+<p>P368</p>
+<p>p369找 hard link 大於1的檔案時，一定要指定 type 為 file，不然會列出所有子目錄，因為每個子目錄中都有個隱藏的. 資料夾</p>
+
+            </article>
+          </div>
+          
+      <div class='entry-meta-bottom'>
+        
+
+  <div class="entry-categories"><p><span>Categories</span>
+    
+    <a href="/categories/linux" title="View all posts in Linux">Linux</a>
+  </p>
+</div>
+
+
+
+<div class="entry-tags"><p><span>Tags</span>
+  
+  <a href="/tags/centos" title="View all posts tagged CentOS">CentOS</a>
+  
+  <a href="/tags/rh124" title="View all posts tagged RH124">RH124</a>
+  
+  <a href="/tags/rhcsa" title="View all posts tagged RHCSA">RHCSA</a>
+  
+
+</p></div>	</div>
+
+	
+<div class="author-meta">
+
+  <div class="author">
+    	
+      <img alt='wade' src="https://www.gravatar.com/avatar/6fee0275681dd0b43da1d6acb66c336f?s=100&d=identicon" class='avatar avatar-72 photo' height='72' width='72'>
+    
+    <span>
+      Written by:<a href="https://notes.wadeism.net/" title="Posts by wade" rel="author">wade</a> </span>
+    </div>
+    <div class="bio">
+      
+      
+      <p>本站站長</p>
+      
+      
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a class="github" target="_blank"
+href="https://github.com/wade-chiang">
+<i class="fab fa-github"
+title="github icon"></i>
+</a>
+
+
+
+
+
+
+
+</div>
+</div>
+
+</div>
+</div>
+
+<section id="comments" class="comments">
+  <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+    var d = document, s = d.createElement('script');
+    s.src = 'https://notes-wadeism.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+</section>
+</div>
+
+ 
+
+
+
+    </div>
+
+    <footer id="site-footer" class="site-footer" role="contentinfo">
+	<h1>
+    
+    <a href=""> Nothing but.. </a>
+    
+	</h1>
+
+			
+			<p class="site-description">Something here</p>
+			
+
+		<div id="menu-footer" class="menu-container menu-footer" role="navigation">
+		<div class="menu">
+
+      <ul id="menu-footer-items" class="menu-footer-items">
+        
+</ul>
+
+</div>	</div>
+
+<ul class="social-media-icons">
+
+        
+
+        
+
+
+        
+
+        
+
+        
+
+        
+
+        
+
+
+        
+        <li>
+        <a href="https://github.com/wade-chiang"  class="github" target="_blank">
+            <i class="fab fa-github" title="github"></i>
+            <span class="screen-reader-text">github</span>
+        </a>
+        </li>
+        
+
+
+        
+
+        
+        <li>
+        <a href="https://notes.wadeism.net/index.xml" data-animate-hover="pulse" class="rss" target="_blank">
+            <i class="fas fa-rss" title="rss"></i>
+            <span class="screen-reader-text">rss</span>
+        </a>
+        </li>
+        
+
+				</ul>	<div class="design-credit">
+		
+		<p>© 2022 Wade</p>
+		
+		<p>Nederburg Hugo Theme by <a href="https://appernetic.io" target="_blank">Appernetic</a>.</p>
+		
+		<p>A port of Tracks by Compete Themes.</p>
+		
+	</div>
+</footer>
+
+  </div>
+  <script src="https://notes.wadeism.net/js/jquery.min.js"></script>
+<script src="https://notes.wadeism.net/js/jquerymigrate.js"></script>
+<script src="https://notes.wadeism.net/js/production.min.js?v=1684173172"></script>
+
+
+
+<script src="https://notes.wadeism.net/js/prism.js"></script>
+
+
+<script src="https://notes.wadeism.net/js/medium-zoom.js"></script>
+<script src="https://notes.wadeism.net/js/wade_custom.js"></script>
+
+
+
+
+
+<script type="text/javascript">var _jf = _jf || [];_jf.push(['p','63921']);_jf.push(['initAction',true]);_jf.push(['_setFont','xingothic-tc-w6','css','.xingothic-tc-w6']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-meta-bottom a']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-content h3']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-content h4']);_jf.push(['_setFont','xingothic-tc-w6','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w6','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w6','weight',600]);_jf.push(['_setFont','xingothic-tc-w5','css','.xingothic-tc-w5']);_jf.push(['_setFont','xingothic-tc-w5','css','div.entry-content p']);_jf.push(['_setFont','xingothic-tc-w5','css','div.excerpt-content p']);_jf.push(['_setFont','xingothic-tc-w5','css','div.post article']);_jf.push(['_setFont','xingothic-tc-w5','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w5','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w5','weight',500]);_jf.push(['_setFont','xingothic-tc-w7','css','.xingothic-tc-w7']);_jf.push(['_setFont','xingothic-tc-w7','css','h1.entry-title']);_jf.push(['_setFont','xingothic-tc-w7','css','h2.excerpt-title']);_jf.push(['_setFont','xingothic-tc-w7','css','div.entry-content h2']);_jf.push(['_setFont','xingothic-tc-w7','css','strong']);_jf.push(['_setFont','xingothic-tc-w7','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w7','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w7','weight',700]);(function(A,p,c,m,l,q,r,h,B,D){var b=A._jf;if(b.constructor!==Object){var t=!0,u=function(a){var f=!0,e;for(e in b)b[e][0]==a&&(f&&(f=f&&!1!==b[e][1].call(b)),b[e]=null,delete b[e])},v=/\S+/g,w=/[\t\r\n\f]/g,C=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,n="".trim,x=n&&!n.call("\ufeff\u00a0")?function(a){return null==a?"":n.call(a)}:function(a){return null==a?"":(a+"").replace(C,"")},k=function(a){var f,b,g;if("string"===typeof a&&a&&(a=(a||"").match(v)||[],f=h[c]?(" "+h[c]+" ").replace(w," "):" ")){for(g=0;b=a[g++];)0>f.indexOf(" "+b+" ")&&(f+=b+" ");h[c]=x(f)}},d=function(a){var b,e,g;if(0===arguments.length||"string"===typeof a&&a){var d=(a||"").match(v)||[];if(b=h[c]?(" "+h[c]+" ").replace(w," "):""){for(g=0;e=d[g++];)for(;0<=b.indexOf(" "+e+" ");)b=b.replace(" "+e+" "," ");h[c]=a?x(b):""}}},y;b.addScript=y=function(b,f,e,g,d,c){d=d||function(){};c=c||function(){};var a=p.createElement("script"),h=p.getElementsByTagName("script")[0],k,m=!1,l=function(){a.src="";a.parentNode.removeChild(a);a=a.onerror=a.onload=a.onreadystatechange=null};g&&(k=setTimeout(function(){l();c()},g));a.type=f||"text/javascript";a.async=e;a.onload=a.onreadystatechange=function(b,c){m||a.readyState&&!/loaded|complete/.test(a.readyState)||(m=!0,g&&clearTimeout(k),l(),c||d())};a.onerror=function(a,b,d){g&&clearTimeout(k);l();c();return!0};a.src=b;h.parentNode.insertBefore(a,h)};for(var z in b)"initAction"==b[z][0]&&(t=b[z][1]);b.push(["_eventPreload",function(){1==t&&k(m);y(B,null,!1,3E3,null,function(){u("_eventInactived")})}]);b.push(["_eventReload",function(){d(r);d(q);k(l)}]);b.push(["_eventActived",function(){d(m);d(l);k(q)}]);b.push(["_eventInactived",function(){d(m);d(l);k(r)}]);u("_eventPreload")}})(this,this.document,"className","jf-loading","jf-reloading","jf-active","jf-inactive",this.document.getElementsByTagName("html")[0],"//ds.justfont.com/js/stable/v/6.0/id/171309946041");</script>
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9504338511537027" crossorigin="anonymous"></script>
+
+
+<script src="https://notes.wadeism.net/js/back-to-top.js"></script>
+
+  
+  
+
+</body>
+</html>

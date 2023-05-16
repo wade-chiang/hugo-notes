@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Git on Nothing but..</title>
+    <link>https://notes.wadeism.net/tags/git/</link>
+    <description>Recent content in Git on Nothing but..</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 12 Sep 2022 12:57:23 +0800</lastBuildDate><atom:link href="https://notes.wadeism.net/tags/git/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>使用多組 SSH Key 讓不同 GitHub 帳號免密碼執行 git push</title>
+      <link>https://notes.wadeism.net/post/2022-09-12-git-push-with-specify-ssh-key/</link>
+      <pubDate>Mon, 12 Sep 2022 12:57:23 +0800</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/2022-09-12-git-push-with-specify-ssh-key/</guid>
+      <description>開始用 Hugo 與 md 檔來寫文章後（雖然這是今年的</description>
+    </item>
+    
+    <item>
+      <title>使用 GitHub 建立個人靜態網頁</title>
+      <link>https://notes.wadeism.net/post/github-create-personal-page/</link>
+      <pubDate>Mon, 01 Oct 2018 14:09:39 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/github-create-personal-page/</guid>
+      <description>記得以前在課堂上，老師介紹過兩種免費的方</description>
+    </item>
+    
+  </channel>
+</rss>

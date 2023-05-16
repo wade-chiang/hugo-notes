@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="application/ld+json">
+    {
+        "@context" : "http://schema.org",
+        "@type" : "BlogPosting",
+        "mainEntityOfPage": {
+             "@type": "WebPage",
+             "@id": "https:\/\/notes.wadeism.net\/"
+        },
+        "articleSection" : "post",
+        "name" : "macOS 開機自動執行 Script",
+        "headline" : "macOS 開機自動執行 Script",
+        "description" : "在 Linux 裡我們很習慣用 rc.local 或是自製 systemd 的 unit 來讓開",
+        "inLanguage" : "zh-Hant-TW",
+        "author" : "wade",
+        "creator" : "wade",
+        "publisher": "wade",
+        "accountablePerson" : "wade",
+        "copyrightHolder" : "wade",
+        "copyrightYear" : "2020",
+        "datePublished": "2020-11-09 08:22:22 \u002b0000 \u002b0000",
+        "dateModified" : "2020-11-09 08:22:22 \u002b0000 \u002b0000",
+        "url" : "https:\/\/notes.wadeism.net\/post\/macos-running-script-on-boot\/",
+        "wordCount" : "2067",
+        "image" : "https:\/\/notes.wadeism.net\/https:\/\/image.wadeism.net\/launchd00.png",
+        "keywords" : [ "Mac","macOS","Blog" ]   
+    }
+    </script>
+
+
+
+ <title>macOS 開機自動執行 Script - Nothing but..</title>
+<meta property="og:title" content="macOS 開機自動執行 Script - Nothing but..">
+
+
+
+<meta name="description" content="My notes for everyone" />
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="all,follow">
+<meta name="googlebot" content="index,follow,snippet,archive">
+<link rel="stylesheet" id="ct-tracks-google-fonts-css" href="https://fonts.googleapis.com/css?family=Raleway%3A400%2C700&amp;subset=latin%2Clatin-ext&amp;ver=4.7.2" type="text/css" media="all">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+<link href="https://notes.wadeism.net/css/style.css?v=1684173173" rel="stylesheet" id="theme-stylesheet" type='text/css' media='all'>
+
+<link href="https://notes.wadeism.net/css/custom.css?v=1684173173" rel="stylesheet" type='text/css' media='all'>
+<link rel="shortcut icon" href="https://notes.wadeism.net/img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="https://notes.wadeism.net/img/favicon.ico" type="image/x-icon">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-120924943-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-120924943-1');
+</script>
+
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-120924943-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-120924943-1');
+</script>
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://notes.wadeism.net/css/prism.css" >
+
+
+<style>
+   
+   
+   
+  @import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Roboto+Mono&display=swap');
+</style>
+
+
+<link href="https://notes.wadeism.net/css/wade_custom.css?v=1684173173" rel="stylesheet" type='text/css' media='all'>
+</head>
+
+
+<body class="post-template-default single single-post single-format-standard ct-body singular singular-post not-front standard">
+
+  <div id="overflow-container" class="overflow-container">
+    <a class="skip-content" href="#main">Skip to content</a>
+    <header id="site-header" class="site-header" role="banner">
+      <div class='top-navigation'>
+        <div class='container'>
+
+  <div id="menu-secondary" class="menu-container menu-secondary" role="navigation">
+    <button id="toggle-secondary-navigation" class="toggle-secondary-navigation"><i class="fas fa-plus"></i></button>
+
+    <div class="menu">
+
+      <ul id="menu-secondary-items" class="menu-secondary-items">
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/bass">bass</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/developer">developer</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/linux">linux</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/mac">mac</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/office">office</a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+
+  </div>
+
+
+  <ul class="social-media-icons">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+    
+    <li>
+      <a href="https://github.com/wade-chiang" data-animate-hover="pulse" class="github" target="_blank">
+        <i class="fab fa-github" title="github"></i>
+        <span class="screen-reader-text">github</span>
+      </a>
+    </li>
+    
+
+
+    
+
+    
+    <li>
+      <a href="https://notes.wadeism.net/index.xml" data-animate-hover="pulse" class="rss" target="_blank">
+        <i class="fas fa-rss" title="rss"></i>
+        <span class="screen-reader-text">rss</span>
+      </a>
+    </li>
+    
+
+
+  </ul></div>
+
+      </div>
+
+      <div class="container">
+        <div id="title-info" class="title-info">
+  <div id='site-title' class='site-title'>
+    
+    <a href="/"> Nothing but.. </a>
+    </div>
+  </div>
+  <button id="toggle-navigation" class="toggle-navigation">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <div id="menu-primary-tracks" class="menu-primary-tracks"></div>
+  <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+    
+    <p class="site-description">Something here</p>
+    
+
+    <div class="menu">
+      <ul id="menu-primary-items" class="menu-primary-items">
+        
+        
+        <li class='menu-item menu-item-type-custom menu-item-object-custom '>
+          <a href="https://notes.wadeism.net/">Home</a>
+          
+        </li>
+        
+        <li class='menu-item menu-item-type-post_type menu-item-object-page '>
+          <a href="https://notes.wadeism.net/about/">About</a>
+          
+        </li>
+        
+        <li class='menu-item menu-item-type-post_type menu-item-object-page '>
+          <a href="https://notes.wadeism.net/contact/"></a>
+          
+        </li>
+        
+      </ul>
+    </div>
+
+  </div>
+
+      </div>
+    </header>
+
+    <div id="main" class="main" role="main">
+
+      
+  
+  
+    
+  
+  
+  <div id="loop-container" class="loop-container">
+    
+    <div class="post type-post status-publish format-standard has-post-thumbnail hentry category-design tag-design tag-standard-2 tag-tagalicious tag-travel entry full-without-featured odd excerpt-1">
+
+      <div class='featured-image lazy lazy-bg-image'  data-background="https://image.wadeism.net/launchd00.png">
+      </div>
+      
+        <div class="entry-meta">
+          <span class="date">09 November 2020</span>	<span> / </span>
+
+          <span class="author">
+            <a href="https://notes.wadeism.net/" title="Posts by wade" rel="author">wade</a>
+          </span>
+
+
+          
+          <span class="category">
+            <span> / </span>
+
+            <a href="/categories/mac">Mac</a>
+          </span>
+          
+
+
+        </div>
+        <div class='entry-header'>
+          <h1 class='entry-title'> macOS 開機自動執行 Script</h1>
+        </div>
+        <div class="entry-container">
+          <div class="entry-content">
+            <article>
+              <p>在 Linux 裡我們很習慣用 rc.local 或是自製 systemd 的 unit 來讓開機時自動執行某個程式或是 script，而在 Mac 上目前我所知道的方法有 <span class="hl-blue">Launchd</span> 與 <span class="hl-blue">Automator</span> 兩種，本篇要講的 launchd 就是個類似 Linux systemd 的工具。</p>
+<p>Launchd 是 Mac 上用來控制、管理 Daemon 與程序的工具，用 ps 可以看到它的 pid 為 1，表示它是系統第一個執行的 process，而用來控制 launchd 的工具 launchctl，也類似 Linux 的 systemctl，基本上可以用 systemd 的概念來理解它，不過使用的方法當然還是很不一樣，下面就來紀錄這次的使用過程。</p>
+<p><span class="hl-red">本文使用版本為macOS Catalina</span></p>
+<h2 id="launchd-設定檔種類與路徑">launchd 設定檔種類與路徑</h2>
+<p>Launchd 設定檔的內容為程式的啟動方式與流程，類似於 systemd 的 unit，分為 <span class="hl-blue">Agent</span> 與 <span class="hl-blue">Daemon</span> 兩種，Agent 是使用者登入時載入，而 Daemon 則是系統開機時載入，較屬於常駐型的程式。因不同的使用情況與權限會放到下面不同的路徑中：</p>
+<ul>
+<li><span class="hl-green mono">~/Library/LaunchAgents</span>：存放各別使用者的 agent 設定</li>
+<li><span class="hl-green mono">/Library/LaunchAgents</span>：由系統管理者所提供的 agent，每個使用者登入時都會執行</li>
+<li><span class="hl-green mono">/Library/LaunchDaemons</span>：由系統管理者提供的全域 daemon，不過設定檔中可以用 UserName 這個 tag 來指定要執行的使用者</li>
+<li><span class="hl-green mono">/System/Library/LaunchAgents</span>：系統 agent 的路徑</li>
+<li><span class="hl-green mono">/System/Library/LaunchDaemons</span>：系統 daemon 的路徑，建議與前面的系統 agent 一樣都不要去動到！</li>
+</ul>
+<h2 id="launchd-設定檔範例">launchd 設定檔範例</h2>
+<p>launchd 的設定檔格式為 xml，副檔名為 <span class="hl-blue">.plist</span>。</p>
+<p>本次的範例是想在<span class="hl-blue">開機時自動在自己的 home 目錄中建立 AA、BB、CC 三個空資料夾</span>，以下為 agent 的 plist 檔 take1.plist 的內容：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#75715e">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">&lt;!DOCTYPE plist PUBLIC &#34;-//Apple//DTD PLIST 1.0//EN&#34; &#34;http://www.apple.com/DTDs/PropertyList-1.0.dtd&#34;&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;plist</span> <span style="color:#a6e22e">version=</span><span style="color:#e6db74">&#34;1.0&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;dict&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">&lt;key&gt;</span>EnvironmentVariables<span style="color:#f92672">&lt;/key&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">&lt;dict&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#f92672">&lt;key&gt;</span>PATH<span style="color:#f92672">&lt;/key&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#f92672">&lt;string&gt;</span>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/bin/zsh<span style="color:#f92672">&lt;/string&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">&lt;/dict&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">&lt;key&gt;</span>Label<span style="color:#f92672">&lt;/key&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">&lt;string&gt;</span>com.wade.take1<span style="color:#f92672">&lt;/string&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">&lt;key&gt;</span>ProgramArguments<span style="color:#f92672">&lt;/key&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">&lt;array&gt;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#f92672">&lt;string&gt;</span>/Users/wade/mkdir.sh<span style="color:#f92672">&lt;/string&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">&lt;/array&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">&lt;key&gt;</span>RunAtLoad<span style="color:#f92672">&lt;/key&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">&lt;true/&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">&lt;key&gt;</span>StandardErrorPath<span style="color:#f92672">&lt;/key&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">&lt;string&gt;</span>/Users/wade/take1.err<span style="color:#f92672">&lt;/string&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">&lt;key&gt;</span>StandardOutPath<span style="color:#f92672">&lt;/key&gt;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">&lt;string&gt;</span>/Users/wade/take1.out<span style="color:#f92672">&lt;/string&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/dict&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/plist&gt;</span>
+</span></span></code></pre></div><p><span class="hl-blue">&lt;key&gt;</span> 用來定義項目名稱，例如<span class="hl-blue">&lt;key&gt;Label&lt;/key&gt;</span> 就是指這個 agent 在 launchd 裡的名字，而它底下的 <span class="hl-blue">&lt;string&gt;</span> 則是該項目的值，從上面的例子可以知道，這個 agent 在 launchctl 裡看到的名稱即為「com.wade.take1」，下面簡單介紹幾個比較重要的 key tag：</p>
+<ul>
+<li><span class="hl-green mono">EnvironmentVariables</span>：底下加入 PATH 的 key值可以定義 PATH 環境變數，這個選項在一些範例中不一定會有，但如果 script 執行上有問題時，可以試著加上這個選項。</li>
+<li><span class="hl-green mono">Label</span>：agent 的名稱，使用 launchctl list 可以看到。</li>
+<li><span class="hl-green mono">ProgramArguments</span>：要執行的指令或 script，使用 <array> tag 可以執行複數的物件（執行單一指令時可以改用 <key>Program</key>）</li>
+<li><span class="hl-green mono">RunAtLoad</span>：下面將該值設定為 <true/>，表示這個 agent 在被 launchd 讀取時就會被執行。</li>
+<li><span class="hl-green mono">StandardErrorPath</span>：將執行結果的 standard error 訊息存到指定的檔案裡。</li>
+<li><span class="hl-green mono">StandardOutPath</span>：將執行結果的 standard out 訊息存到指定的檔案裡，<span class="hl-red">與上面選項都是非必要的，但如果設定檔裡的程式執行有問題時，拿來除錯非常的實用！</span></li>
+</ul>
+<p><br>
+<span class="hl-blue">/Users/wade/mkdir.sh</span> 的內容如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/zsh
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>cPath<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/Users/wade&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>folder<span style="color:#f92672">=(</span>
+</span></span><span style="display:flex;"><span>AA
+</span></span><span style="display:flex;"><span>BB
+</span></span><span style="display:flex;"><span>CC
+</span></span><span style="display:flex;"><span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> fName in <span style="color:#e6db74">${</span>folder<span style="color:#e6db74">}</span>; <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>  mkdir <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>cPath<span style="color:#e6db74">}</span><span style="color:#e6db74">/</span><span style="color:#e6db74">${</span>fName<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>
+</span></span></code></pre></div><p>script 的內容就是在 /User/wade 裡建立 AA、BB、CC 三個空資料夾，因為 Catalina 開始的預設 shell 是 zsh，因此前面的 shell 宣告使用 <span class="hl-blue">#!/bin/zsh</span></p>
+<p>有了 plist 檔與 script 後，接著我們就要用 launchctl 這個操作工具來讓設定檔生效。</p>
+<h2 id="以-launchctl-啟用-agent">以 launchctl 啟用 agent</h2>
+<p>因為這次的範例只是在自己的 home 目錄建資料夾，因此我們將 take1.plist 檔放到 <span class="hl-blue">~/Library/LaunchAgents</span> 裡。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mv take1.plist ~/Library/LaunchAgents/
+</span></span></code></pre></div><p><br>
+接著切換到該目錄後，使用 launchctl 讀取設定檔</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd ~/Library/LaunchAgents/
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>launchctl load take1.plist
+</span></span></code></pre></div><p><br>
+如果 plist 有錯，要修改的話需要先將設定給移除，待改完後再次讀取</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>launchctl remove com.wade.take1
+</span></span></code></pre></div><p><br>
+查看 plist 的讀取與執行狀態</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>launchctl list | grep wade.take1
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>PID   Status   Label
+</span></span><span style="display:flex;"><span>-     <span style="color:#ae81ff">127</span>      com.wade.take1
+</span></span></code></pre></div><p>一般來說，執行中的 daemon 會有 PID，這次的 script 並非常駐型的 daemon 程式，所以沒有 PID 很正常，而執行成功的 agent，Status Code 應該要是 0，Status 127 表示執行有錯誤。</p>
+<p>這時候我們可以去 google 搜尋 launchd 有關 127 code 的資訊，另外也可以用我們在 plist 中指定輸出的 standard error file 去查看錯誤的資訊</p>
+<p>查看錯誤訊息</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat ~/take1.err
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>/bin/zsh: can<span style="color:#960050;background-color:#1e0010">&#39;</span>t open input file: /Users/wade/mkdir.sh
+</span></span></code></pre></div><p>出現類似上面的訊息時，可能是檔案權限的問題，這時候可以先檢查檔案與資料夾是否有 rx 的權限，如果都正確的話，可能就是 Mac 的安全限制。</p>
+<h2 id="允許-zsh-存取檔案">允許 zsh 存取檔案</h2>
+<p>為了允許 zsh 存取檔案，我們首先打開 <span class="hl-blue">系統偏好設定</span>，接著選取 <span class="hl-blue">安全性與隱私權</span> → <span class="hl-blue">隱私權</span></p>
+<p><img src="https://image.wadeism.net/launchd01.png" alt=""></p>
+<p><img src="https://image.wadeism.net/launchd02.png" alt=""></p>
+<p><br>
+在左邊視窗中找到 <span class="hl-blue">完全取用磁碟</span></p>
+<p><img src="https://image.wadeism.net/launchd03.png" alt=""></p>
+<p>接著點選右邊的 + 號（記得先點擊下面的小鎖頭解開修改限制）</p>
+<p><img src="https://image.wadeism.net/launchd04.png" alt=""></p>
+<p>預設我們是無法在 Finder 裡看到 /bin 資料夾的，這時按組合鍵「<span class="hl-blue">Shift</span>」+「<span class="hl-blue">Command</span>」+「<span class="hl-blue">.</span>」就會跳出隱藏的系統檔案</p>
+<p><img src="https://image.wadeism.net/launchd05.png" alt=""></p>
+<p>找到 <span class="hl-blue">Macintosh HD</span> → <span class="hl-blue">bin</span> 裡面的 zsh，將它打開就可以把 zsh 加入「完全取用磁碟」的權限。</p>
+<p><img src="https://image.wadeism.net/launchd06.png" alt=""></p>
+<p><img src="https://image.wadeism.net/launchd07.png" alt=""></p>
+<p>如果 script 的宣告是用 /bin/bash，那這邊就選 /bin/bash</p>
+<h2 id="再次啟用-launchd-設定檔">再次啟用 launchd 設定檔</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>launchctl start take1.plist
+</span></span></code></pre></div><p><br>
+查看 plist 的讀取與執行狀態</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>launchctl list | grep wade.take1
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>PID   Status   Label
+</span></span><span style="display:flex;"><span>-     <span style="color:#ae81ff">0</span>        com.wade.take1
+</span></span></code></pre></div><p>這次看起來設定檔有執行成功了，接著看看 home 目錄裡是否有 AA、BB、CC 三個資料夾，有的話將它們刪掉並且重開機測試</p>
+<p>重開機後如果空資料夾有建起來，就算是大成告成啦！</p>
+<h2 id="後記">後記</h2>
+<p>由於對 mac 還不是很熟，所以這次 debug 的時間比較久，幾個地方之後需要注意：</p>
+<ul>
+<li>務必先單獨測試 script 是否能執行，不能執行的話 launchtd 這邊也會出錯</li>
+<li>找不到問題時，可以裝 LaunchControl 這個 app 來 debug，基本上它就是教你新增 PATH、或是用它的小工具來除錯，不過這是個付費軟體，所以用它來修改的 plist 得另存再來試</li>
+<li>很多出錯的地方都是在權限的問題，就算 script 直接執行沒問題，使用 launchd 還是有可能出錯，所以上面的 允許 zsh  存取檔案那邊非常重要</li>
+</ul>
+<hr>
+<p>參考資料：</p>
+<p><a href="https://www.launchd.info/" target="_blank">A launchd Tutorial</a></p>
+
+            </article>
+          </div>
+          
+      <div class='entry-meta-bottom'>
+        
+
+  <div class="entry-categories"><p><span>Categories</span>
+    
+    <a href="/categories/mac" title="View all posts in Mac">Mac</a>
+  </p>
+</div>
+
+
+
+<div class="entry-tags"><p><span>Tags</span>
+  
+  <a href="/tags/mac" title="View all posts tagged Mac">Mac</a>
+  
+  <a href="/tags/macos" title="View all posts tagged macOS">macOS</a>
+  
+
+</p></div>	</div>
+
+	
+<div class="author-meta">
+
+  <div class="author">
+    	
+      <img alt='wade' src="https://www.gravatar.com/avatar/6fee0275681dd0b43da1d6acb66c336f?s=100&d=identicon" class='avatar avatar-72 photo' height='72' width='72'>
+    
+    <span>
+      Written by:<a href="https://notes.wadeism.net/" title="Posts by wade" rel="author">wade</a> </span>
+    </div>
+    <div class="bio">
+      
+      
+      <p>本站站長</p>
+      
+      
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a class="github" target="_blank"
+href="https://github.com/wade-chiang">
+<i class="fab fa-github"
+title="github icon"></i>
+</a>
+
+
+
+
+
+
+
+</div>
+</div>
+
+</div>
+</div>
+
+<section id="comments" class="comments">
+  <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+    var d = document, s = d.createElement('script');
+    s.src = 'https://notes-wadeism.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+</section>
+</div>
+
+ 
+
+
+
+    </div>
+
+    <footer id="site-footer" class="site-footer" role="contentinfo">
+	<h1>
+    
+    <a href=""> Nothing but.. </a>
+    
+	</h1>
+
+			
+			<p class="site-description">Something here</p>
+			
+
+		<div id="menu-footer" class="menu-container menu-footer" role="navigation">
+		<div class="menu">
+
+      <ul id="menu-footer-items" class="menu-footer-items">
+        
+</ul>
+
+</div>	</div>
+
+<ul class="social-media-icons">
+
+        
+
+        
+
+
+        
+
+        
+
+        
+
+        
+
+        
+
+
+        
+        <li>
+        <a href="https://github.com/wade-chiang"  class="github" target="_blank">
+            <i class="fab fa-github" title="github"></i>
+            <span class="screen-reader-text">github</span>
+        </a>
+        </li>
+        
+
+
+        
+
+        
+        <li>
+        <a href="https://notes.wadeism.net/index.xml" data-animate-hover="pulse" class="rss" target="_blank">
+            <i class="fas fa-rss" title="rss"></i>
+            <span class="screen-reader-text">rss</span>
+        </a>
+        </li>
+        
+
+				</ul>	<div class="design-credit">
+		
+		<p>© 2022 Wade</p>
+		
+		<p>Nederburg Hugo Theme by <a href="https://appernetic.io" target="_blank">Appernetic</a>.</p>
+		
+		<p>A port of Tracks by Compete Themes.</p>
+		
+	</div>
+</footer>
+
+  </div>
+  <script src="https://notes.wadeism.net/js/jquery.min.js"></script>
+<script src="https://notes.wadeism.net/js/jquerymigrate.js"></script>
+<script src="https://notes.wadeism.net/js/production.min.js?v=1684173173"></script>
+
+
+
+<script src="https://notes.wadeism.net/js/prism.js"></script>
+
+
+<script src="https://notes.wadeism.net/js/medium-zoom.js"></script>
+<script src="https://notes.wadeism.net/js/wade_custom.js"></script>
+
+
+
+
+
+<script type="text/javascript">var _jf = _jf || [];_jf.push(['p','63921']);_jf.push(['initAction',true]);_jf.push(['_setFont','xingothic-tc-w6','css','.xingothic-tc-w6']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-meta-bottom a']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-content h3']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-content h4']);_jf.push(['_setFont','xingothic-tc-w6','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w6','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w6','weight',600]);_jf.push(['_setFont','xingothic-tc-w5','css','.xingothic-tc-w5']);_jf.push(['_setFont','xingothic-tc-w5','css','div.entry-content p']);_jf.push(['_setFont','xingothic-tc-w5','css','div.excerpt-content p']);_jf.push(['_setFont','xingothic-tc-w5','css','div.post article']);_jf.push(['_setFont','xingothic-tc-w5','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w5','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w5','weight',500]);_jf.push(['_setFont','xingothic-tc-w7','css','.xingothic-tc-w7']);_jf.push(['_setFont','xingothic-tc-w7','css','h1.entry-title']);_jf.push(['_setFont','xingothic-tc-w7','css','h2.excerpt-title']);_jf.push(['_setFont','xingothic-tc-w7','css','div.entry-content h2']);_jf.push(['_setFont','xingothic-tc-w7','css','strong']);_jf.push(['_setFont','xingothic-tc-w7','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w7','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w7','weight',700]);(function(A,p,c,m,l,q,r,h,B,D){var b=A._jf;if(b.constructor!==Object){var t=!0,u=function(a){var f=!0,e;for(e in b)b[e][0]==a&&(f&&(f=f&&!1!==b[e][1].call(b)),b[e]=null,delete b[e])},v=/\S+/g,w=/[\t\r\n\f]/g,C=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,n="".trim,x=n&&!n.call("\ufeff\u00a0")?function(a){return null==a?"":n.call(a)}:function(a){return null==a?"":(a+"").replace(C,"")},k=function(a){var f,b,g;if("string"===typeof a&&a&&(a=(a||"").match(v)||[],f=h[c]?(" "+h[c]+" ").replace(w," "):" ")){for(g=0;b=a[g++];)0>f.indexOf(" "+b+" ")&&(f+=b+" ");h[c]=x(f)}},d=function(a){var b,e,g;if(0===arguments.length||"string"===typeof a&&a){var d=(a||"").match(v)||[];if(b=h[c]?(" "+h[c]+" ").replace(w," "):""){for(g=0;e=d[g++];)for(;0<=b.indexOf(" "+e+" ");)b=b.replace(" "+e+" "," ");h[c]=a?x(b):""}}},y;b.addScript=y=function(b,f,e,g,d,c){d=d||function(){};c=c||function(){};var a=p.createElement("script"),h=p.getElementsByTagName("script")[0],k,m=!1,l=function(){a.src="";a.parentNode.removeChild(a);a=a.onerror=a.onload=a.onreadystatechange=null};g&&(k=setTimeout(function(){l();c()},g));a.type=f||"text/javascript";a.async=e;a.onload=a.onreadystatechange=function(b,c){m||a.readyState&&!/loaded|complete/.test(a.readyState)||(m=!0,g&&clearTimeout(k),l(),c||d())};a.onerror=function(a,b,d){g&&clearTimeout(k);l();c();return!0};a.src=b;h.parentNode.insertBefore(a,h)};for(var z in b)"initAction"==b[z][0]&&(t=b[z][1]);b.push(["_eventPreload",function(){1==t&&k(m);y(B,null,!1,3E3,null,function(){u("_eventInactived")})}]);b.push(["_eventReload",function(){d(r);d(q);k(l)}]);b.push(["_eventActived",function(){d(m);d(l);k(q)}]);b.push(["_eventInactived",function(){d(m);d(l);k(r)}]);u("_eventPreload")}})(this,this.document,"className","jf-loading","jf-reloading","jf-active","jf-inactive",this.document.getElementsByTagName("html")[0],"//ds.justfont.com/js/stable/v/6.0/id/171309946041");</script>
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9504338511537027" crossorigin="anonymous"></script>
+
+
+<script src="https://notes.wadeism.net/js/back-to-top.js"></script>
+
+  
+  
+
+</body>
+</html>

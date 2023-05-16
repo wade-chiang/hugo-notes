@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>SAMBA on Nothing but..</title>
+    <link>https://notes.wadeism.net/tags/samba/</link>
+    <description>Recent content in SAMBA on Nothing but..</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 24 Dec 2020 16:40:00 +0000</lastBuildDate><atom:link href="https://notes.wadeism.net/tags/samba/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>macOS Catalina 使用 autofs 自動掛載 SAMBA</title>
+      <link>https://notes.wadeism.net/post/macos-catalina-autofs-samba/</link>
+      <pubDate>Thu, 24 Dec 2020 16:40:00 +0000</pubDate>
+      
+      <guid>https://notes.wadeism.net/post/macos-catalina-autofs-samba/</guid>
+      <description>我在 CentOS 8 安裝與設定 NFS Server 一文中提過 NFS 在 Unix 系</description>
+    </item>
+    
+  </channel>
+</rss>

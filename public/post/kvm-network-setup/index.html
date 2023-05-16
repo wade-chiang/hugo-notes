@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="application/ld+json">
+    {
+        "@context" : "http://schema.org",
+        "@type" : "BlogPosting",
+        "mainEntityOfPage": {
+             "@type": "WebPage",
+             "@id": "https:\/\/notes.wadeism.net\/"
+        },
+        "articleSection" : "post",
+        "name" : "KVM 網路設定教學",
+        "headline" : "KVM 網路設定教學",
+        "description" : "查看 KVM 預設的網路介面 sudo virsh net-info --network default # 執行結果",
+        "inLanguage" : "zh-Hant-TW",
+        "author" : "wade",
+        "creator" : "wade",
+        "publisher": "wade",
+        "accountablePerson" : "wade",
+        "copyrightHolder" : "wade",
+        "copyrightYear" : "2020",
+        "datePublished": "2020-07-07 15:30:44 \u002b0000 \u002b0000",
+        "dateModified" : "2020-07-07 15:30:44 \u002b0000 \u002b0000",
+        "url" : "https:\/\/notes.wadeism.net\/post\/kvm-network-setup\/",
+        "wordCount" : "1948",
+        "image" : "https:\/\/notes.wadeism.net\/https:\/\/image.wadeism.net\/kvm00.png",
+        "keywords" : [ "headless","KVM","Virtualization","Blog" ]   
+    }
+    </script>
+
+
+
+ <title>KVM 網路設定教學 - Nothing but..</title>
+<meta property="og:title" content="KVM 網路設定教學 - Nothing but..">
+
+
+
+<meta name="description" content="My notes for everyone" />
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="all,follow">
+<meta name="googlebot" content="index,follow,snippet,archive">
+<link rel="stylesheet" id="ct-tracks-google-fonts-css" href="https://fonts.googleapis.com/css?family=Raleway%3A400%2C700&amp;subset=latin%2Clatin-ext&amp;ver=4.7.2" type="text/css" media="all">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+<link href="https://notes.wadeism.net/css/style.css?v=1684173172" rel="stylesheet" id="theme-stylesheet" type='text/css' media='all'>
+
+<link href="https://notes.wadeism.net/css/custom.css?v=1684173172" rel="stylesheet" type='text/css' media='all'>
+<link rel="shortcut icon" href="https://notes.wadeism.net/img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="https://notes.wadeism.net/img/favicon.ico" type="image/x-icon">
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-120924943-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-120924943-1');
+</script>
+
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-120924943-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-120924943-1');
+</script>
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://notes.wadeism.net/css/prism.css" >
+
+
+<style>
+   
+   
+   
+  @import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Roboto+Mono&display=swap');
+</style>
+
+
+<link href="https://notes.wadeism.net/css/wade_custom.css?v=1684173172" rel="stylesheet" type='text/css' media='all'>
+</head>
+
+
+<body class="post-template-default single single-post single-format-standard ct-body singular singular-post not-front standard">
+
+  <div id="overflow-container" class="overflow-container">
+    <a class="skip-content" href="#main">Skip to content</a>
+    <header id="site-header" class="site-header" role="banner">
+      <div class='top-navigation'>
+        <div class='container'>
+
+  <div id="menu-secondary" class="menu-container menu-secondary" role="navigation">
+    <button id="toggle-secondary-navigation" class="toggle-secondary-navigation"><i class="fas fa-plus"></i></button>
+
+    <div class="menu">
+
+      <ul id="menu-secondary-items" class="menu-secondary-items">
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/bass">bass</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/developer">developer</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/linux">linux</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/mac">mac</a>
+        </li>
+        
+        <li class="menu-item menu-item-type-taxonomy menu-item-object-category">
+          <a href="/categories/office">office</a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+
+  </div>
+
+
+  <ul class="social-media-icons">
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+    
+    <li>
+      <a href="https://github.com/wade-chiang" data-animate-hover="pulse" class="github" target="_blank">
+        <i class="fab fa-github" title="github"></i>
+        <span class="screen-reader-text">github</span>
+      </a>
+    </li>
+    
+
+
+    
+
+    
+    <li>
+      <a href="https://notes.wadeism.net/index.xml" data-animate-hover="pulse" class="rss" target="_blank">
+        <i class="fas fa-rss" title="rss"></i>
+        <span class="screen-reader-text">rss</span>
+      </a>
+    </li>
+    
+
+
+  </ul></div>
+
+      </div>
+
+      <div class="container">
+        <div id="title-info" class="title-info">
+  <div id='site-title' class='site-title'>
+    
+    <a href="/"> Nothing but.. </a>
+    </div>
+  </div>
+  <button id="toggle-navigation" class="toggle-navigation">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <div id="menu-primary-tracks" class="menu-primary-tracks"></div>
+  <div id="menu-primary" class="menu-container menu-primary" role="navigation">
+    
+    <p class="site-description">Something here</p>
+    
+
+    <div class="menu">
+      <ul id="menu-primary-items" class="menu-primary-items">
+        
+        
+        <li class='menu-item menu-item-type-custom menu-item-object-custom '>
+          <a href="https://notes.wadeism.net/">Home</a>
+          
+        </li>
+        
+        <li class='menu-item menu-item-type-post_type menu-item-object-page '>
+          <a href="https://notes.wadeism.net/about/">About</a>
+          
+        </li>
+        
+        <li class='menu-item menu-item-type-post_type menu-item-object-page '>
+          <a href="https://notes.wadeism.net/contact/"></a>
+          
+        </li>
+        
+      </ul>
+    </div>
+
+  </div>
+
+      </div>
+    </header>
+
+    <div id="main" class="main" role="main">
+
+      
+  
+  
+    
+  
+  
+  <div id="loop-container" class="loop-container">
+    
+    <div class="post type-post status-publish format-standard has-post-thumbnail hentry category-design tag-design tag-standard-2 tag-tagalicious tag-travel entry full-without-featured odd excerpt-1">
+
+      <div class='featured-image lazy lazy-bg-image'  data-background="https://image.wadeism.net/kvm00.png">
+      </div>
+      
+        <div class="entry-meta">
+          <span class="date">07 July 2020</span>	<span> / </span>
+
+          <span class="author">
+            <a href="https://notes.wadeism.net/" title="Posts by wade" rel="author">wade</a>
+          </span>
+
+
+          
+          <span class="category">
+            <span> / </span>
+
+            <a href="/categories/linux">Linux</a>
+          </span>
+          
+
+
+        </div>
+        <div class='entry-header'>
+          <h1 class='entry-title'> KVM 網路設定教學</h1>
+        </div>
+        <div class="entry-container">
+          <div class="entry-content">
+            <article>
+              <p>查看 KVM 預設的網路介面</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh net-info --network default
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Name:           default
+</span></span><span style="display:flex;"><span>UUID:           f53e847a-4e83-4p47-ab75-3f9d020ee453
+</span></span><span style="display:flex;"><span>Active:         yes
+</span></span><span style="display:flex;"><span>Persistent:     yes
+</span></span><span style="display:flex;"><span>Autostart:      yes
+</span></span><span style="display:flex;"><span>Bridge:         virbr0
+</span></span></code></pre></div><p>KVM 裝好後會自動新增一個 NAT 的網路，可以看到自動建立的 default 使用的網卡是 virbr0</p>
+<p><br>
+查看目前 remote host 上的網卡資訊</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ip a
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>2: ens3: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span style="color:#ae81ff">1500</span> qdisc fq_codel state UP group default qlen <span style="color:#ae81ff">1000</span>
+</span></span><span style="display:flex;"><span>link/ether 52:54:00:44:d1:cb brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>inet 192.168.122.160/24 brd 192.168.122.255 scope global dynamic noprefixroute ens3
+</span></span><span style="display:flex;"><span>valid_lft 3596sec preferred_lft 3596sec
+</span></span><span style="display:flex;"><span>inet6 fe80::bad7:6118:68ec:3b8a/64 scope link noprefixroute 
+</span></span><span style="display:flex;"><span>valid_lft forever preferred_lft forever
+</span></span><span style="display:flex;"><span>3: virbr0: &lt;NO-CARRIER,BROADCAST,MULTICAST,UP&gt; mtu <span style="color:#ae81ff">1500</span> qdisc noqueue state DOWN group default qlen <span style="color:#ae81ff">1000</span>
+</span></span><span style="display:flex;"><span>link/ether 52:54:00:fa:15:28 brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>inet 192.168.199.1/24 brd 192.168.199.255 scope global virbr0
+</span></span><span style="display:flex;"><span>valid_lft forever preferred_lft forever
+</span></span><span style="display:flex;"><span>4: virbr0-nic: &lt;BROADCAST,MULTICAST&gt; mtu <span style="color:#ae81ff">1500</span> qdisc fq_codel master virbr0 state DOWN group default qlen <span style="color:#ae81ff">1000</span>
+</span></span><span style="display:flex;"><span>link/ether 52:54:00:fa:15:28 brd ff:ff:ff:ff:ff:ff
+</span></span></code></pre></div><p><span class="hl-blue">ens3</span> 是 host 上的實體網卡，<span class="hl-blue">virbr0</span> 則是 kvm 自動新增的 NAT 虛擬網卡。<br>
+建立虛擬機預設使用 default 網路，機器會在 192.168.199.1/24 的這個網段當中</p>
+<h2 id="修改-default-的網段">修改 default 的網段</h2>
+<p>192.168.199.1/24 這個網段是 KVM 隨機建立的，如果不喜歡可以更改</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh net-edit --network default
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;network&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;name&gt;</span>default<span style="color:#f92672">&lt;/name&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;uuid&gt;</span>b53e847a-4e83-4d47-ab75-3f9d020ee450<span style="color:#f92672">&lt;/uuid&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;forward</span> <span style="color:#a6e22e">mode=</span><span style="color:#e6db74">&#39;nat&#39;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;bridge</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#39;virbr0&#39;</span> <span style="color:#a6e22e">stp=</span><span style="color:#e6db74">&#39;on&#39;</span> <span style="color:#a6e22e">delay=</span><span style="color:#e6db74">&#39;0&#39;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;mac</span> <span style="color:#a6e22e">address=</span><span style="color:#e6db74">&#39;52:54:00:fa:15:28&#39;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;ip</span> <span style="color:#a6e22e">address=</span><span style="color:#e6db74">&#39;192.168.199.1&#39;</span> <span style="color:#a6e22e">netmask=</span><span style="color:#e6db74">&#39;255.255.255.0&#39;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;dhcp&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;range</span> <span style="color:#a6e22e">start=</span><span style="color:#e6db74">&#39;192.168.199.2&#39;</span> <span style="color:#a6e22e">end=</span><span style="color:#e6db74">&#39;192.168.199.254&#39;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/dhcp&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/ip&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/network&gt;</span>
+</span></span></code></pre></div><p>使用 <span class="hl-blue">virsh net-edit</span> 編輯 defulat 的設定檔，在這裡我把 192.168.199.x 改成 192.168.123.x</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;network&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;name&gt;</span>default<span style="color:#f92672">&lt;/name&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;uuid&gt;</span>b53e847a-4e83-4d47-ab75-3f9d020ee450<span style="color:#f92672">&lt;/uuid&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;forward</span> <span style="color:#a6e22e">mode=</span><span style="color:#e6db74">&#39;nat&#39;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;bridge</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#39;virbr0&#39;</span> <span style="color:#a6e22e">stp=</span><span style="color:#e6db74">&#39;on&#39;</span> <span style="color:#a6e22e">delay=</span><span style="color:#e6db74">&#39;0&#39;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;mac</span> <span style="color:#a6e22e">address=</span><span style="color:#e6db74">&#39;52:54:00:fa:15:28&#39;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;ip</span> <span style="color:#a6e22e">address=</span><span style="color:#e6db74">&#39;192.168.123.1&#39;</span> <span style="color:#a6e22e">netmask=</span><span style="color:#e6db74">&#39;255.255.255.0&#39;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;dhcp&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;range</span> <span style="color:#a6e22e">start=</span><span style="color:#e6db74">&#39;192.168.123.2&#39;</span> <span style="color:#a6e22e">end=</span><span style="color:#e6db74">&#39;192.168.123.254&#39;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/dhcp&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/ip&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/network&gt;</span>
+</span></span></code></pre></div><p><br>
+修改完成後將 default 網路停用</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh net-destroy --network default
+</span></span></code></pre></div><p><br>
+接著再重啟 default 網路</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh net-start --network default
+</span></span></code></pre></div><p><br>
+可以看到 virbr0 已經變成 192.168.123.1/24 的網段了</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ip a
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>2: ens3: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span style="color:#ae81ff">1500</span> qdisc fq_codel state UP group default qlen <span style="color:#ae81ff">1000</span>
+</span></span><span style="display:flex;"><span>link/ether 52:54:00:44:d1:cb brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>inet 192.168.122.160/24 brd 192.168.122.255 scope global dynamic noprefixroute ens3
+</span></span><span style="display:flex;"><span>valid_lft 3596sec preferred_lft 3596sec
+</span></span><span style="display:flex;"><span>inet6 fe80::bad7:6118:68ec:3b8a/64 scope link noprefixroute 
+</span></span><span style="display:flex;"><span>valid_lft forever preferred_lft forever
+</span></span><span style="display:flex;"><span>3: virbr0: &lt;NO-CARRIER,BROADCAST,MULTICAST,UP&gt; mtu <span style="color:#ae81ff">1500</span> qdisc noqueue state DOWN group default qlen <span style="color:#ae81ff">1000</span>
+</span></span><span style="display:flex;"><span>link/ether 52:54:00:fa:15:28 brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>inet 192.168.123.1/24 brd 192.168.123.255 scope global virbr0
+</span></span><span style="display:flex;"><span>valid_lft forever preferred_lft forever
+</span></span><span style="display:flex;"><span>4: virbr0-nic: &lt;BROADCAST,MULTICAST&gt; mtu <span style="color:#ae81ff">1500</span> qdisc fq_codel master virbr0 state DOWN group default qlen <span style="color:#ae81ff">1000</span>
+</span></span><span style="display:flex;"><span>link/ether 52:54:00:fa:15:28 brd ff:ff:ff:ff:ff:ff
+</span></span></code></pre></div><h2 id="建立-kvm-虛擬網路範本">建立 KVM 虛擬網路範本</h2>
+<p>KVM 使用虛擬網路來管理與控制 guest 的網路連線，每個虛擬網路有不同的網段與功能，像上面的 default 就是預設的 NAT 網路。</p>
+<p>我們可以在虛擬網路中新增許多不同的連線型態來滿足各種需求，例如新的 NAT、local only、bridge…等，在 virsh 中，新增虛擬網路必須先建立 xml 的範本，然後再使用指令匯入</p>
+<h3 id="建立-nat-網路">建立 NAT 網路</h3>
+<p>除了 default 的 NAT 以外，也可以再新增其它的 NAT 網路，測試比較複雜的網路環境可以用得上</p>
+<p>建立 NAT 網路的設定範本 new-nat.xml</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;network&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;name&gt;</span>new-nat<span style="color:#f92672">&lt;/name&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;bridge</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#34;virbr1&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;forward</span> <span style="color:#a6e22e">mode=</span><span style="color:#e6db74">&#34;nat&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;ip</span> <span style="color:#a6e22e">address=</span><span style="color:#e6db74">&#34;192.168.133.1&#34;</span> <span style="color:#a6e22e">netmask=</span><span style="color:#e6db74">&#34;255.255.255.0&#34;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;dhcp&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;range</span> <span style="color:#a6e22e">start=</span><span style="color:#e6db74">&#34;192.168.133.2&#34;</span> <span style="color:#a6e22e">end=</span><span style="color:#e6db74">&#34;192.168.133.254&#34;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;host</span> <span style="color:#a6e22e">mac=</span><span style="color:#e6db74">&#39;12:45:00:b0:ce:15&#39;</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#39;test-1&#39;</span> <span style="color:#a6e22e">ip=</span><span style="color:#e6db74">&#39;192.168.133.10&#39;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&lt;host</span> <span style="color:#a6e22e">mac=</span><span style="color:#e6db74">&#39;12:45:00:e9:a3:15&#39;</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#39;test-2&#39;</span> <span style="color:#a6e22e">ip=</span><span style="color:#e6db74">&#39;192.168.133.20&#39;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/dhcp&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;/ip&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/network&gt;</span>
+</span></span></code></pre></div><ul>
+<li><span class="hl-green mono">&lt;name&gt;</span>：KVM 中的虛擬網路名稱，也就是 virsh net-list 所列出的名稱</li>
+<li><span class="hl-green mono">&lt;forward mode&gt;</span>：這邊一樣是選 nat</li>
+<li><span class="hl-green mono">&lt;ip address&gt;</span>：網段的 gateway（host 上的 ip）與 netmask</li>
+<li><span class="hl-green mono">&lt;range start, end&gt;</span>：網段的範圍</li>
+<li><span class="hl-green mono">&lt;host&gt;</span>：這邊可以根據 guest 的網卡 mac address 來綁定 ip，這樣即使是用 dhcp，有設定到的機器都會分派到固定的 ip</li>
+</ul>
+<p><br>
+virsh 透過 xml 檔建立網路</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh net-define new-nat.xml
+</span></span></code></pre></div><p><br>
+列出目前的網路介面</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh net-list --all
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Name                 State      Autostart     Persistent
+</span></span><span style="display:flex;"><span>----------------------------------------------------------
+</span></span><span style="display:flex;"><span>default              active     yes           yes
+</span></span><span style="display:flex;"><span>new-nat              inactive   no            yes
+</span></span></code></pre></div><p><br>
+讓 new-nat 自動啟動</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh net-autostart --network new-nat
+</span></span></code></pre></div><p><br>
+啟動 new-nat 網路</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh net-start --network new-nat
+</span></span></code></pre></div><h3 id="建立-local-only-的隔離網路">建立 local only 的隔離網路</h3>
+<p>local only 的網路可以讓 guest 只能與 host  和同網段的機器連線，其餘外網一律不能連線</p>
+<p>建立 local only 的網路設定檔 internal.xml</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;network</span> <span style="color:#a6e22e">connections=</span><span style="color:#e6db74">&#39;1&#39;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;name&gt;</span>internal<span style="color:#f92672">&lt;/name&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;bridge</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#39;virbr2&#39;</span> <span style="color:#a6e22e">stp=</span><span style="color:#e6db74">&#39;on&#39;</span> <span style="color:#a6e22e">delay=</span><span style="color:#e6db74">&#39;0&#39;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;domain</span> <span style="color:#a6e22e">name=</span><span style="color:#e6db74">&#39;internal&#39;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;ip</span> <span style="color:#a6e22e">address=</span><span style="color:#e6db74">&#39;192.168.100.1&#39;</span> <span style="color:#a6e22e">netmask=</span><span style="color:#e6db74">&#39;255.255.255.0&#39;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;dhcp&gt;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&lt;range</span> <span style="color:#a6e22e">start=</span><span style="color:#e6db74">&#39;192.168.100.128&#39;</span> <span style="color:#a6e22e">end=</span><span style="color:#e6db74">&#39;192.168.100.254&#39;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/dhcp&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&lt;/ip&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/network&gt;</span>
+</span></span></code></pre></div><p><br>
+virsh 建立 internal 網路設定</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh net-define internal.xml
+</span></span></code></pre></div><p><br>
+讓 internal 自動啟動</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo  virsh net-autostart --network internal
+</span></span></code></pre></div><p><br>
+啟動 internal 網路</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh net-start --network internal
+</span></span></code></pre></div><h2 id="為虛擬機新增網路卡">為虛擬機新增網路卡</h2>
+<p>前面新增了虛擬網路，要使用這些網路就必須幫 guest 掛上一張新的網路卡（或是編輯原有的網卡），並且指定要使用的網路</p>
+<h3 id="新增網路卡-for-new-nat">新增網路卡 for new NAT</h3>
+<p>NAT 網路卡設定範本 new-nic.xml</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;interface</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#39;network&#39;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;source</span> <span style="color:#a6e22e">network=</span><span style="color:#e6db74">&#39;new-nat&#39;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;model</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#39;virtio&#39;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/interface&gt;</span>
+</span></span></code></pre></div><p>source network 填上虛擬網路的名稱。用 <span class="hl-blue">virsh net-list</span> 可以查看</p>
+<p><br>
+為虛擬機掛載新的網路卡</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh attach-device --domain <span style="color:#f92672">[</span>VM_Name<span style="color:#f92672">]</span> --file new-nic.xml <span style="color:#f92672">[</span> --persistent / --config / --live <span style="color:#f92672">]</span>
+</span></span></code></pre></div><ul>
+<li><span class="hl-green mono">&ndash;domain</span>：虛擬機的名稱</li>
+<li><span class="hl-green mono">&ndash;file</span>：網卡的設定檔</li>
+<li><span class="hl-green mono">&ndash;persistenet</span>：讓 device 永遠掛載，沒有這個選項的話，用 KVM 重啟虛擬機後新網卡會消失</li>
+<li><span class="hl-green mono">&ndash;config</span>：guest 未啟動時用，掛載會在下次開機時生效</li>
+<li><span class="hl-green mono">&ndash;live</span>：guest 已啟動時用，掛載的設備可在執行中的虛擬機中生效</li>
+</ul>
+<h3 id="新增網路卡-for-internal-local-only">新增網路卡 for internal local only</h3>
+<p>internal 網路卡設定範本 nic-internal.xml</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;interface</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#39;network&#39;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;source</span> <span style="color:#a6e22e">network=</span><span style="color:#e6db74">&#39;internal&#39;</span> <span style="color:#a6e22e">bridge=</span><span style="color:#e6db74">&#39;virbr2&#39;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;model</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#39;virtio&#39;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/interface&gt;</span>
+</span></span></code></pre></div><p><br>
+為虛擬機掛載新的網路卡</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh attach-device --domain <span style="color:#f92672">[</span>VM_Name<span style="color:#f92672">]</span> --file nic-internal.xml <span style="color:#f92672">[</span>--persistent / --config / --live <span style="color:#f92672">]</span>
+</span></span></code></pre></div><h2 id="為虛擬機移除網路卡">為虛擬機移除網路卡</h2>
+<p>查看虛擬機目前使用的網卡</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh domiflist --domain <span style="color:#f92672">[</span>VM_Name<span style="color:#f92672">]</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Interface  Type       Source     Model       MAC
+</span></span><span style="display:flex;"><span>-------------------------------------------------------
+</span></span><span style="display:flex;"><span>vnet0      network    default    virtio      52:54:00:99:6c:c8
+</span></span><span style="display:flex;"><span>macvtap0   direct     ens3       virtio      52:54:00:a6:ce:f2
+</span></span><span style="display:flex;"><span>vnet1      network    new-nat    virtio      52:54:00:ef:0a:1e
+</span></span></code></pre></div><p>用 domiflist 可以看到虛擬機目前有三張網卡，如果 new-nat 這張不想用了，可以把它移除</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh detach-interface --domain <span style="color:#f92672">[</span>VM_Name<span style="color:#f92672">]</span> --mac 52:54:00:ef:0a:1e --type network
+</span></span></code></pre></div><p>用 mac address 來指定要移除的網卡，type 部分也是參考 domiflist 裡的資訊即可</p>
+<h2 id="為虛擬機新增-macvtap-橋接網卡">為虛擬機新增 MacVTap 橋接網卡</h2>
+<p>MacVTap 是一種 bridge 的技術，可以讓 guest 拿到與 host 同網段的 ip，而且相較傳統的 bridge 效能比較好，不過缺點是 <span class="hl-red">MacVTap bridge 的網卡，會讓 guest 無法與 host 連線，只能和 host 以外的同網段機器相通</span>。所以設定 MacVTap 網卡的 guest 通常都會再配一張 local only 的網卡讓 host 與 guest 互連。</p>
+<p>在<a href="https://notes.wadeism.net/post/kvm-create-vm-in-terminal/" target="_blank">安裝虛擬機的文章</a>裡，我都是直接在建新機器時就把 MacVTap 的網卡也一併裝上，如果一開始沒有設定，之後想裝時只要建一個 bridge 的網路卡設定檔，然後再掛載給虛擬機就可以，不需要為 bridge 新增虛擬網路（但傳統的 bridge 就需要）</p>
+<p>一樣先查詢 host 的網卡資訊</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ip a
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># 執行結果：</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>2: ens3: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span style="color:#ae81ff">1500</span> qdisc fq_codel state UP group default qlen <span style="color:#ae81ff">1000</span>
+</span></span><span style="display:flex;"><span>link/ether 52:54:00:44:d1:cb brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>inet 192.168.122.160/24 brd 192.168.122.255 scope global dynamic noprefixroute ens3
+</span></span><span style="display:flex;"><span>valid_lft 3596sec preferred_lft 3596sec
+</span></span><span style="display:flex;"><span>inet6 fe80::bad7:6118:68ec:3b8a/64 scope link noprefixroute 
+</span></span><span style="display:flex;"><span>valid_lft forever preferred_lft forever
+</span></span><span style="display:flex;"><span>3: virbr0: &lt;NO-CARRIER,BROADCAST,MULTICAST,UP&gt; mtu <span style="color:#ae81ff">1500</span> qdisc noqueue state DOWN group default qlen <span style="color:#ae81ff">1000</span>
+</span></span><span style="display:flex;"><span>link/ether 52:54:00:fa:15:28 brd ff:ff:ff:ff:ff:ff
+</span></span><span style="display:flex;"><span>inet 192.168.199.1/24 brd 192.168.199.255 scope global virbr0
+</span></span><span style="display:flex;"><span>valid_lft forever preferred_lft forever
+</span></span><span style="display:flex;"><span>4: virbr0-nic: &lt;BROADCAST,MULTICAST&gt; mtu <span style="color:#ae81ff">1500</span> qdisc fq_codel master virbr0 state DOWN group default qlen <span style="color:#ae81ff">1000</span>
+</span></span><span style="display:flex;"><span>link/ether 52:54:00:fa:15:28 brd ff:ff:ff:ff:ff:ff
+</span></span></code></pre></div><p>ens3 為 host 的主要連外網卡</p>
+<p><br>
+新增 MacVTap 的網路卡設定檔 macvtap.xml，並將 dev 設成主要網卡的名稱。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span><span style="color:#f92672">&lt;interface</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#39;direct&#39;</span><span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;source</span> <span style="color:#a6e22e">dev=</span><span style="color:#e6db74">&#39;ens3&#39;</span> <span style="color:#a6e22e">mode=</span><span style="color:#e6db74">&#39;vepa&#39;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&lt;model</span> <span style="color:#a6e22e">type=</span><span style="color:#e6db74">&#39;virtio&#39;</span><span style="color:#f92672">/&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&lt;/interface&gt;</span>
+</span></span></code></pre></div><p><br>
+為虛擬機新增 MacVTap bridge 網卡</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo virsh attach-device <span style="color:#f92672">[</span>VM_Name<span style="color:#f92672">]</span> --file macvtap.xml --persistent <span style="color:#f92672">[</span> --config / --live <span style="color:#f92672">]</span>
+</span></span></code></pre></div><h3 id="kvm-虛擬機系列文章">KVM 虛擬機系列文章：</h3>
+<p><a href="https://notes.wadeism.net/post/kvm-create-vm-in-terminal/" target="_blank">KVM 純文字環境下的虛擬機安裝教學</a></p>
+<p><a href="https://notes.wadeism.net/post/kvm-create-volume-by-qemu-img/" target="_blank">KVM 使用 qemu-img 建立與調整虛擬硬碟</a></p>
+<p><a href="https://notes.wadeism.net/post/kvm-internal-snapshot/" target="_blank">KVM Internal Snapshot 快照教學</a></p>
+<p><a href="https://notes.wadeism.net/post/kvm-external-snapshot/" target="_blank">KVM External Snapshot 快照教學</a></p>
+<p><a href="https://notes.wadeism.net/post/kvm-create-vm-clone-by-overlay/" target="_blank">KVM 使用 overlay 製作虛擬機 Clone</a></p>
+<hr>
+<p>參考資料：</p>
+<p><a href="https://wiki.libvirt.org/page/TroubleshootMacvtapHostFail" target="_blank">Guest can reach outside network, but can&amp;rsquo;t reach host (macvtap)</a></p>
+
+            </article>
+          </div>
+          
+      <div class='entry-meta-bottom'>
+        
+
+  <div class="entry-categories"><p><span>Categories</span>
+    
+    <a href="/categories/linux" title="View all posts in Linux">Linux</a>
+  </p>
+</div>
+
+
+
+<div class="entry-tags"><p><span>Tags</span>
+  
+  <a href="/tags/headless" title="View all posts tagged headless">headless</a>
+  
+  <a href="/tags/kvm" title="View all posts tagged KVM">KVM</a>
+  
+  <a href="/tags/virtualization" title="View all posts tagged Virtualization">Virtualization</a>
+  
+
+</p></div>	</div>
+
+	
+<div class="author-meta">
+
+  <div class="author">
+    	
+      <img alt='wade' src="https://www.gravatar.com/avatar/6fee0275681dd0b43da1d6acb66c336f?s=100&d=identicon" class='avatar avatar-72 photo' height='72' width='72'>
+    
+    <span>
+      Written by:<a href="https://notes.wadeism.net/" title="Posts by wade" rel="author">wade</a> </span>
+    </div>
+    <div class="bio">
+      
+      
+      <p>本站站長</p>
+      
+      
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a class="github" target="_blank"
+href="https://github.com/wade-chiang">
+<i class="fab fa-github"
+title="github icon"></i>
+</a>
+
+
+
+
+
+
+
+</div>
+</div>
+
+</div>
+</div>
+
+<section id="comments" class="comments">
+  <div id="disqus_thread"></div>
+<script>
+    
+
+    
+
+    (function() { 
+    var d = document, s = d.createElement('script');
+    s.src = 'https://notes-wadeism.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+</section>
+</div>
+
+ 
+
+
+
+    </div>
+
+    <footer id="site-footer" class="site-footer" role="contentinfo">
+	<h1>
+    
+    <a href=""> Nothing but.. </a>
+    
+	</h1>
+
+			
+			<p class="site-description">Something here</p>
+			
+
+		<div id="menu-footer" class="menu-container menu-footer" role="navigation">
+		<div class="menu">
+
+      <ul id="menu-footer-items" class="menu-footer-items">
+        
+</ul>
+
+</div>	</div>
+
+<ul class="social-media-icons">
+
+        
+
+        
+
+
+        
+
+        
+
+        
+
+        
+
+        
+
+
+        
+        <li>
+        <a href="https://github.com/wade-chiang"  class="github" target="_blank">
+            <i class="fab fa-github" title="github"></i>
+            <span class="screen-reader-text">github</span>
+        </a>
+        </li>
+        
+
+
+        
+
+        
+        <li>
+        <a href="https://notes.wadeism.net/index.xml" data-animate-hover="pulse" class="rss" target="_blank">
+            <i class="fas fa-rss" title="rss"></i>
+            <span class="screen-reader-text">rss</span>
+        </a>
+        </li>
+        
+
+				</ul>	<div class="design-credit">
+		
+		<p>© 2022 Wade</p>
+		
+		<p>Nederburg Hugo Theme by <a href="https://appernetic.io" target="_blank">Appernetic</a>.</p>
+		
+		<p>A port of Tracks by Compete Themes.</p>
+		
+	</div>
+</footer>
+
+  </div>
+  <script src="https://notes.wadeism.net/js/jquery.min.js"></script>
+<script src="https://notes.wadeism.net/js/jquerymigrate.js"></script>
+<script src="https://notes.wadeism.net/js/production.min.js?v=1684173172"></script>
+
+
+
+<script src="https://notes.wadeism.net/js/prism.js"></script>
+
+
+<script src="https://notes.wadeism.net/js/medium-zoom.js"></script>
+<script src="https://notes.wadeism.net/js/wade_custom.js"></script>
+
+
+
+
+
+<script type="text/javascript">var _jf = _jf || [];_jf.push(['p','63921']);_jf.push(['initAction',true]);_jf.push(['_setFont','xingothic-tc-w6','css','.xingothic-tc-w6']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-meta-bottom a']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-content h3']);_jf.push(['_setFont','xingothic-tc-w6','css','div.entry-content h4']);_jf.push(['_setFont','xingothic-tc-w6','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w6','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w6','weight',600]);_jf.push(['_setFont','xingothic-tc-w5','css','.xingothic-tc-w5']);_jf.push(['_setFont','xingothic-tc-w5','css','div.entry-content p']);_jf.push(['_setFont','xingothic-tc-w5','css','div.excerpt-content p']);_jf.push(['_setFont','xingothic-tc-w5','css','div.post article']);_jf.push(['_setFont','xingothic-tc-w5','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w5','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w5','weight',500]);_jf.push(['_setFont','xingothic-tc-w7','css','.xingothic-tc-w7']);_jf.push(['_setFont','xingothic-tc-w7','css','h1.entry-title']);_jf.push(['_setFont','xingothic-tc-w7','css','h2.excerpt-title']);_jf.push(['_setFont','xingothic-tc-w7','css','div.entry-content h2']);_jf.push(['_setFont','xingothic-tc-w7','css','strong']);_jf.push(['_setFont','xingothic-tc-w7','alias','xingothic-tc']);_jf.push(['_setFont','xingothic-tc-w7','english','Roboto']);_jf.push(['_setFont','xingothic-tc-w7','weight',700]);(function(A,p,c,m,l,q,r,h,B,D){var b=A._jf;if(b.constructor!==Object){var t=!0,u=function(a){var f=!0,e;for(e in b)b[e][0]==a&&(f&&(f=f&&!1!==b[e][1].call(b)),b[e]=null,delete b[e])},v=/\S+/g,w=/[\t\r\n\f]/g,C=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,n="".trim,x=n&&!n.call("\ufeff\u00a0")?function(a){return null==a?"":n.call(a)}:function(a){return null==a?"":(a+"").replace(C,"")},k=function(a){var f,b,g;if("string"===typeof a&&a&&(a=(a||"").match(v)||[],f=h[c]?(" "+h[c]+" ").replace(w," "):" ")){for(g=0;b=a[g++];)0>f.indexOf(" "+b+" ")&&(f+=b+" ");h[c]=x(f)}},d=function(a){var b,e,g;if(0===arguments.length||"string"===typeof a&&a){var d=(a||"").match(v)||[];if(b=h[c]?(" "+h[c]+" ").replace(w," "):""){for(g=0;e=d[g++];)for(;0<=b.indexOf(" "+e+" ");)b=b.replace(" "+e+" "," ");h[c]=a?x(b):""}}},y;b.addScript=y=function(b,f,e,g,d,c){d=d||function(){};c=c||function(){};var a=p.createElement("script"),h=p.getElementsByTagName("script")[0],k,m=!1,l=function(){a.src="";a.parentNode.removeChild(a);a=a.onerror=a.onload=a.onreadystatechange=null};g&&(k=setTimeout(function(){l();c()},g));a.type=f||"text/javascript";a.async=e;a.onload=a.onreadystatechange=function(b,c){m||a.readyState&&!/loaded|complete/.test(a.readyState)||(m=!0,g&&clearTimeout(k),l(),c||d())};a.onerror=function(a,b,d){g&&clearTimeout(k);l();c();return!0};a.src=b;h.parentNode.insertBefore(a,h)};for(var z in b)"initAction"==b[z][0]&&(t=b[z][1]);b.push(["_eventPreload",function(){1==t&&k(m);y(B,null,!1,3E3,null,function(){u("_eventInactived")})}]);b.push(["_eventReload",function(){d(r);d(q);k(l)}]);b.push(["_eventActived",function(){d(m);d(l);k(q)}]);b.push(["_eventInactived",function(){d(m);d(l);k(r)}]);u("_eventPreload")}})(this,this.document,"className","jf-loading","jf-reloading","jf-active","jf-inactive",this.document.getElementsByTagName("html")[0],"//ds.justfont.com/js/stable/v/6.0/id/171309946041");</script>
+
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9504338511537027" crossorigin="anonymous"></script>
+
+
+<script src="https://notes.wadeism.net/js/back-to-top.js"></script>
+
+  
+  
+
+</body>
+</html>
