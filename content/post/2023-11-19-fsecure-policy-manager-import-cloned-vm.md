@@ -37,7 +37,7 @@ f-secure-linuxsecurity 版本：2.0.34（fsls64-2.0.34-exported.zip）<br/>
 ## Process 檢查
 首先我們分別在兩台測試 VM 中查看 F-Secure 執行的 process 資料，可以看出一些端倪
 
-```bash
+```sh
 ps aux | grep fsma2 | grep -v auto
 ```
 
@@ -55,7 +55,7 @@ fsbg        3723  0.0  0.2 1014100 1988 ?        Ssl  Nov02   0:00 /opt/f-secure
 fsbg        3790  0.8  0.9  17288  9240 ?        Ss   Nov02   9:27 /opt/f-secure/fsbg/bin/fsma2 --local-schema /opt/f-secure/fsbg/share/mgmt/cosmos.json --mount-point /etc/opt/f-secure/fsbg/mgmt --vardir /var/opt/f-secure/fsbg/fsma2 --uid 998 --gid 999 -o allow_other -o default_permissions --mib=/etc/opt/f-secure/fsbg/policies/fsbg.mib.json --mode pm --address https://192.168.23.50:443 --identity 35f723a7-1542-d875-cc7f-38uifbfyu7 --pubkey /var/opt/f-secure/fsbg/setup/pm-server-key.pub
 ```
 
-從這裡可以看到一個很關鍵的參數，"<span class="hl-green">--identity</span>--identity 35f723a7-1542-d875-cc7f-38uifbfyu7"，以字面上猜測，防毒軟體執行時很可能是用這段 id 作為識別碼，接著我們再進一步驗證這串 id 的來源
+從這裡可以看到一個很關鍵的參數，"<span class="hl-green">--identity</span> 35f723a7-1542-d875-cc7f-38uifbfyu7"，以字面上猜測，防毒軟體執行時很可能是用這段 id 作為識別碼，接著我們再進一步驗證這串 id 的來源
 
 
 ## 檢查系統 id
@@ -93,7 +93,7 @@ vim /opt/f-secure/fsbg/bin/fsma2_start
 ```
 
 ```sh
-#!/bin/bash
+#!/bin/sh
 
 DESTDIR=$(dirname "$(dirname "$(readlink -f "$0")")")
 ETCDIR=$(readlink -f "$DESTDIR/etc")
@@ -178,7 +178,7 @@ exec "$DESTDIR"/bin/fsma2 "${options[@]}"
 
 以下是修改的腳本內容，存成 shell script 檔後可利用 Ansible 部署到機器中一次執行，若要手工的話，也是可以將多行指令全部組在一起一台一台的貼上執行
 
-```sh
+```bash
 #!/bin/bash
 
 # 清空原有的 machine-id
