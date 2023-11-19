@@ -16,20 +16,20 @@ tags:
 
 我們的產品中，有許多 HyperV 的 VM 是用 HyperV Export 出 VM backup 之後，再 Import Virtual Machine 時引用剛才備份的 VM 所建立，當我們在這數十台 clone 出的 VM 安裝 fsls 之後，發現中控台同一時間只能抓到一台 VM，無法辨識出每一台有安裝 fsls 的 VM：
 
-![(https://image.wadeism.net/fsecure01.jpg)]
+![](https://image.wadeism.net/fsecure01.jpg)
 
 多按幾次 Refresh 後跳出其它台的 VM…
 
-![(https://image.wadeism.net/fsecure02.jpg)]
+![](https://image.wadeism.net/fsecure02.jpg)
 
 下面就我所找到的解決方法來說明：
 
 
 ## 環境說明
-系統：Ubuntu 22.04 Server
-F-Secure Policy Manager Server 版本：15.20.95099
-F-Secure Policy Manager Console 版本：15.20.95099
-f-secure-linuxsecurity 版本：2.0.34（fsls64-2.0.34-exported.zip）
+系統：Ubuntu 22.04 Server<br/>
+F-Secure Policy Manager Server 版本：15.20.95099<br/>
+F-Secure Policy Manager Console 版本：15.20.95099<br/>
+f-secure-linuxsecurity 版本：2.0.34（fsls64-2.0.34-exported.zip）<br/>
 
 測試用 VM 名稱：test01、test02
 
@@ -203,4 +203,4 @@ sudo systemctl restart fsma2.service
 
 最後我們再回到 F-Secure Policy Manager 上，把原本 Pending 的那台機器先移除，再重新 Refresh ，就會同時出現兩台機器啦！
 
-![(https://image.wadeism.net/fsecure03.jpg)]
+![](https://image.wadeism.net/fsecure03.jpg)
