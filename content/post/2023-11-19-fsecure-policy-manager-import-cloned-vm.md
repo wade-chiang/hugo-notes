@@ -2,7 +2,7 @@
 title: 解決 F-Secure Policy Manager 無法納管 cloned VM 的問題
 date: 2023-11-19T23:23:38+08:00
 type: post
-draft: true
+draft: false
 url: /post/2023-11-19-fsecure-policy-manager-import-cloned-vm
 image: "https://image.wadeism.net/fsecure00.jpg"
 categories:
@@ -55,7 +55,7 @@ fsbg        3723  0.0  0.2 1014100 1988 ?        Ssl  Nov02   0:00 /opt/f-secure
 fsbg        3790  0.8  0.9  17288  9240 ?        Ss   Nov02   9:27 /opt/f-secure/fsbg/bin/fsma2 --local-schema /opt/f-secure/fsbg/share/mgmt/cosmos.json --mount-point /etc/opt/f-secure/fsbg/mgmt --vardir /var/opt/f-secure/fsbg/fsma2 --uid 998 --gid 999 -o allow_other -o default_permissions --mib=/etc/opt/f-secure/fsbg/policies/fsbg.mib.json --mode pm --address https://192.168.23.50:443 --identity 35f723a7-1542-d875-cc7f-38uifbfyu7 --pubkey /var/opt/f-secure/fsbg/setup/pm-server-key.pub
 ```
 
-從這裡可以看到一個很關鍵的參數，"--identity 35f723a7-1542-d875-cc7f-38uifbfyu7"，以字面上猜測，防毒軟體執行時很可能是用這段 id 作為識別碼，接著我們再進一步驗證這串 id 的來源
+從這裡可以看到一個很關鍵的參數，"<span class="hl-green">--identity</span>--identity 35f723a7-1542-d875-cc7f-38uifbfyu7"，以字面上猜測，防毒軟體執行時很可能是用這段 id 作為識別碼，接著我們再進一步驗證這串 id 的來源
 
 
 ## 檢查系統 id
@@ -84,7 +84,7 @@ sudo dmidecode -s system-uuid
 35f723a7-1542-d875-cc7f-38uifbfyu7
 ```
 
-從這裡就可以看出 f-secure 的 identity 是引用 system uuid 作為識別碼。
+從這裡就可以看出 f-secure 的 identity 是引用 <span class="hl-green">system uuid</span> 作為識別碼。
 
 如果想要更進一步的確認，可以直接查看 f-secure 啟動的腳本
 
@@ -155,7 +155,7 @@ umount "$mount_point" 2>/dev/null
 exec "$DESTDIR"/bin/fsma2 "${options[@]}"
 ```
 
-第 41 行中寫到 --identify "$uuid"，而 $uuid 的值可從第14行的變數取得，我們就來用它的指令試試看，這邊我先省略變數組成，用絕對路徑執行預設路徑的程式
+第 41 行中寫到 <span class="hl-green">--identify "$uuid"</span>，而 $uuid 的值可從第14行的變數取得，我們就來用它的指令試試看，這邊我先省略變數組成，用絕對路徑執行預設路徑的程式
 
 
 ```sh
@@ -204,41 +204,3 @@ sudo systemctl restart fsma2.service
 最後我們再回到 F-Secure Policy Manager 上，把原本 Pending 的那台機器先移除，再重新 Refresh ，就會同時出現兩台機器啦！
 
 ![(https://image.wadeism.net/fsecure03.jpg)]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## title 1
-
-<span class="hl-blue">Content</span>
-<span class="hl-red">Content</span>
-<div style="text-align: center">Center Content</div>
-
-
-* <span class="hl-green mono">-Options_1</span>：Content
-* <span class="hl-green mono">-Options_2</span>：Content
-
-
-## title 2
-
-* * *
-
-參考資料：
-
-[Link Text](https://url)
-
