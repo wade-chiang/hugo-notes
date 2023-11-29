@@ -65,7 +65,7 @@ Command (? for help):
 Command (? for help): +1G
 ```
 
-為磁區加上 partition type codes，雖然代號就算沒照規定設好像也不太會怎樣，但我們就還是先照書走吧：
+為磁區加上 partition type codes，習慣上我會切成 /boot、/ 與 /home 三個區，所以這邊列出三種磁區的代碼，雖然代號就算沒照規定設好像也不太會怎樣，但我們就還是先照書走吧：：
 ```sh
 /boot   ef00（EFI）
 /       8304（root）
@@ -80,19 +80,30 @@ Command (? for help): ef00
 ```sh
 Command (? for help): w
 ```
+<br/>
+完成後就可以用 blkid 來檢查一下磁區是否有劃好，有劃好的話應該會看到類似下面的訊息
 
-
-我的習慣會切成 /boot、/ 與 /home 三個區
-
-列出三種磁區的代碼，代號會在新建磁區的時候要求輸入，雖然代號就算沒照規定設好像也不太會怎樣，但我們就還是先照書走吧：
 ```sh
-/boot   ef00（EFI）
-/       8304（root）
-/home   8302（home）
+/dev/sr0: BLOCK_SIZE="2048" UUID="2023-11-01-06-55-57-00" LABEL="ARCH_202311" TYPE="iso9660" PTUUID="fd38acc6" PTTYPE="dos"
+/dev/loop0: BLOCK_SIZE="1048576" TYPE="squashfs"
+/dev/nvme0n1p2: PARTLABEL="Linux x86-64 root (/)" PARTUUID="2c40c551-cf01-4f6d-b731-058290cc038c"
+/dev/nvme0n1p3: PARTLABEL="Linux /home" PARTUUID="3b4e9a75-5c87-111f-87e0-a62ce6ce94d7"
+/dev/nvme0n1p1: PARTLABEL="EFI system partition" PARTUUID="c8702579-6dab-4283-adaf-caf98515b01b"
 ```
-劃好之後，應該就可以用 blkid 來檢查一下磁區是否有劃好，有劃好的話應該會看到類似下面
+<br/>
 
 劃分好磁區後，接著就來格式化磁區，除了給 /boot 的磁區用 FAT32 的 file system 以外，其它的我們都用 ext4 來格式化
+
+```sh
+mkfs.fat -F 32 /dev/nvme0n1p1
+```
+```sh
+mkfs.ext4 /dev/nvme0n1p2
+```
+```sh
+mkfs.ext4 /dev/nvme0n1p3
+```
+
 
 
 <span class="hl-blue">Content</span>
