@@ -11,9 +11,9 @@ tags:
 - ArchLinux
 ---
 
-應該有不少人想嘗試 Arch 時，在一開始的安裝步驟就先被勸退了，記得蠻久以前的我也是如此。不過大約兩年前我的 manjaro 初體驗在7個月就突然炸掉之後，我又開始試著安裝 Arch，這次順利的成功了，從此也就成了 Arch 的愛用者。<br/>
+應該有不少人想嘗試 Arch 時，在一開始的安裝步驟就先被勸退了，記得蠻久以前的我也是如此。不過就在約兩年前當我的 manjaro 初體驗進行到7個月就突然炸掉之後，我又回去試著安裝 Arch，這次順利的成功了，從此也就成了 Arch 的愛用者。<br/>
 <br/>
-雖然在 Arch 台灣社群中有提到，「根本就沒有新手，又或者在 Arch 社群裡人人遇到安裝都是新手」，不過只要好好的 follow 官方 wiki 的 installation guide，其實該做該注意的裡面都已經寫上了，只要耐心得閱讀相信多數的問題都可以迎刃而解。<br/>
+雖然在 Arch 台灣社群中有提到，「根本就沒有新手，又或者在 Arch 社群裡人人遇到安裝都是新手」，不過只要好好的 follow 官方 wiki 的 installation guide，其實該做該注意的裡面都已經寫上了，只要耐心的閱讀相信多數問題都可以迎刃而解。<br/>
 <br/>
 話雖如此，還是想要寫一篇自已的 Arch 安裝手冊，一方面這是屬於我個人的筆記，比較以個人用途為優先（但步驟大都是官方 wiki 的內容），再者這個安裝流程在這兩年多來的幾次 Arch 安裝過程裡都是完全適用，沒有一次需要修改，所以我覺得還算是值得參考與記錄。
 
@@ -26,6 +26,7 @@ MainBoard:  ASUS ROG STRIX X670E-F GAMING WIFI<br/>
 Memory:     Micron Crucial DDR5 4800 32G * 2<br/>
 Graphic:    ASUS TUF Gaming Radeon RX 7900 XTX OC Edition 24GB GDDR6<br/>
 
+---
 
 Arch Linux 的安裝我把會把它分為兩個部分，pre install 與 post install，pre install 就是類似裝 ubuntu 用 live cd 安裝的過程，其操作並不是在實際安裝的磁區裡，而是在 live cd 的環境中設定電腦，以下幾個就是 pre install 的步驟：
 
@@ -33,12 +34,13 @@ Arch Linux 的安裝我把會把它分為兩個部分，pre install 與 post ins
 
 ### 硬碟分割
 
-用 gdisk 操作安裝目標的硬碟
+用 gdisk 分割目標硬碟
 ```sh
 gdisk /dev/dev/nvme0n1
 ```
 
-在 gdisk 的介面介面中，可以按 ? 來查看所有的指令，可以很簡單分割出想要的磁區規劃，下面就簡單記一下分割第一個磁區時在 gdisk 裡所需要的操作：
+在 gdisk 的介面中，按 ? 來查看所有的指令，可以很簡單分割出想要的磁區規劃，下面就簡單記一下分割第一個磁區時在 gdisk 裡所需要的操作：<br/>
+<br/>
 
 查看硬碟分割區狀態
 ```sh
@@ -65,7 +67,7 @@ Command (? for help):
 Command (? for help): +1G
 ```
 
-為磁區加上 partition type codes，習慣上我會切成 /boot、/ 與 /home 三個區，所以這邊列出三種磁區的代碼，雖然代號就算沒照規定設好像也不太會怎樣，但我們就還是先照書走吧：：
+為磁區加上 partition type codes，習慣上我會切成 /boot、/ 與 /home 三個區，所以這邊列出三種磁區的代碼，雖然代碼沒有硬性規定，但照上面來設計在日後磁區識別上還是相當有用：
 ```sh
 /boot   ef00（EFI）
 /       8304（root）
@@ -76,12 +78,12 @@ Command (? for help): +1G
 Command (? for help): ef00
 ```
 
-最後再用 p 看一次目前的狀況，確認無誤就就可以用 w 進行實際的分割。
+最後再用 <span class="hl-blue">p</span> 看一次目前的狀況，確認無誤就就可以用 <span class="hl-blue">w</span> 進行實際的分割。
 ```sh
 Command (? for help): w
 ```
 <br/>
-完成後就可以用 blkid 來檢查一下磁區是否有劃好，有劃好的話應該會看到類似下面的訊息
+完成後就可以用 <span class="mono hl-green">blkid</span> 來檢查一下磁區是否有劃好，有劃好的話應該會看到類似下面的訊息
 
 ```sh
 /dev/sr0: BLOCK_SIZE="2048" UUID="2023-11-01-06-55-57-00" LABEL="ARCH_202311" TYPE="iso9660" PTUUID="fd38acc6" PTTYPE="dos"
@@ -92,7 +94,9 @@ Command (? for help): w
 ```
 <br/>
 
-劃分好磁區後，接著就來格式化磁區，除了給 /boot 的磁區用 FAT32 的 file system 以外，其它的我們都用 ext4 來格式化（想用其它格式也可以）
+### 硬碟格式化
+
+劃分好磁區後，接著就來格式化磁區，除了給 /boot 的磁區用 FAT32 以外，其它的我們都用 ext4 來格式化（想用其它格式也可以）
 
 ```sh
 mkfs.fat -F 32 /dev/nvme0n1p1
@@ -111,8 +115,6 @@ blkid
 ```
 
 ```sh
-#
-
 /dev/sr0: BLOCK_SIZE="2048" UUID="2023-11-01-06-55-57-00" LABEL="ARCH_202311" TYPE="iso9660" PTUUID="fd38acc6" PTTYPE="dos"
 /dev/loop0: BLOCK_SIZE="1048576" TYPE="squashfs"
 /dev/nvme0n1p2: UUID="45e7bd42-c017-4310-8437-6ff3df288e54" BLOCK_SIZE="4096" TYPE="ext4" PARTLABEL="Linux x86-64 root (/)" PARTUUID="3dbe7a27-f8a1-4621-8f34-7ef406a39c4b"
@@ -121,7 +123,7 @@ blkid
 ```
 
 
-### 建立與掛載安裝目錄
+## 建立與掛載安裝目錄
 
 接著我們把之後要使用的系統目錄先掛載起來<br/>
 因為在使用 gdisk 分割磁區時已經有先定義好不同用途磁區的 PARTLABEL，所以可以利用 label 來幫我們識別磁區的實體路徑
@@ -148,9 +150,9 @@ mount $(blkid | grep EFI | awk -F ":" '{print $1}') /mnt/home
 ```
 
 
-### 額外安裝網卡驅動程式
+## 安裝網卡驅動程式
 
-一般情況下是不需要這步驟的，但我的主機板是垃圾 Intel I225-V 2.5G 網卡，會沒理由的無預警斷線，後來買了Broadcom 10G的網卡，但這張是需要另外裝驅動才能用。<br/>
+一般情況下是不需要這步驟的，但我的主機板是垃圾 Intel I225-V 2.5G 網卡，會沒理由的無預警斷線，所以後來買了Broadcom 10G 網卡，但這張是需要另外裝驅動才能用。<br/>
 <br/>
 因此這邊我需要先在別台電腦下載網卡的驅動程式，存到隨身碟後，把網卡驅動裝好才能繼續安裝Arch
 
@@ -172,18 +174,17 @@ sudo pacman -Sy linux-firmware-bnx2x
 
 裝完後應該就有網路可用了
 
-### 正式安裝 Arch
+
+## 正式安裝 Arch
 
 ```sh
 pacstrap /mnt base linux linux-firmware linux-firmware-bnx2x
 ```
 
 這步就是把 Arch 裝到 /mnt 裡（之後的 /），這裡趁有網路的時候把 Broadcom 的網卡驅動也一併裝上，之後真的進入 Arch 後才不會沒有網路可用。
-其實這步也可以把個人常用的套件都一起裝，不過這邊我只選擇安裝最基本需要的系統核心。
-
-
+其實這步也可以把個人常用的套件都一起裝，不過這邊我只選擇安裝最基本需要的系統核心。<br/>
+<br/>
 ### 產生 fstab
-
 ```sh
 genfstab -U /mnt >> /mnt/etc/fstab
 ```
@@ -192,7 +193,6 @@ genfstab -U /mnt >> /mnt/etc/fstab
 ### Change root to /mnt
 
 這邊利用 change root /mnt，先進入 Arch 系統中做一些基本設定
-
 ```sh
 arch-chroot /mnt
 ```
@@ -209,7 +209,7 @@ pacman -Sy \
   networkmanager
 ```
 
-以上都是我常用的套件，算是基本中的基本，會安裝 networkmanager 是因為它是 Gnome GUI 會用的，不然網路設定也可以直接用預設的 networkctl 或另外安裝如 netplan 之類的套件
+以上都是我常用的套件，算是基本中的基本
 
 
 ### 設定時區、地區、語言
@@ -269,7 +269,7 @@ exit && reboot
 ```
 
 
-### 啟動網路
+## 啟動網路
 
 ```sh
 systemctl enable NetworkManager && systemctl start NetworkManager
@@ -348,7 +348,7 @@ sudo chown $USER:$USER /mnt/data /mnt/workshop /ramdisk
 
 ### 修改 fstab 
 
-這步就是完全個人向的設定了，主要是把其它的硬碟掛載到剛才建立的掛載點裡，另外就是設定剛才的 ramdisk 與 瀏覽器 cache，讓它們吃 Ram 的空間，不寫入 ssd裡。最後就是把個人的資料掛進 /home/$USER 裡的各分類資料夾
+這步也是完全個人向的設定，主要是把其它的硬碟掛載到剛才建立的掛載點裡，另外就是設定剛才的 ramdisk 與 瀏覽器 cache，讓它們吃 Ram 的空間，不寫入 ssd裡。最後就是把個人的資料掛進 /home/$USER 裡的各分類資料夾
 
 ```sh
 # /dev/sda1 workshop on MX500 500G
@@ -431,6 +431,7 @@ enable 後，重開機就可以看到 Gnome 的登入畫面啦
 ```sh
 sudo reboot
 ```
+
 
 ### 安裝 Gnome 常用套件
 
@@ -520,22 +521,14 @@ sudo pacman -Sy \
 ```sh
 sudo pacman -Sy eza bat ncdu fd duf
 ```
-```
+<br/>
+<br/>
+到這邊我的 Arch Linux 就算是安裝完成了，接下來幾篇再來寫一下 Arch 裡一些常用工具的安裝
 
-<span class="hl-blue">Content</span>
-<span class="hl-red">Content</span>
-<div style="text-align: center">Center Content</div>
-
-
-* <span class="hl-green mono">-Options_1</span>：Content
-* <span class="hl-green mono">-Options_2</span>：Content
-
-
-## title 2
 
 * * *
 
 參考資料：
 
-[Link Text](https://url)
+[Arch Wiki](https://wiki.archlinux.org)
 
