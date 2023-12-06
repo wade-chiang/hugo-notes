@@ -2,9 +2,9 @@
 title: 我的 Arch Linux 安裝手冊
 date: 2023-11-26T23:51:59+08:00
 type: post
-draft: true
+draft: false
 url: /post/2023-11-26-arch-linux-installation-guide
-image: ""
+image: "https://notes.wadeism.net/arch-linux-installation-guide00.webp"
 categories:
 - Linux
 tags:
@@ -268,8 +268,9 @@ grub-mkconfig -o /boot/grub/grub.cfg
 exit && reboot
 ```
 
+## Post Install
 
-## 啟動網路
+### 啟動網路
 
 ```sh
 systemctl enable NetworkManager && systemctl start NetworkManager
@@ -325,7 +326,7 @@ sudo cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
 
 利用 xdg-user-dir 來建立 Music…等資料夾（也可以不用這個套件，手動建立）
 ```sh
-sudo pacman -Sy xdg-user-dir && xdg-user-dirs-update
+sudo pacman -Sy xdg-user-dirs && xdg-user-dirs-update
 ```
 
 建立硬碟與 ramdisk 掛載點
@@ -516,14 +517,14 @@ sudo pacman -Sy \
   gnome-keyring
 ```
 
-下面這些則是一些老基礎指令的強化版本
+下面這些則是一些基礎指令的強化版本
 
 ```sh
 sudo pacman -Sy eza bat ncdu fd duf
 ```
 <br/>
 <br/>
-到這邊我的 Arch Linux 就算是安裝完成了，接下來幾篇再來寫一下 Arch 裡一些常用工具的安裝
+到這邊基本的 Arch Linux 就算是安裝完成了，接下來幾篇再來寫一下 Arch 裡一些常用工具的安裝
 
 
 * * *
