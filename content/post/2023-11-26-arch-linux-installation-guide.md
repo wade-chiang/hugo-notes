@@ -4,7 +4,7 @@ date: 2023-11-26T23:51:59+08:00
 type: post
 draft: false
 url: /post/2023-11-26-arch-linux-installation-guide
-image: "https://notes.wadeism.net/arch-linux-installation-guide00.webp"
+image: "https://image.wadeism.net/arch-linux-installation-guide00.webp"
 categories:
 - Linux
 tags:
