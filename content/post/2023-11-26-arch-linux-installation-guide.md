@@ -83,6 +83,7 @@ Command (? for help): ef00
 Command (? for help): w
 ```
 <br/>
+
 完成後就可以用 <span class="mono hl-green">blkid</span> 來檢查一下磁區是否有劃好，有劃好的話應該會看到類似下面的訊息
 
 ```sh
@@ -524,6 +525,7 @@ sudo pacman -Sy eza bat ncdu fd duf
 ```
 <br/>
 <br/>
+
 到這邊基本的 Arch Linux 就算是安裝完成了，接下來幾篇再來寫一下 Arch 裡一些常用工具的安裝
 
 
