@@ -147,7 +147,7 @@ mount $(blkid | grep home | awk -F ":" '{print $1}') /mnt/home
 
 掛載 /boot
 ```sh
-mount $(blkid | grep EFI | awk -F ":" '{print $1}') /mnt/home
+mount $(blkid | grep EFI | awk -F ":" '{print $1}') /mnt/boot
 ```
 
 
