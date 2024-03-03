@@ -14,7 +14,7 @@ tags:
 
 使用檔案管理軟體時，很常會使用到「以終端機開啟(當前目錄)」這個功能，基本上多數的 file manager 也都有這個功能，像 PCManFM 就是按右鍵或是直接按 F4。Ubuntu 內建的 Nautilus 雖然也可以在滑鼠右鍵選單中找到，但並沒有使用鍵盤熱鍵開啟的方式，因此在網路上找瞭解決的方法，方法如下：
 
-<span class="hl-red">本例適用於 Ubuntu 18.04、Ubuntu 20.04、Ubuntu 21.10、GNOME nautilus 44.2.1 on Arch Linux，但可能不適用於每一種 Nautilus 版本</span>
+<span class="hl-red">本例適用於 Ubuntu 18.04、Ubuntu 20.04、Ubuntu 21.10、GNOME nautilus 45.2.1 on Arch Linux(2023/12)，但可能不適用於每一種 Nautilus 版本</span>
 
 在 <span class="hl-blue">~/.local/share/nautilus/scripts</span> 新增 script 檔，檔名為：Terminal（不可有副檔名）
 

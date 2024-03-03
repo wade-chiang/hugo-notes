@@ -1,14 +1,14 @@
 ---
 title: 
-date: 2023-12-07T02:23:17+08:00
+date: 2024-03-03T22:45:27+08:00
 type: post
 draft: true
-url: /post/2023-12-07-arch-linux-install-fcitx5-and-boshiamy
+url: /post/2024-03-03-resolve-failed-to-start-avidemux-appimage-on-arch-linux
 image: ""
 categories:
-- 
+- Linux
 tags:
--
+- ArchLinux
 ---
 
 前言

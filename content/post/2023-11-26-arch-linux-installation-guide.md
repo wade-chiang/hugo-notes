@@ -445,6 +445,7 @@ sudo reboot
 * <span class="hl-green mono">gnome-tweaks</span>：Gnome 調校程式
 * <span class="hl-green mono">gnome-shell-extensions</span>：外掛程式管理
 * <span class="hl-green mono">gnome-terminal</span>：終端機程式
+* <span class="hl-green mono">file-roller</span>：壓縮程式
 
 ```sh
 sudo pacman -Sy \
@@ -454,7 +455,8 @@ nautilus \
 gnome-control-center \
 gnome-tweaks \
 gnome-shell-extensions \
-gnome-terminal
+gnome-terminal \
+file-roller
 ```
 
 
