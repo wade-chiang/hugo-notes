@@ -1,6 +1,6 @@
 ---
 title: Arch Linux Gnome 安裝 fcitx5 與 嘸蝦米輸入法
-date: 2023-12-07T02:23:17+08:00
+date: 2024-03-03T01:20:17+08:00
 type: post
 draft: false
 url: /post/2024-03-03-arch-linux-install-fcitx5-and-boshiamy
