@@ -1,5 +1,5 @@
 ---
-title: Arch Linux Gnome 安裝 fcitx5 與 嘸蝦米輸入法
+title: Arch Linux Gnome 安裝 fcitx5 與嘸蝦米輸入法
 date: 2024-03-03T01:20:17+08:00
 type: post
 draft: false
